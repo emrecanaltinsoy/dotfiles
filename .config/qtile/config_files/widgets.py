@@ -6,10 +6,10 @@ from .colors import colors
 from .general import TERMINAL, HOME_DIR, FONT_NERD
 
 
-def python_icon(f_color, b_color, scale, file_dir):
+def python_icon(b_color, scale, file_dir):
     return [
         widget.Sep(
-            linewidth=0, padding=6, foreground=f_color, background=b_color
+            linewidth=0, padding=6, background=b_color
         ),
         widget.Image(
             filename=file_dir,
@@ -19,7 +19,7 @@ def python_icon(f_color, b_color, scale, file_dir):
             },
         ),
         widget.Sep(
-            linewidth=0, padding=6, foreground=f_color, background=b_color
+            linewidth=0, padding=6, background=b_color
         ),
     ]
 
@@ -158,11 +158,9 @@ def check_updates(f_color, b_color, font, font_size):
             display_format="{updates} Updates",
             no_update_string="0 Updates",
             foreground=f_color,
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(
-                    TERMINAL + " -e sudo apt upgrade"
-                )
-            },
+            colour_no_updates=f_color,
+            colour_have_updates=f_color,
+            execute=TERMINAL + " -e sudo apt upgrade",
             background=b_color,
         ),
         widget.Sep(

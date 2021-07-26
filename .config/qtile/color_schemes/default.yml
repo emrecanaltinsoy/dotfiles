@@ -1,0 +1,15 @@
+"panel-background": "#282c34" # panel background
+"window-name": "#e1acff" # window name
+
+"widget1_fore": "#ffffff" # widget1 foreground
+"widget1_back": "#74438f" # widget1 background
+"widget2_fore": "#ffffff" # widget2 foreground
+"widget2_back": "#4f76c7" # widget2 background
+
+"workspace_colors": # workspace colors
+    "active": "#ffffff" # active tab color
+    "inactive": "#4c566a" # inactive tab color
+    "foreground": "#ffffff" # foreground
+    "background": "#282c34" # background
+    "active_tab_border": "#e1acff" # active tab border color
+    "active-tab-background": "#3d3f4b" # active tab background

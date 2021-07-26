@@ -1,7 +1,8 @@
 /*
 !.gitignore
-!battery-icons
+!color_schemes
 !config_files
+!battery-icons
 !layout-icons
 !volume-icons
 !config.py
