@@ -45,7 +45,7 @@
     word_wrap = yes
 
     # ignore newlines '\n' in notifications
-    ignore_newline = no
+    ignore_newline = yes
 
 
     # the geometry of the window
@@ -59,11 +59,11 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+20"
+    geometry = "300x30-30+40"
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-    transparency = 0
+    transparency = 10
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -134,16 +134,16 @@
     # xev might be helpful to find names for keys
 
     # close notification
-    close = mod4+m
+    # close = mod4+m */
 
     # close all notifications
-    close_all = mod4+shift+m
+    # close_all = mod4+shift+m
 
     # redisplay last message(s)
-    history = mod4+n
+    # history = mod4+n
 
     # context menu
-    context = mod4+shift+i
+    # context = mod4+shift+i
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.

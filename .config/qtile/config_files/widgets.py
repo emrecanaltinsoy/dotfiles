@@ -3,7 +3,7 @@
 from libqtile import qtile
 from libqtile import widget
 from .colors import colors
-from .general import TERMINAL, HOME_DIR, FONT_NERD, BAR_SIZE, BAR_OPACITY
+from .general import TERMINAL, HOME_DIR, FONT_NERD
 
 
 def python_icon(f_color, b_color, scale, file_dir):
@@ -24,31 +24,30 @@ def python_icon(f_color, b_color, scale, file_dir):
     ]
 
 
-def workspaces():
+def workspaces(workspace_colorscheme, font, font_size):
     return [
         widget.GroupBox(
-            font=FONT_NERD,
-            fontsize=16,
+            font=font,
+            fontsize=font_size,
             disable_drag=True,
             margin_y=3,
             margin_x=0,
             padding_y=5,
             padding_x=3,
             borderwidth=3,
-            active=colors["group-names-font"],
-            inactive=colors["inactive-background"],
             rounded=False,
-            highlight_color=colors["current-tab-background"],
+
+            active=workspace_colorscheme["active"],
+            inactive=workspace_colorscheme["inactive"],
             highlight_method="line",  # ‘border’, ‘block’, ‘text’, or ‘line’
-            this_current_screen_border=colors["window-name"],
-            this_screen_border=colors["odd-widget"],
-            other_current_screen_border=colors["window-name"],
-            other_screen_border=colors["odd-widget"],
-            foreground=colors["group-names-font"],
-            background=colors["panel-background"],
+            highlight_color=workspace_colorscheme["active-tab-background"],
+            this_current_screen_border=workspace_colorscheme["active_tab_border"],
+
+            foreground=workspace_colorscheme["foreground"],
+            background=workspace_colorscheme["background"],
         ),
         widget.Sep(
-            linewidth=0, padding=4, foreground=colors["group-names-font"], background=colors["panel-background"]
+            linewidth=0, padding=4, foreground=workspace_colorscheme["foreground"], background=workspace_colorscheme["background"]
         ),
     ]
 
@@ -295,18 +294,18 @@ def battery():
     return [
         widget.BatteryIcon(
             foreground=colors["group-names-font"],
-            background=colors["odd-widget"],
+            background=colors["widget1"],
             update_interval=1,
             theme_path=f"{HOME_DIR}/.config/qtile/battery-icons/Yaru",
         ),
         widget.Sep(
-            linewidth=0, padding=4, foreground=colors["group-names-font"], background=colors["odd-widget"]
+            linewidth=0, padding=4, foreground=colors["group-names-font"], background=colors["widget1"]
         ),
         widget.Battery(
             battery=0,
             format="{char}",
             foreground=colors["group-names-font"],
-            background=colors["odd-widget"],
+            background=colors["widget1"],
             low_foreground=colors["current-tab-border-line"],
             low_percentage=0.1,
             notify_below=35,
@@ -327,7 +326,7 @@ def battery():
             battery=0,
             format="{percent:2.0%}",
             foreground=colors["group-names-font"],
-            background=colors["odd-widget"],
+            background=colors["widget1"],
             low_percentage=0.1,
             low_foreground=colors["current-tab-border-line"],
             notify_below=35,
@@ -344,7 +343,7 @@ def battery():
             }
         ),
         widget.Sep(
-            linewidth=0, padding=4, foreground=colors["group-names-font"], background=colors["odd-widget"]
+            linewidth=0, padding=4, foreground=colors["group-names-font"], background=colors["widget1"]
         ),
     ]
 
