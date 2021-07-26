@@ -79,6 +79,12 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 "                                    Themes                                    "
 "------------------------------------------------------------------------------"
     Plug 'joshdick/onedark.vim'
+    Plug 'kaicataldo/material.vim'
+    Plug 'tomasiser/vim-code-dark'
+    Plug 'crusoexia/vim-monokai'
+    Plug 'ayu-theme/ayu-vim'
+    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'phanviet/vim-monokai-pro'
 call plug#end()
 
 "------------------------------------------------------------------------------"
