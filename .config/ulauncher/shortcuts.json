@@ -1,0 +1,52 @@
+{
+    "2301820e-92d2-4771-bc1d-6fb44f406a98": {
+        "id": "2301820e-92d2-4771-bc1d-6fb44f406a98",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/google-search-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1618776598.4348338
+    },
+    "a0e64984-9918-47e5-b5e0-2bd7db4e9911": {
+        "id": "a0e64984-9918-47e5-b5e0-2bd7db4e9911",
+        "name": "Stack Overflow",
+        "keyword": "so",
+        "cmd": "http://stackoverflow.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/stackoverflow-icon.svg",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1618776598.4348783
+    },
+    "36527365-677d-4586-959f-ae9d8dd30f53": {
+        "id": "36527365-677d-4586-959f-ae9d8dd30f53",
+        "name": "Wikipedia",
+        "keyword": "wiki",
+        "cmd": "https://en.wikipedia.org/wiki/%s",
+        "icon": "/usr/share/ulauncher/media/wikipedia-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1618776598.4349172
+    },
+    "65d24d22-8f40-496d-99e0-131280ad20d0": {
+        "id": "65d24d22-8f40-496d-99e0-131280ad20d0",
+        "name": "YouTube",
+        "keyword": "yt",
+        "cmd": "https://www.youtube.com/results?search_query=%s",
+        "icon": "/usr/share/icons/youtube_logo.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1618779352.0680697
+    },
+    "868fcf62-b66c-4cea-a252-07782084799e": {
+        "id": "868fcf62-b66c-4cea-a252-07782084799e",
+        "name": "GitHub",
+        "keyword": "gh",
+        "cmd": "https://github.com/search?q=%s",
+        "icon": "/usr/share/icons/github.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1618842640.722745
+    }
+}

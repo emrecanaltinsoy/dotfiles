@@ -3,5 +3,5 @@
 !.bashrc
 !.dmenu-scripts
 !.local
-#!.config
+!.config
 !.xmonad
