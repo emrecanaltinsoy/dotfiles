@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+. $HOME/.dmenu-scripts/dmenu-config/config
+. $HOME/.dmenu-scripts/dmenu-config/dmenu-theme
+
+main() {
+  # As this is loaded from other file it is technically not defined
+  # shellcheck disable=SC2154 # Choosing  a search engine by name from array above.
+  engine=$(printf '%s\n' "${!websearch[@]}" | sort | ${DMENU} $colors $font -i -l 20 -p 'Choose search engine:')
+  
+  if [ "$engine" ]; then
+    # Getting the URL of the search engine we chose.
+    url="${websearch["${engine}"]}"
+    if [ "$url" ]; then
+      # Searching the chosen engine.
+      query=$(echo "$engine" | ${DMENU} -p 'Enter search query:')
+      if [ "$query" ]; then
+        # query="$(echo "${query}" | jq -s -R -r @uri)"
+        # Display search results in web browser
+        # shellcheck disable=SC2154
+        ${websearch_browser} "${url}${query}"
+      fi
+    fi
+  fi
+  echo "Program terminated." && exit 0
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
+

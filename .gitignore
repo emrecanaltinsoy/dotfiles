@@ -1,7 +1,7 @@
 /*
 !.gitignore
 !.bashrc
-#!.dmenu-scripts
+!.dmenu-scripts
 #!.local
 #!.config
 #!.xmonad

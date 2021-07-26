@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+script_path="$HOME/.dmenu-scripts"
+
+# dmenu theme
+. $HOME/.dmenu-scripts/dmenu-config/dmenu-theme
+lines="-l 10"
+
+prompt="-p Options:"
+opt1="Power Menu\nEdit Config Files\nKill Process\nWeb Search\nConnect Wifi"
+
+main() {
+    ask() {
+        answer="$( echo -e $1 | dmenu -i -p "$2" $lines $colors $font )"
+    }
+
+    ask "$opt1" "$prompt"
+
+    case $answer in
+        "Power Menu")
+            bash /home/emrecan/.dmenu-scripts/dmenu-power
+            ;;
+        "Edit Config Files")
+            bash /home/emrecan/.dmenu-scripts/dmenu-confedit
+            ;;
+        "Kill Process")
+            bash /home/emrecan/.dmenu-scripts/dmenu-killprocess
+            ;;
+        "Web Search")
+            bash /home/emrecan/.dmenu-scripts/dmenu-websearch
+            ;;
+        "Connect Wifi")
+            bash /home/emrecan/.dmenu-scripts/dmenu-wifi
+            ;;
+    esac
+
+    exit 0
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
+

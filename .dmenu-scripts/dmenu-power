@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# dmenu theme
+. $HOME/.dmenu-scripts/dmenu-config/dmenu-theme
+colors="-nb #2C323E -nf #9899a0 -sb #BF616A -sf #2C323E"
+
+first_prompt="What do you want to do?"
+opt1="Lock Screen\nSuspend\nLog Out\nRestart\nShutdown"
+opt2="Yes\nNo"
+
+main() {
+    ask() {
+        answer="$( echo -e $1 | dmenu -i -p "$2" $lines $colors $font )"
+    }
+
+    ask "$opt1" "$first_prompt"
+
+    case $answer in
+        "Lock Screen")
+            ask "$opt2" "Do you really want to lock the screen?"
+            if [[ $answer == "Yes" ]]; then
+                xdg-screensaver lock
+            fi
+            ;;
+        "Suspend")
+            ask "$opt2" "Do you really want to lock the screen?"
+            if [[ $answer == "Yes" ]]; then
+                systemctl suspend -i
+            fi
+            ;;
+        "Log Out")
+            ask "$opt2" "Do you really want to log out?"
+            if [[ $answer == "Yes" ]]; then
+                pkill -u $USER
+            fi
+            ;;
+        "Restart")
+            ask "$opt2" "Do you really want to restart the system?"
+            if [[ $answer == "Yes" ]]; then
+                systemctl reboot
+            fi
+            ;;
+        "Shutdown")
+            ask "$opt2" "Do you really want to turn off your computer?"
+            if [[ $answer == "Yes" ]]; then
+                systemctl poweroff
+            fi
+            ;;
+    esac
+    echo "Program terminated." && exit 0
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
+

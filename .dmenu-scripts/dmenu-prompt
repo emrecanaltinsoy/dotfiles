@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# dmenu theme
+. $HOME/.dmenu-scripts/dmenu-config/dmenu-theme
+lines="-l 10"
+prompt="-p prompt:"
+
+dmenu_run $prompt $lines $colors $font

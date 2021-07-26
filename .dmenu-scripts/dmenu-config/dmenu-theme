@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+lines="-l 5"
+font="-fn MononokiNerdFont-12"
+colors="-nb #2C323E -nf #9899a0 -sb #81A1C1 -sf #E5E9F0"
