@@ -1,18 +1,18 @@
 #!/usr/bin/bash 
 compton &
-# # picom &
+# picom &
 nitrogen --set-zoom-fill --random ~/wallpapers & # Wallpaper random set
-# # nitrogen --restore &
+# nitrogen --restore &
 # xfce4-power-manager & # Power Manager
 dunst & # Notifications
-# # Applets
-# nm-applet & # Network Applet
+# Applets
+nm-applet & # Network Applet
 blueman-tray & # Bluetooth Applet
-# pnmixer & # Audio Applet
+volumeicon & # Audio Applet
+# pnmixer & 
 cbatticon -l 30 -r 10 -u 5 -x & # xfce4-power-manager-settings & # Battery Applet
+
 # Start up Applications
 mailspring &
 
 # lxsession &
-# festival --tts $HOME/.config/qtile/welcome_msg &
-# volumeicon &

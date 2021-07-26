@@ -145,9 +145,9 @@ def check_updates(f_color, b_color, font, font_size):
             linewidth=0, padding=5, foreground=f_color, background=b_color,
         ),
         widget.TextBox(
-            text="⟳",
+            text=" ",
             font=font,
-            padding=2,
+            padding=0,
             foreground=f_color,
             background=b_color,
             fontsize=font_size,
@@ -155,8 +155,8 @@ def check_updates(f_color, b_color, font, font_size):
         widget.CheckUpdates(
             update_interval=1800,
             distro="Debian",
-            display_format="{updates} Updates",
-            no_update_string="0 Updates",
+            display_format="{updates}",
+            no_update_string="0",
             foreground=f_color,
             colour_no_updates=f_color,
             colour_have_updates=f_color,
@@ -175,10 +175,10 @@ def memory_cpu(f_color, b_color, font, font_size):
             linewidth=0, padding=5, foreground=f_color, background=b_color,
         ),
         widget.TextBox(
-            text="🖬 ",
+            text="🖬",
             foreground=f_color,
             background=b_color,
-            padding=0,
+            padding=3,
             fontsize=font_size,
         ),
         widget.Memory(
@@ -194,11 +194,11 @@ def memory_cpu(f_color, b_color, font, font_size):
             linewidth=0, padding=5, foreground=f_color, background=b_color,
         ),
         widget.TextBox(
-            text=" ",
+            text="",
             font=font,
             foreground=f_color,
             background=b_color,
-            padding=0,
+            padding=3,
             fontsize=font_size
         ),
         widget.CPU(
@@ -346,15 +346,41 @@ def battery():
     ]
 
 
+def powerline_right(f_color, b_color, font, font_size):
+    return [
+        widget.TextBox(
+            foreground=f_color,
+            background=b_color,
+            text="",  # Icon: nf-oct-triangle_left
+            font=font,
+            fontsize=font_size,
+            padding=-4
+        )
+    ]
+
+
+def powerline_left(f_color, b_color, font, font_size):
+    return [
+        widget.TextBox(
+            foreground=f_color,
+            background=b_color,
+            text="",  # Icon: nf-oct-triangle_left
+            font=font,
+            fontsize=font_size,
+            padding=-4
+        )
+    ]
+
+
 def systemtray(f_color, b_color):
     return [
         widget.Sep(
-            linewidth=0, padding=5, foreground=f_color, background=b_color
+            linewidth=0, padding=2, foreground=f_color, background=b_color
         ),
         widget.Systray(
-            background=b_color, padding=5),
+            background=b_color, padding=2),
         widget.Sep(
-            linewidth=0, padding=5, foreground=f_color, background=b_color
+            linewidth=0, padding=2, foreground=f_color, background=b_color
         ),
     ]
 

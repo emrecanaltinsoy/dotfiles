@@ -1,0 +1,19 @@
+"panel-background": "#292d3e" # panel background
+"window-name": "#e1acff" # window name
+
+"widget1_fore": "#000000" # widget1 foreground
+"widget1_back": "#ff5555" # widget1 background
+"widget2_fore": "#000000" # widget2 foreground
+"widget2_back": "#A77AC4" # widget2 background
+"widget3_fore": "#000000" # widget1 foreground
+"widget3_back": "#7197E7" # widget1 background
+"widget4_fore": "#000000" # widget2 foreground
+"widget4_back": "#ffb86c" # widget2 background
+
+"workspace_colors": # workspace colors
+    "active": "#f1ffff" # active tab color
+    "inactive": "#4c566a" # inactive tab color
+    "foreground": "#ffffff" # foreground
+    "background": "#292d3e" # background
+    "active_tab_border": "#e1acff" # active tab border color
+    "active-tab-background": "#3d3f4b" # active tab background

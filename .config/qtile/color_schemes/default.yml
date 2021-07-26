@@ -5,6 +5,10 @@
 "widget1_back": "#74438f" # widget1 background
 "widget2_fore": "#ffffff" # widget2 foreground
 "widget2_back": "#4f76c7" # widget2 background
+"widget3_fore": "#ffffff" # widget1 foreground
+"widget3_back": "#74438f" # widget1 background
+"widget4_fore": "#ffffff" # widget2 foreground
+"widget4_back": "#4f76c7" # widget2 background
 
 "workspace_colors": # workspace colors
     "active": "#ffffff" # active tab color
