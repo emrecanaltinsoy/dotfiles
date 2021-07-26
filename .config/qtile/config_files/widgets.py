@@ -154,7 +154,7 @@ def check_updates(f_color, b_color, font, font_size):
         ),
         widget.CheckUpdates(
             update_interval=1800,
-            distro="Debian",
+            distro="Debian",  # Requires "sudo apt install apt-show-versions" for Debian
             display_format="{updates}",
             no_update_string="0",
             foreground=f_color,

@@ -1,18 +1,18 @@
 #!/usr/bin/bash 
-compton &
-# picom &
+compton & # Compositor
+# picom & # Compositor
 nitrogen --set-zoom-fill --random ~/wallpapers & # Wallpaper random set
-# nitrogen --restore &
-# xfce4-power-manager & # Power Manager
+# nitrogen --restore & # Restore the previous wallpaper
 dunst & # Notifications
-# Applets
+#------------------------------------------------------------------------------#
+#                                    Applets                                   #
+#------------------------------------------------------------------------------#
 nm-applet & # Network Applet
 blueman-tray & # Bluetooth Applet
 volumeicon & # Audio Applet
-# pnmixer & 
-cbatticon -l 30 -r 10 -u 5 -x & # xfce4-power-manager-settings & # Battery Applet
-
-# Start up Applications
-mailspring &
-
+cbatticon -l 30 -r 10 -u 5 & # Battery Applet
+#------------------------------------------------------------------------------#
+#                             Start up Applications                            #
+#------------------------------------------------------------------------------#
+mailspring & # E-mail client
 # lxsession &
