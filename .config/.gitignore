@@ -2,6 +2,7 @@
 !.gitignore
 !alacritty
 !conky
+!dunst
 !fish
 !gtk-3.0
 !nvim
