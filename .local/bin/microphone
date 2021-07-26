@@ -1,0 +1,9 @@
+#!/bin/bash
+   
+     if [[ "$(fuser /dev/snd/pcmC1D0c 2>/dev/null)" != "" ]]; then
+       icon=""
+     else
+       icon=""
+     fi
+
+printf "$icon" 

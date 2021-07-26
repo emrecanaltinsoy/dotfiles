@@ -1,0 +1,7 @@
+#!/bin/bash
+
+bright="$(xbacklight | awk -F "." '{print $1}')"
+
+icon=" "
+
+printf "$icon$bright%%\n"

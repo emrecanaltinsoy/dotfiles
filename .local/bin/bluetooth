@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ "$(bluetoothctl show | grep 'Powered' | awk '{print $2}')" == "yes" ]] && [[ "$(bluetoothctl info)" == "Missing device address argument" ]]; then
+    icon=" "
+    connection="No device connected"
+elif [[ "$(bluetoothctl show | grep 'Powered' | awk '{print $2}')" == "yes" ]] && [[ "$(bluetoothctl info)" != "Missing device address argument" ]]; then
+    icon=" "
+    connection="Device: $(bluetoothctl info | awk 'NR==2 {print $2}')"
+    battery="" #"Remaining battery: $(~/.local/bin/bluetooth_battery "$(bluetoothctl info | awk 'NR==1 {print $2}')" | awk '{print $6}')"
+else
+    icon=""
+fi
+
+case $BLOCK_BUTTON in
+	1) setsid -f blueman-manager ;;
+	3) notify-send "Bluetooth Module
+$connection
+$battery" ;;
+esac
+
+printf "$icon" 
+# printf "%s" "$icon"
+

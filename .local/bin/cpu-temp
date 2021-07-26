@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) setsid -f psensor ;;
+
+	3) notify-send "  Thermal Module " "\- Shows CPU temperature.
+- Click to show psensor." ;;
+
+esac
+
+#sed 's/000$/°C/' /sys/class/thermal/thermal_zone3/temp
+icon=""
+#icon="🌡"
+
+temp="$(sensors | awk '/Package/ {print int($4)"°C"}')"
+
+printf "$icon $temp\n" 

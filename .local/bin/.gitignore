@@ -1,0 +1,17 @@
+/*
+!.gitignore
+!battery
+!bluetooth
+!brightness
+!clock
+!cpu
+!cpu-temp
+!gpu-temp
+!kernel
+!memory
+!microphone
+!netspeed
+!packageupdate
+!uptime
+!volume
+!weather

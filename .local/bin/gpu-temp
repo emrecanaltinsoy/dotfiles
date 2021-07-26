@@ -1,0 +1,7 @@
+#!/bin/sh
+
+icon=""
+
+temp="$(nvidia-smi | awk 'NR==10 {print int($3)"°C"}')"
+
+printf "%s\n" "$icon $temp"

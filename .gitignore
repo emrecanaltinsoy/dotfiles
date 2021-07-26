@@ -2,6 +2,6 @@
 !.gitignore
 !.bashrc
 !.dmenu-scripts
-#!.local
+!.local
 #!.config
 #!.xmonad

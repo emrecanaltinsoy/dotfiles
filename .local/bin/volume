@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Prints the current volume or 🔇 if muted. Uses PulseAudio by default,
+# uncomment the ALSA lines if you remove PulseAudio.
+
+case $BLOCK_BUTTON in
+	1) setsid -f st -e pulsemixer ;;
+	2) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+	4) pactl set-sink-volume @DEFAULT_SINK@ +2% ;;
+	5) pactl set-sink-volume @DEFAULT_SINK@ -2% ;;
+	3) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇 if muted.
+- Middle click to mute.
+- Scroll to change." ;;
+	6) "st" -e "$EDITOR" "$0" ;;
+esac
+
+volstat="$(pactl list sinks)"
+# volstat="$(amixer get Master)" # ALSA only equivalent.
+
+#echo "$volstat" | grep -q "Mute: yes" && printf " ﱝ \\n" && exit
+# echo "$volstat" | grep "\[off\]" >/dev/null && printf "🔇\\n" && exit # ALSA
+
+vol="$(echo "$volstat" | grep '[0-9]\+%' | awk NR==1 | sed "s,.* \([0-9]\+\)%.*,\1,;1q")"
+# vol=$(echo "$volstat" | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q") # ALSA
+mute="$(pactl list sinks | grep 'Mute: yes')"
+
+if [ "$vol" -gt 75 ]; then
+	icon=" "
+#    icon="🔊"
+elif [ "$vol" -gt 25 ]; then
+	icon="墳"
+#    icon="🔉"
+elif [ "$vol" -lt 25 ]; then
+	icon="奔"
+#    icon="🔈"
+elif [ mute == "Mute: yes" ]; then
+    icon="🔇"
+else
+	icon="墳"
+#    icon="🔈"
+fi
+
+printf "$icon$vol%%\n"

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) setsid -f "st" -e htop ;;
+	2) notify-send " CPU hogs" "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n(100% per core)" ;;
+	3) notify-send "  CPU module " "\- Shows CPU Usage.
+- Click to open htop.
+- Middle click to show intensive processes." ;;
+	6) "st" -e "vim" "$0" ;;
+esac
+
+icon=""
+#icon="🖥"
+#icon="💻"
+
+cpu="$(top -bn 1 | awk '/^%Cpu/ {print int($2 + $4 + $6)"%"}')"
+
+printf "$icon $cpu"%"\n"

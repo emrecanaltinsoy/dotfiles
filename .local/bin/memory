@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ -z $BLOCK_BUTTON ]; then
+        icon=""
+        #icon="🧠"
+
+        mem="$(free | awk '/^Mem: /{print int(($3 + $5)/1024)}')Mi"
+
+        #printf "^c#f0c674^ $icon $mem^d^ ^c#373b41^|^d^\n"
+
+	echo "$icon $mem"
+#else
+#	echo "ERROR, SOMETHING WRONG!"
+	exit
+fi
+
+case $BLOCK_BUTTON in
+	1) setsid -f "st" -e htop ;;
+#	*) notify-send -t 2000 "handle button click for button $BLOCK_BUTTON" & ;;
+	2) notify-send " Memory hogs" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)" ;;
+	3) notify-send "  Memory module" "\- Shows Memory Used.
+- Click to open htop.
+- Middle click to show memory hogs." ;;
+esac
+
+
