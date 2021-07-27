@@ -47,7 +47,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 "------------------------------------------------------------------------------"
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    " Plug 'bling/vim-bufferline'
 "------------------------------------------------------------------------------"
 "                                Airline Themes                                "
 "------------------------------------------------------------------------------"
@@ -58,11 +57,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'ayu-theme/ayu-vim'
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'phanviet/vim-monokai-pro'
-
-    " Lightline statusbar
-    " Plug 'itchyny/lightline.vim'  
-    " Lightline extension
-    " Plug 'mengelbrecht/lightline-bufferline'
 "------------------------------------------------------------------------------"
 "                           NERDTree (File Explorer)                           "
 "------------------------------------------------------------------------------"
