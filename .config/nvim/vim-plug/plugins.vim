@@ -49,6 +49,17 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 "------------------------------------------------------------------------------"
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'bling/vim-bufferline'
+"------------------------------------------------------------------------------"
+"                                Airline Themes                                "
+"------------------------------------------------------------------------------"
+    Plug 'joshdick/onedark.vim'
+    Plug 'kaicataldo/material.vim'
+    Plug 'tomasiser/vim-code-dark'
+    Plug 'crusoexia/vim-monokai'
+    Plug 'ayu-theme/ayu-vim'
+    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'phanviet/vim-monokai-pro'
 
     " Lightline extension
     " Plug 'mengelbrecht/lightline-bufferline'
@@ -75,16 +86,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'tpope/vim-rhubarb'
     Plug 'junegunn/gv.vim'
 
-"------------------------------------------------------------------------------"
-"                                    Themes                                    "
-"------------------------------------------------------------------------------"
-    Plug 'joshdick/onedark.vim'
-    Plug 'kaicataldo/material.vim'
-    Plug 'tomasiser/vim-code-dark'
-    Plug 'crusoexia/vim-monokai'
-    Plug 'ayu-theme/ayu-vim'
-    Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'phanviet/vim-monokai-pro'
 call plug#end()
 
 "------------------------------------------------------------------------------"
