@@ -34,23 +34,18 @@ set timeoutlen=500                      " By default timeoutlen is 1000 ms
 set formatoptions-=cro                  " Stop newline continution of comments
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set ignorecase                          " Ignore case sensitivity for commands
-"set autochdir                          " Your working directory will always be the same as your working directory
+set autochdir                          " Your working directory will always be the same as your working directory
 set smartcase
 set noswapfile
 set shell=sh
-" let g:python3_host_prog = expand("/usr/bin/python3.8")
 
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 
 " You can't stop me
 cmap w!! w !sudo tee %
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Other Stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python
+" let g:python3_host_prog = expand("/usr/bin/python3.8")
 let g:python_highlight_all = 1
 
-au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
-au BufEnter *.org            call org#SetOrgFileType()
 
