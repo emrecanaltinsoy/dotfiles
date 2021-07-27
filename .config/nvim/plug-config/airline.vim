@@ -16,7 +16,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 " hide parent directory names for buffers
-" let g:airline#extensions#tabline#fnamemod = ':t' 
+let g:airline#extensions#tabline#fnamemod = ':t' 
 
 " add number for tab names
 let g:airline#extensions#tabline#tab_nr_type= 1

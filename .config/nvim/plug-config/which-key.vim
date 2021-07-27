@@ -24,18 +24,70 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
 " Single mappings
-let g:which_key_map['/'] = [ '<Plug>NERDCommenterToggle'  , 'comment' ]
-let g:which_key_map['e'] = [ ':CocCommand explorer'       , 'explorer' ]
-let g:which_key_map['f'] = [ ':Files'                     , 'search files' ]
-let g:which_key_map['h'] = [ '<C-W>s'                     , 'split below']
-let g:which_key_map['r'] = [ ':RnvimrToggle'              , 'ranger' ]
-let g:which_key_map['S'] = [ ':Startify'                  , 'start screen' ]
-let g:which_key_map['T'] = [ ':Rg'                        , 'search text' ]
-let g:which_key_map['v'] = [ '<C-W>v'                     , 'split right']
-let g:which_key_map['z'] = [ 'Goyo'                       , 'zen' ]
+let g:which_key_map['/'] = [ ':Commentary<CR>'              , 'comment selected' ]
+let g:which_key_map['e'] = [ ':CocCommand explorer'         , 'explorer' ]
+let g:which_key_map['f'] = [ ':Files'                       , 'files in directory' ]
+let g:which_key_map['h'] = [ '<C-W>s'                       , 'split below']
+let g:which_key_map['v'] = [ '<C-W>v'                       , 'split right']
+let g:which_key_map['r'] = [ ':RnvimrToggle'                , 'ranger' ]
+let g:which_key_map['s'] = [ ':Startify'                    , 'start screen' ]
+let g:which_key_map['g'] = [ ':Rg'                          , 'search text' ]
+let g:which_key_map['n'] = [ ':NERDTreeToggle<CR>'          , 'ToggleNERDTree' ]
+let g:which_key_map['t'] = [ ':Tags'                        , 'Tags' ]
+let g:which_key_map['m'] = [ ':Marks'                       , 'Marks' ]
+let g:which_key_map['b'] = [ ':Buffers'                     , 'Buffers' ]
+" Symbol renaming for python.
+let g:which_key_map['<F2>'] = [ '<Plug>(coc-rename)'        , 'Rename' ]
+" Close the current buffer and move to the previous one
+let g:which_key_map['q'] = [ ':bp | bd #'                   , 'Close Buffer' ]
 
-" s is for search
-let g:which_key_map.s = {
+" nnoremap <Leader>o o<Esc>^Da
+" nnoremap <Leader>O O<Esc>^Da
+
+"------------------------------------------------------------------------------"
+"                                      Coc                                     "
+"------------------------------------------------------------------------------"
+let g:which_key_map.c = {
+      \ 'name' : '+Coc'  ,
+      \ 'a' : ['<Plug>(coc-codeaction-selected)'            , 'CodeAction Selected' ] , 
+      \ 'd' : [':CocList diagnostics'                       , 'Diagnostic' ] , 
+      \ 'e' : [':CocList extensions'                        , 'Extensions' ] ,
+      \ 'c' : [':CocList commands'                          , 'Commands' ] , 
+      \ 'o' : [':CocList outline'                           , 'Outline' ] , 
+      \ 's' : [':CocList -I symbols'                        , 'Symbols' ] , 
+      \ 'j' : [':CocNext'                                   , 'CocNext' ] , 
+      \ 'k' : [':CocPrev'                                   , 'CocPrev' ] , 
+      \ 'p' : [':CocResume'                                 , 'CocResume' ] , 
+      \ 'f' : ['<Plug>(coc-format-selected)'                , 'Format Selected' ] , 
+      \ }
+
+" Remap keys for applying codeAction to the current buffer.
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
+
+"------------------------------------------------------------------------------"
+"                                  Switch Tabs                                 "
+"------------------------------------------------------------------------------"
+" Go to tab by number
+" let g:which_key_map.b = {
+"       \ 'name' : '+Buffers'  ,
+"       \ '1' : ['1gt'                      , 'Buffer1' ] , 
+"       \ '2' : ['2gt'                      , 'Buffer2' ] ,
+"       \ '3' : ['3gt'                      , 'Buffer3' ] , 
+"       \ '4' : ['4gt'                      , 'Buffer4' ] ,
+"       \ '5' : ['5gt'                      , 'Buffer5' ] , 
+"       \ '6' : ['6gt'                      , 'Buffer6' ] ,
+"       \ '7' : ['7gt'                      , 'Buffer7' ] , 
+"       \ '8' : ['8gt'                      , 'Buffer8' ] ,
+"       \ '9' : ['9gt'                      , 'Bufffer9' ] , 
+"       \ '0' : [':tablast<cr>'             , 'Last Buffer' ] , 
+"       \ 'q' : [':bp | bd #'       , 'Close Buffer' ] , 
+"       \ 'b' : [':Buffers'                 , 'Buffers' ] , 
+"       \ }
+
+" S is for search
+let g:which_key_map.S = {
       \ 'name' : '+search' ,
       \ '/' : [':History/'     , 'history'],
       \ ';' : [':Commands'     , 'commands'],
