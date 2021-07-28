@@ -64,28 +64,22 @@ let g:startify_change_to_dir = 1
 "------------------------------------------------------------------------------"
 "                                Custom Headers                                "
 "------------------------------------------------------------------------------"
-let g:startify_custom_header = 'startify#pad(startify#fortune#boxed())'
 
-" let g:startify_custom_header =
-"       \ startify#center(split(system('figlet STARTIFY'), '\n'))
+" Boxed Fortune Header
+"let g:startify_custom_header = 'startify#pad(startify#fortune#boxed())'
 
-" let g:startify_custom_header = [
-"    \  '           __                    __           ___              ',
-"    \  '          /\ \__                /\ \__  __  /"___\             ',
-"    \  '      ____\ \ ,_\    __     _ __\ \ ,_\/\_\/\ \__/  __  __     ',
-"    \  '     /",__\\ \ \/  /"__`\  /\`"__\ \ \/\/\ \ \ ,__\/\ \/\ \    ',
-"    \  '    /\__, `\\ \ \_/\ \L\.\_\ \ \/ \ \ \_\ \ \ \ \_/\ \ \_\ \   ',
-"    \  '    \/\____/ \ \__\ \__/.\_\\ \_\  \ \__\\ \_\ \_\  \/`____ \  ',
-"    \  '     \/___/   \/__/\/__/\/_/ \/_/   \/__/ \/_/\/_/   `/___/> \ ',
-"    \  '                                                        /\___/ ',
-"    \  '                                                        \/__/  ',
-"    \]
+" Custom Text Header using Figlet
+let s:header = 'NEOVIM'
+let s:fonts = ['banner', 'big', 'block', 'ivrit', 'lean', 'script', 
+            \ 'shadow', 'slant', 'standard']
+let s:random_font = s:fonts[RandInt(0, len(s:fonts)-1)]
+" -f -> font flag
+" For the position -c -> center, -l -> left, -r -> right
+let g:startify_custom_header =
+            \ startify#pad(split(system(
+            \ 'figlet '. s:header .' -f '. s:random_font . ' -l'), '\n'))
 
-" let g:ascii = [
-"   \ '        __',
-"   \ '.--.--.|__|.--------.',
-"   \ '|  |  ||  ||        |',
-"   \ ' \___/ |__||__|__|__|',
-"   \ ''
-"   \]
-" let g:startify_custom_header = 'startify#center(g:ascii + startify#fortune#boxed())'
+" Pre-defined Headers (in nvim/general/headers.vim)
+"let s:seed = RandInt(0, len(g:welcome_headers)-1)
+"let g:startify_custom_header = startify#pad(g:welcome_headers[s:seed])
+
