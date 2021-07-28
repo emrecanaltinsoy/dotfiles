@@ -35,7 +35,7 @@ set ignorecase                          " Ignore case sensitivity for commands
 set autochdir                          " Your working directory will always be the same as your working directory
 set smartcase
 set noswapfile
-set shell=sh
+set shell=/usr/bin/fish
 
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 

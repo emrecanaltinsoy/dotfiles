@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+filetype plugin on
 
 command! PlugSnap !XZ_OPT=-9 tar cJf ~/.config/nvim/autoload/plugged.tar.xz ~/.config/nvim/autoload/plugged/
 

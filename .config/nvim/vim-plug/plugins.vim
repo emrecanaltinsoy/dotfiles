@@ -26,8 +26,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'norcalli/nvim-colorizer.lua'
     " Creates comment frames
     Plug 'cometsong/CommentFrame.vim'
-    " Helps with comment shortcut (Space+/)
-    Plug 'tpope/vim-commentary'
     " Intellisense
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " Python highlighting
@@ -36,6 +34,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'liuchengxu/vim-which-key'
     " Multiple Cursor
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+    " NERDCommenter
+    Plug 'preservim/nerdcommenter'
+
 
 "------------------------------------------------------------------------------"
 "                               Ranger Extension                               "
