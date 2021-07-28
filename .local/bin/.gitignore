@@ -2,6 +2,7 @@
 !.gitignore
 !battery
 !bluetooth
+!brave_bookmark.sh
 !brightness
 !clock
 !cpu

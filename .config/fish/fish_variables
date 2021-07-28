@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export BraveBookmarkPath:/media/emrecan/Files/YandexDisk/BraveBookmarks
 SETUVAR --export CONFIG_DIR:/home/emrecan/\x2econfig
 SETUVAR --export DMBROWSER:firefox
 SETUVAR --export DMENU:dmenu
