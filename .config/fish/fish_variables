@@ -7,14 +7,18 @@ SETUVAR --export EDITOR:nvim
 SETUVAR --export LOCATION:Barcelona
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr__2E_2E_:cd\x20\x2e\x2e
-SETUVAR _fish_abbr_caa:config\x20add\x20\x2d\x2dall\x20\x2e
-SETUVAR _fish_abbr_ccam:config\x20commit\x20\x2da\x20\x2dm
-SETUVAR _fish_abbr_cdiff:config\x20diff\x20\x2dM
 SETUVAR _fish_abbr_change_2D_terminal:sudo\x20update\x2dalternatives\x20\x2d\x2dconfig\x20x\x2dterminal\x2demulator
 SETUVAR _fish_abbr_clear_2D_cache:/bin/clearcache\x2esh
-SETUVAR _fish_abbr_cpom:config\x20pull\x20origin\x20main
-SETUVAR _fish_abbr_cpush:config\x20push
-SETUVAR _fish_abbr_cs:config\x20status
+SETUVAR _fish_abbr_confa:config\x20add\x20\x2e
+SETUVAR _fish_abbr_confb:config\x20branch
+SETUVAR _fish_abbr_confcm:config\x20commit\x20\x2da\x20\x2dm
+SETUVAR _fish_abbr_confco:config\x20checkout
+SETUVAR _fish_abbr_confd:config\x20diff\x20\x2dM
+SETUVAR _fish_abbr_confl:config\x20log
+SETUVAR _fish_abbr_confm:config\x20merge
+SETUVAR _fish_abbr_confpull:config\x20pull\x20origin\x20main
+SETUVAR _fish_abbr_confpush:config\x20push
+SETUVAR _fish_abbr_confs:config\x20status
 SETUVAR _fish_abbr_ga:git\x20add
 SETUVAR _fish_abbr_gaa:git\x20add\x20\x2d\x2dall\x20\x2e
 SETUVAR _fish_abbr_gb:git\x20branch
@@ -24,6 +28,7 @@ SETUVAR _fish_abbr_gca:git\x20commit\x20\x2da\x20\x2dm
 SETUVAR _fish_abbr_gco:git\x20checkout
 SETUVAR _fish_abbr_gcob:git\x20checkout\x20\x2db
 SETUVAR _fish_abbr_gcp:git\x20cherry\x2dpick
+SETUVAR _fish_abbr_gcred:git\x20config\x20\x2d\x2dglobal\x20credential\x2ehelper\x20cache
 SETUVAR _fish_abbr_gd:git\x20diff\x20\x2dM
 SETUVAR _fish_abbr_gl:git\x20log\x20\x2d\x2dpretty\x3dformat\x3a\x22\x25Cgreen\x25h\x25Creset\x20\x2d\x20\x25Cblue\x25an\x25Creset\x20\x40\x20\x25ar\x20\x3a\x20\x25s\x22
 SETUVAR _fish_abbr_gl2:git\x20log\x20\x2d\x2dpretty\x3d\x27format\x3a\x25Cgreen\x25h\x25Creset\x20\x25an\x20\x2d\x20\x25s\x27\x20\x2d\x2dgraph
