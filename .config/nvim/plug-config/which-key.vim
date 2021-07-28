@@ -24,7 +24,7 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
 " Single mappings
-let g:which_key_map['/'] = [ '<Plug>NERDCommenterToggle'              , 'comment selected' ]
+let g:which_key_map['/'] = [ '<Plug>NERDCommenterToggle'    , 'comment selected' ]
 let g:which_key_map['e'] = [ ':CocCommand explorer'         , 'explorer' ]
 let g:which_key_map['f'] = [ ':Files'                       , 'files in directory' ]
 let g:which_key_map['h'] = [ '<C-W>s'                       , 'split below']
@@ -32,7 +32,7 @@ let g:which_key_map['v'] = [ '<C-W>v'                       , 'split right']
 let g:which_key_map['r'] = [ ':RnvimrToggle'                , 'ranger' ]
 let g:which_key_map['s'] = [ ':Startify'                    , 'start screen' ]
 let g:which_key_map['g'] = [ ':Rg'                          , 'search text' ]
-let g:which_key_map['n'] = [ ':NERDTreeToggle'          , 'ToggleNERDTree' ]
+let g:which_key_map['n'] = [ ':NERDTreeToggle'              , 'ToggleNERDTree' ]
 let g:which_key_map['t'] = [ ':Tags'                        , 'Tags' ]
 let g:which_key_map['m'] = [ ':Marks'                       , 'Marks' ]
 let g:which_key_map['b'] = [ ':Buffers'                     , 'Buffers' ]
