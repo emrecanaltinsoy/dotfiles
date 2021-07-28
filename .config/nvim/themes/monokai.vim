@@ -1,2 +1,3 @@
+set termguicolors
 colorscheme monokai
-let g:airline_theme = 'monokai'
+let g:airline_theme = 'molokai'

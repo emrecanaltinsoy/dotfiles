@@ -1,2 +1,2 @@
-let g:airline_theme = 'codedark'
 colorscheme codedark
+let g:airline_theme = 'codedark'

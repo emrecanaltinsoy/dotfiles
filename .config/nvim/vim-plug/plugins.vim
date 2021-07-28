@@ -58,6 +58,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'ayu-theme/ayu-vim'
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'phanviet/vim-monokai-pro'
+    Plug 'morhetz/gruvbox'
 "------------------------------------------------------------------------------"
 "                           NERDTree (File Explorer)                           "
 "------------------------------------------------------------------------------"
