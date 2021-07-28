@@ -3,6 +3,8 @@ let g:mapleader = "\<Space>"
 
 let g:CommentFrame_SkipDefaultMappings = v:true
 
+let g:NERDCreateDefaultMappings = 0
+
 " Better nav for omnicomplete
 inoremap <expr> <c-j> ("\<C-n>")
 inoremap <expr> <c-k> ("\<C-p>")
