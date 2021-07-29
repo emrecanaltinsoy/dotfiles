@@ -8,6 +8,7 @@ SETUVAR --export EDITOR:nvim
 SETUVAR --export LOCATION:Barcelona
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr__2E_2E_:cd\x20\x2e\x2e
+SETUVAR _fish_abbr_add__fish__path:set\x20\x2dU\x20fish_user_paths\x20/path/to/add\x20\x24fish_user_paths
 SETUVAR _fish_abbr_change_2D_terminal:sudo\x20update\x2dalternatives\x20\x2d\x2dconfig\x20x\x2dterminal\x2demulator
 SETUVAR _fish_abbr_clear_2D_cache:/bin/clearcache\x2esh
 SETUVAR _fish_abbr_confa:config\x20add\x20\x2e
@@ -93,4 +94,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR fish_user_paths:/home/emrecan/\x2elocal/bin/\x1e/usr/local/bin
+SETUVAR fish_user_paths:/home/emrecan/go/bin\x1e/home/emrecan/\x2elocal/bin/\x1e/usr/local/bin
