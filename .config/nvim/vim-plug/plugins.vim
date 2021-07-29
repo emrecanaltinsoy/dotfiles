@@ -2,9 +2,9 @@
 "                             Auto Install vim-plug                            "
 "------------------------------------------------------------------------------"
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  "autocmd VimEnter * PlugInstall
+  "silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    "\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
   "autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
@@ -28,8 +28,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'cometsong/CommentFrame.vim'
     " Intellisense
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " Python highlighting
-    Plug 'vim-python/python-syntax'          
     " Which-key
     Plug 'liuchengxu/vim-which-key'
     " Multiple Cursor
@@ -43,11 +41,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
-"------------------------------------------------------------------------------"
-"                               Ranger Extension                               "
-"------------------------------------------------------------------------------"
-    "Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}    
-
 "------------------------------------------------------------------------------"
 "                               Airline Extension                              "
 "------------------------------------------------------------------------------"
@@ -65,27 +58,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     "Plug 'phanviet/vim-monokai-pro'
     "Plug 'morhetz/gruvbox'
 "------------------------------------------------------------------------------"
-"                           NERDTree (File Explorer)                           "
-"------------------------------------------------------------------------------"
-    "Plug 'scrooloose/NERDTree'
-    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    "Plug 'Xuyuanp/nerdtree-git-plugin'
-    "Plug 'ryanoasis/vim-devicons'
-
-"------------------------------------------------------------------------------"
-"                                 Fuzzy Finder                                 "
-"------------------------------------------------------------------------------"
-    "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    "Plug 'junegunn/fzf.vim'
-    "Plug 'airblade/vim-rooter'
-
-"------------------------------------------------------------------------------"
 "                                Git Integration                               "
 "------------------------------------------------------------------------------"
     Plug 'mhinz/vim-signify'
-    "Plug 'tpope/vim-fugitive'
-    "Plug 'tpope/vim-rhubarb'
-    "Plug 'junegunn/gv.vim'
 
 call plug#end()
 
