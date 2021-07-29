@@ -3,9 +3,10 @@
 # dmenu theme
 . $HOME/.dmenu-scripts/dmenu-config/dmenu-theme
 colors="-nb #2C323E -nf #9899a0 -sb #BF616A -sf #2C323E"
+lines="-l 6"
 
 first_prompt="What do you want to do?"
-opt1="Lock Screen\nSuspend\nLog Out\nRestart\nShutdown"
+opt1="Lock Screen\nSuspend\nLog Out\nHibernate\nRestart\nShutdown"
 opt2="Yes\nNo"
 
 main() {
@@ -32,6 +33,12 @@ main() {
             ask "$opt2" "Do you really want to log out?"
             if [[ $answer == "Yes" ]]; then
                 pkill -u $USER
+            fi
+            ;;
+        "Hibernate")
+            ask "$opt2" "Do you really want to hibernate the system?"
+            if [[ $answer == "Yes" ]]; then
+                systemctl hibernate
             fi
             ;;
         "Restart")
