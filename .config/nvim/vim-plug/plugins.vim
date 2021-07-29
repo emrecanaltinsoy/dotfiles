@@ -37,11 +37,16 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " NERDCommenter
     Plug 'preservim/nerdcommenter'
 
-
+"------------------------------------------------------------------------------"
+"                                   Telescope                                  "
+"------------------------------------------------------------------------------"
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 "------------------------------------------------------------------------------"
 "                               Ranger Extension                               "
 "------------------------------------------------------------------------------"
-    Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}    
+    "Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}    
 
 "------------------------------------------------------------------------------"
 "                               Airline Extension                              "
@@ -52,35 +57,35 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 "                                Airline Themes                                "
 "------------------------------------------------------------------------------"
     Plug 'joshdick/onedark.vim'
-    Plug 'kaicataldo/material.vim'
-    Plug 'tomasiser/vim-code-dark'
-    Plug 'crusoexia/vim-monokai'
-    Plug 'ayu-theme/ayu-vim'
-    Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'phanviet/vim-monokai-pro'
-    Plug 'morhetz/gruvbox'
+    "Plug 'kaicataldo/material.vim'
+    "Plug 'tomasiser/vim-code-dark'
+    "Plug 'crusoexia/vim-monokai'
+    "Plug 'ayu-theme/ayu-vim'
+    "Plug 'dracula/vim', { 'as': 'dracula' }
+    "Plug 'phanviet/vim-monokai-pro'
+    "Plug 'morhetz/gruvbox'
 "------------------------------------------------------------------------------"
 "                           NERDTree (File Explorer)                           "
 "------------------------------------------------------------------------------"
-    Plug 'scrooloose/NERDTree'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'ryanoasis/vim-devicons'
+    "Plug 'scrooloose/NERDTree'
+    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    "Plug 'Xuyuanp/nerdtree-git-plugin'
+    "Plug 'ryanoasis/vim-devicons'
 
 "------------------------------------------------------------------------------"
 "                                 Fuzzy Finder                                 "
 "------------------------------------------------------------------------------"
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'airblade/vim-rooter'
+    "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    "Plug 'junegunn/fzf.vim'
+    "Plug 'airblade/vim-rooter'
 
 "------------------------------------------------------------------------------"
 "                                Git Integration                               "
 "------------------------------------------------------------------------------"
     Plug 'mhinz/vim-signify'
-    Plug 'tpope/vim-fugitive'
-    Plug 'tpope/vim-rhubarb'
-    Plug 'junegunn/gv.vim'
+    "Plug 'tpope/vim-fugitive'
+    "Plug 'tpope/vim-rhubarb'
+    "Plug 'junegunn/gv.vim'
 
 call plug#end()
 

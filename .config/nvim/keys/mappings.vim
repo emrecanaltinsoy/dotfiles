@@ -1,21 +1,14 @@
 " set leader key
-let g:mapleader = "\<Space>"
+" let g:mapleader = "\<Space>"
+lua require'keybindings'
 
-let g:CommentFrame_SkipDefaultMappings = v:true
+"let g:CommentFrame_SkipDefaultMappings = v:true
 
-let g:NERDCreateDefaultMappings = 0
+"let g:NERDCreateDefaultMappings = 0
 
 " Better nav for omnicomplete
 inoremap <expr> <c-j> ("\<C-n>")
 inoremap <expr> <c-k> ("\<C-p>")
-"------------------------------------------------------------------------------"
-"                                Window Resizing                               "
-"------------------------------------------------------------------------------"
-" Use alt + hjkl to resize windows
-nnoremap <silent> <M-j>  :resize -2<CR>
-nnoremap <silent> <M-k>  :resize +2<CR>
-nnoremap <silent> <M-h>  :vertical resize -2<CR>
-nnoremap <silent> <M-l>  :vertical resize +2<CR>
 
 "------------------------------------------------------------------------------"
 "                               ESC Alternatives                               "
@@ -43,13 +36,11 @@ nnoremap <C-Q> :wq!<CR>
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" Better tabbing
-vnoremap < <gv
-vnoremap > >gv
 
 " Better window navigation 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap o o<ESC>D
+nnoremap O O<ESC>D
+
+" Better tabbing
+vnoremap < 
 

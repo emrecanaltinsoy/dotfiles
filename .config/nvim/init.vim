@@ -9,8 +9,8 @@ command! PlugSnap !XZ_OPT=-9 tar cJf ~/.config/nvim/autoload/plugged.tar.xz ~/.c
 "------------------------------------------------------------------------------"
 source $HOME/.config/nvim/general/settings.vim
 source $HOME/.config/nvim/general/colors.vim
-source $HOME/.config/nvim/general/functions.vim
-source $HOME/.config/nvim/general/headers.vim
+"source $HOME/.config/nvim/general/functions.vim
+"source $HOME/.config/nvim/general/headers.vim
 "------------------------------------------------------------------------------"
 "                                    Plugins                                   "
 "------------------------------------------------------------------------------"
@@ -26,12 +26,12 @@ source $HOME/.config/nvim/plug-config/coc.vim
 source $HOME/.config/nvim/plug-config/signify.vim
 source $HOME/.config/nvim/plug-config/startify.vim
 source $HOME/.config/nvim/plug-config/rainbow-parentheses.vim
-source $HOME/.config/nvim/plug-config/colorizer.vim
-source $HOME/.config/nvim/plug-config/nerdtree.vim
-source $HOME/.config/nvim/plug-config/nerdtree-git.vim
-source $HOME/.config/nvim/plug-config/fzf.vim
+lua require'plug-colorizer'
+"source $HOME/.config/nvim/plug-config/nerdtree.vim
+"source $HOME/.config/nvim/plug-config/nerdtree-git.vim
+"source $HOME/.config/nvim/plug-config/fzf.vim
 source $HOME/.config/nvim/plug-config/which-key.vim
-source $HOME/.config/nvim/plug-config/rnvimr.vim
+"source $HOME/.config/nvim/plug-config/rnvimr.vim
 "------------------------------------------------------------------------------"
 "                           Airline Theme and Plugin                           "
 "------------------------------------------------------------------------------"

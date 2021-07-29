@@ -2,7 +2,7 @@
 !.gitignore
 !alacritty
 !conky
-!coc
+#!coc
 !dunst
 !fish
 !gtk-3.0

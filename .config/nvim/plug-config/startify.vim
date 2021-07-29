@@ -1,9 +1,9 @@
 " Read ~/.NERDTreeBookmarks file and takes its second column
-function! s:nerdtreeBookmarks()
-    let bookmarks = systemlist("cut -d' ' -f 2- ~/.NERDTreeBookmarks")
-    let bookmarks = bookmarks[0:-2] " Slices an empty last line
-    return map(bookmarks, "{'line': v:val, 'path': v:val}")
-endfunction
+"function! s:nerdtreeBookmarks()
+    "let bookmarks = systemlist("cut -d' ' -f 2- ~/.NERDTreeBookmarks")
+    "let bookmarks = bookmarks[0:-2] " Slices an empty last line
+    "return map(bookmarks, "{'line': v:val, 'path': v:val}")
+"endfunction
 
 function! s:list_commits()
     let git = 'git -C ~/dotfiles'
@@ -23,10 +23,11 @@ let g:startify_session_dir = '~/.config/nvim/session'
 let g:startify_lists = [
           \ { 'type': 'files',     'header': ['   Files']            },
           \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-          \ { 'type': function('s:nerdtreeBookmarks'), 'header': ['   NERDTree Bookmarks']},
           \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
           \ ]
+
+" \ { 'type': function('s:nerdtreeBookmarks'), 'header': ['   NERDTree Bookmarks']},
 " \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
 
 "------------------------------------------------------------------------------"
@@ -66,18 +67,18 @@ let g:startify_change_to_dir = 1
 "------------------------------------------------------------------------------"
 
 " Boxed Fortune Header
-"let g:startify_custom_header = 'startify#pad(startify#fortune#boxed())'
+let g:startify_custom_header = 'startify#pad(startify#fortune#boxed())'
 
 " Custom Text Header using Figlet
-let s:header = 'NEOVIM'
-let s:fonts = ['banner', 'big', 'block', 'ivrit', 'lean', 'script', 
-            \ 'shadow', 'slant', 'standard']
-let s:random_font = s:fonts[RandInt(0, len(s:fonts)-1)]
+" let s:header = 'NEOVIM'
+" let s:fonts = ['banner', 'big', 'block', 'ivrit', 'lean', 'script', 
+"            \ 'shadow', 'slant', 'standard']
+" let s:random_font = s:fonts[RandInt(0, len(s:fonts)-1)]
 " -f -> font flag
 " For the position -c -> center, -l -> left, -r -> right
-let g:startify_custom_header =
-            \ startify#pad(split(system(
-            \ 'figlet '. s:header .' -f '. s:random_font . ' -l'), '\n'))
+" let g:startify_custom_header =
+"             \ startify#pad(split(system(
+"             \ 'figlet '. s:header .' -f '. s:random_font . ' -l'), '\n'))
 
 " Pre-defined Headers (in nvim/general/headers.vim)
 "let s:seed = RandInt(0, len(g:welcome_headers)-1)
