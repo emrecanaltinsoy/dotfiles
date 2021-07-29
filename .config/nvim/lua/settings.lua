@@ -1,3 +1,6 @@
+
+
+
 --vim.o.path="+=**"				        	-- Searches current directory recursively.
 --vim.o.hidden=true                              -- Required to keep multiple buffers open multiple buffers
 --vim.o.wildmenu=true					        -- Display all matches when tab complete.
@@ -37,15 +40,8 @@
 --vim.o.smartcase=true
 --vim.o.swapfile=false
 --vim.o.shell="/usr/bin/fish"
-vim.o.guifont="Mononoki Nerd Font"   "hello
+--vim.o.guifont="Mononoki Nerd Font"   "hello
 
--- vim.cmd(au! BufWritePost $MYVIMRC source %)      -- auto source when writing to init.vm alternatively you can run :source $MYVIMRC
-
--- You can"t stop me
---- cmap w!! w !sudo tee %
-
--- Python
--- let g:python3_host_prog = expand("/usr/bin/python3.8")
-vim.g.python_highlight_all = 1
+--vim.g.python_highlight_all = 1
 
 

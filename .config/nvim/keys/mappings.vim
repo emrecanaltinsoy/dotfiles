@@ -34,7 +34,7 @@ nnoremap <C-s> :w<CR>
 " Alternate way to quit
 nnoremap <C-Q> :wq!<CR>
 " <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 
 " Better window navigation 
@@ -42,5 +42,6 @@ nnoremap o o<ESC>D
 nnoremap O O<ESC>D
 
 " Better tabbing
-vnoremap < 
+vnoremap < <gv
+vnoremap > >gv
 
