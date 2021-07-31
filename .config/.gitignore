@@ -2,14 +2,12 @@
 !.gitignore
 !alacritty
 !conky
-#!coc
 !dunst
 !fish
 !gtk-3.0
 !nvim
 !omf
 !pnmixer
-!ranger
 !qtile
 !terminator
 !ulauncher
