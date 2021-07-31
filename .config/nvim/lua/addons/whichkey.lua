@@ -132,7 +132,7 @@ normal_mod_keys = {
     s = {
         name = "Search",
         c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        f = { ':lua require"telescope.builtin".find_files({ hidden = true })<CR>', "Find Files" },
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
         M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
