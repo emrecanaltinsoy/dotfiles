@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =7
-let g:netrw_dirhist_7='/home/emrecan/Downloads/mononoki-nerd'
-let g:netrw_dirhist_6='/home/emrecan/Downloads'
-let g:netrw_dirhist_5='/home/emrecan/Downloads/mononoki-nerd'
-let g:netrw_dirhist_4='/home/emrecan/Downloads'
-let g:netrw_dirhist_3='/home/emrecan/Downloads/Orchis-theme'
-let g:netrw_dirhist_2='/home/emrecan/Downloads'
-let g:netrw_dirhist_1='/home/emrecan/Applications'
