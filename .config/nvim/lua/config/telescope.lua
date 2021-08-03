@@ -60,13 +60,21 @@ require('telescope').setup{
 require('telescope').load_extension('media_files')
 
 local M = {}
+
 M.search_dotfiles = function()
-    require("telescope.builtin").file_browser({
-        prompt_title = 'dotfiles',
-        cwd="~/.config/nvim/dotfiles/",
+    require"telescope.builtin".find_files({
+        search_dirs = { '~/.config/nvim/dotfiles' },
+        follow  = true,
         hidden = true,
-    }
-    )
+        layout_strategy = "vertical",
+        sorting_strategy = "ascending",
+        path_display = {"shorten"},
+        layout_config = {
+            height = 0.8,
+            width = 0.5,
+            mirror = true,
+        },
+    })
 end
 
 return M
