@@ -15,7 +15,6 @@ g.nvim_tree_auto_close = 1
 g.nvim_tree_auto_open = 1
 g.nvim_tree_auto_resize = 1
 g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
-g.nvim_tree_update_cwd = 1 -- autochdir should false, otherwise works weird
 
 g.nvim_tree_icons= {
     default = "",

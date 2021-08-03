@@ -40,10 +40,11 @@ vim.opt.updatetime=200                      -- Faster completion
 vim.opt.timeoutlen=200                      -- By default timeoutlen is 1000 ms
 vim.opt.clipboard="unnamedplus"               -- Copy paste between vim and everything else
 vim.opt.ignorecase=true                          -- Ignore case sensitivity for commands
---vim.opt.autochdir=true                          -- Your working directory will always be the same as your working directory
 vim.opt.smartcase=true
 vim.opt.swapfile=false
 vim.opt.backup=false
 vim.opt.writebackup=false
 vim.opt.shell="/usr/bin/fish"
+
+vim.opt.autochdir=true                          -- Your working directory will always be the same as your working directory
 

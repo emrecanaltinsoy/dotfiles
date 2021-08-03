@@ -1,0 +1,1 @@
+/home/emrecan/.config/fish/config.fish

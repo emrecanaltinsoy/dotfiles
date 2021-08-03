@@ -1,0 +1,1 @@
+/home/emrecan/.xmonad/xmonad.hs

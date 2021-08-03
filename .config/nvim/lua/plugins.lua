@@ -26,15 +26,20 @@ return require('packer').startup(
         }
         -- Treesitter
         use 'nvim-treesitter/nvim-treesitter'
+        -- Testing
+        -- use 'vim-test/vim-test'         -- ???
         -- Start screen
-        use 'mhinz/vim-startify'
+        -- Startify
+        -- use 'mhinz/vim-startify'
+        -- Dashboard
+        use 'glepnir/dashboard-nvim'
         -- Never forget your keys
         use 'folke/which-key.nvim'
-        -- Helpers
+            -- Helpers
         use 'jiangmiao/auto-pairs'
         use 'junegunn/rainbow_parentheses.vim'
         use 'norcalli/nvim-colorizer.lua'
-        use 'kosayoda/nvim-lightbulb'
+        -- use 'kosayoda/nvim-lightbulb'     -- ???
         -- LSP
         use 'glepnir/lspsaga.nvim'
         use 'neovim/nvim-lspconfig'
@@ -48,6 +53,9 @@ return require('packer').startup(
                 'nvim-lua/plenary.nvim'
             }
         }
+        -- use 'tpope/vim-fugitive'
+        -- Floaterm
+        use {"akinsho/nvim-toggleterm.lua"}
         -- Nvim Tree
         use {
             'kyazdani42/nvim-tree.lua',
@@ -70,11 +78,11 @@ return require('packer').startup(
             }
         }
         -- Commentor
-        use "terrortylor/nvim-comment"
+        use 'terrortylor/nvim-comment'
         -- Themes
-        use 'joshdick/onedark.vim'
+        -- use 'joshdick/onedark.vim'
         use 'morhetz/gruvbox'
         use 'phanviet/vim-monokai-pro'
-        use 'dracula/vim' 
+        -- use 'dracula/vim'
     end
 )

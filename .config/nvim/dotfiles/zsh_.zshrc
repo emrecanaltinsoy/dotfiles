@@ -1,0 +1,1 @@
+/home/emrecan/.config/zsh/.zshrc

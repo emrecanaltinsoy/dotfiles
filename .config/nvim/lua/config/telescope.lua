@@ -1,5 +1,12 @@
+local actions = require('telescope.actions')
+
 require('telescope').setup{
   defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close
+      },
+    },
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -23,9 +30,6 @@ require('telescope').setup{
         horizontal = {
             mirror = false,
         },
-        vertical = {
-            mirror = false,
-        },
     },
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {".git", "node_modules"},
@@ -42,21 +46,27 @@ require('telescope').setup{
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-  }
-}
-
---require('telescope').load_extension('media_files')
---require('telescope').extensions.media_files()
-
---[[
-require'telescope'.setup {
+  },
   extensions = {
     media_files = {
-      -- filetypes whitelist
-      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg"},
-      find_cmd = "rg" -- find command (defaults to `fd`)
-    }
+        -- filetypes whitelist
+        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+        filetypes = {"png", "jpg", "jpeg"},
+        find_cmd = "rg" -- find command (defaults to `fd`)   rg
+    },
   },
 }
---]]
+
+require('telescope').load_extension('media_files')
+
+local M = {}
+M.search_dotfiles = function()
+    require("telescope.builtin").file_browser({
+        prompt_title = 'dotfiles',
+        cwd="~/.config/nvim/dotfiles/",
+        hidden = true,
+    }
+    )
+end
+
+return M

@@ -73,6 +73,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/auto-pairs"
   },
+  ["dashboard-nvim"] = {
+    loaded = true,
+    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/dashboard-nvim"
+  },
   ["galaxyline.nvim"] = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
@@ -105,13 +109,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
-  ["nvim-lightbulb"] = {
-    loaded = true,
-    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/nvim-lightbulb"
-  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+  },
+  ["nvim-toggleterm.lua"] = {
+    loaded = true,
+    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/nvim-toggleterm.lua"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -124,10 +128,6 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
-  },
-  ["onedark.vim"] = {
-    loaded = true,
-    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/onedark.vim"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -153,17 +153,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
-  vim = {
-    loaded = true,
-    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/vim"
-  },
   ["vim-monokai-pro"] = {
     loaded = true,
     path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/vim-monokai-pro"
-  },
-  ["vim-startify"] = {
-    loaded = true,
-    path = "/home/emrecan/.local/share/nvim/site/pack/packer/start/vim-startify"
   },
   ["vim-vsnip"] = {
     loaded = true,

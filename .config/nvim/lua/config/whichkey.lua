@@ -44,6 +44,8 @@ require("which-key").setup {
     -- triggers = {"<leader>"} -- or specify a list manually
 }
 
+local cur_dir = vim.cmd('pwd')
+
 local wk = require("which-key")
 
 visual_mod_opt = {
@@ -70,14 +72,30 @@ normal_mod_opt = {
 
 normal_mod_keys = {
     ["/"] = { ":CommentToggle<CR>", "Comment" },
-    [";"] = { "<cmd>Startify<CR>", "Startify" },
-    w = { "<cmd>w!<CR>", "Save" },
-    q = { "<cmd>q!<CR>", "Quit" },
-    c = { "<cmd>bp | bd #<CR>", "Close Buffer" },
+    [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
     e = { ":NvimTreeToggle<CR>", "File Explorer"},
-    h = { "<C-W>s", "Horizontal Split"},
-    v = { "<C-W>v", "Vertical Split"},
-    z = { '<cmd>let @/=""<CR>', "No Highlight" },
+    h = { '<cmd>let @/=""<CR>', "No Highlight" },
+    -- g = {
+    --     name = "Git",
+    --     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
+    --     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
+    --     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
+    --     p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
+    --     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
+    --     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
+    --     s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
+    --     u = {
+    --         "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
+    --         "Undo Stage Hunk",
+    --     },
+    --     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
+    --     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    --     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
+    --     C = {
+    --         "<cmd>Telescope git_bcommits<cr>",
+    --         "Checkout commit(for current file)",
+    --     },
+    -- },
     p = {
         name = "Packer",
         c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -94,6 +112,7 @@ normal_mod_keys = {
             "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr>",
             "Close other buffers",
         },
+        n = { "<cmd>enew<CR>", "Lazygit" },
         l = { "<cmd>BufferLineCloseLeft<cr>", "Close buffers on the left" },
         r = {
             "<cmd>BufferLineCloseRight<cr>",
@@ -108,43 +127,51 @@ normal_mod_keys = {
             "Sort buffers by language",
         },
     },
-    g = {
-        name = "Git",
-        j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-        k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-        l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-        p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-        r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-        R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-        s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-        u = {
-            "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-            "Undo Stage Hunk",
-        },
-        o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-        b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-        c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-        C = {
-            "<cmd>Telescope git_bcommits<cr>",
-            "Checkout commit(for current file)",
-        },
-    },
+    d = { ":lua require'config.telescope'.search_dotfiles()<CR>", "Dot Files"},
     s = {
         name = "Search",
-        c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-        f = { ':lua require"telescope.builtin".find_files({ hidden = true })<CR>', "Find Files" },
+        -- f = { "<cmd>Telescope find_files<cr>", "Find Files" },
+        f = { ':lua require"telescope.builtin".find_files({ hidden = true, follow = true })<CR>', "Find Files" },
+        -- d = { "<cmd>Telescope file_browser<cr>", "File Browser" },
+        d = { ':lua require"telescope.builtin".file_browser({ hidden = true, follow = true })<CR>', "File Browser" },
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+        m = { "<cmd>Telescope media_files<cr>", "Media Files" },
         M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
         R = { "<cmd>Telescope registers<cr>", "Registers" },
         t = { "<cmd>Telescope live_grep<cr>", "Text" },
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-        C = { "<cmd>Telescope commands<cr>", "Commands" },
+        c = { "<cmd>Telescope commands<cr>", "Commands" },
         p = {
             "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
             "Colorscheme with Preview",
         },
     },
+    -- t = {
+    --     name = "Test",
+    --     n = { ":TestNearest<CR>", "Test Nearest"},
+    --     f = { ":TestFile<CR>", "Test File"},
+    --     s = { ":TestSuite<CR>", "Test Suite"},
+    --     l = { ":TestLast<CR>", "Test Last"},
+    --     v = { ":TestVisit<CR>", "Test Visit"},
+    -- },
+    t = {
+        name = "Terminal",
+        g = { "<cmd>lua _lazygit_toggle()<CR>", "Lazygit" },
+        d = { "<cmd>lua _lazydocker_toggle()<CR>", "Lazydocker" },
+        h = { ":ToggleTerm size=15 direction=horizontal dir=" .. cur_dir .. "<CR>", "Horizontal" },
+        v = { ":ToggleTerm size=100 direction=vertical dir=" .. cur_dir .. "<CR>", "Vertical" },
+        f = { ":ToggleTerm direction=float dir=" .. cur_dir .. "<CR>", "Float" },
+    },
+    w = {
+        name = "Window",
+        h = { "<C-W>s", "Horizontal Split"},
+        v = { "<C-W>v", "Vertical Split"},
+        s = { "<cmd>w!<CR>", "Save" },
+        q = { "<cmd>q!<CR>", "Quit" },
+        c = { "<cmd>bp | bd #<CR>", "Close Buffer" },
+    },
+
     l = {
         name = "LSP",
         a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
