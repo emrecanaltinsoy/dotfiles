@@ -77,7 +77,7 @@ map('t', "<A-Left>", "<c-\\><c-n><c-w>h", options)
 map('t', "<A-Right>", "<c-\\><c-n><c-w>l", options)
 
 -- Back to view mode on terminal
-map('t', '<ESC>', '<C-\\><C-n>:ToggleTerm<CR>', options)
+map('t', '<ESC>', '<C-\\><C-n>', options)   -- :ToggleTerm<CR>
 
 --Toggle Terminal
 -- local cur_dir = vim.cmd('pwd')

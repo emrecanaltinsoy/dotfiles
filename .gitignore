@@ -6,4 +6,5 @@ __pycache__/
 !.local
 !.config
 !.xmonad
+!.zshenv
 !.NERDTreeBookmarks

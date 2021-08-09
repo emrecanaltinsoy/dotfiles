@@ -1,6 +1,7 @@
 /*
 !.gitignore
 !alacritty
+!awesome
 !conky
 !dunst
 !fish
@@ -13,3 +14,4 @@
 !ulauncher
 !volumeicon
 !xmobar
+!zsh

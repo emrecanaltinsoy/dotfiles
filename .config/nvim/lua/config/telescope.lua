@@ -2,11 +2,11 @@ local actions = require('telescope.actions')
 
 require('telescope').setup{
   defaults = {
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close
-      },
-    },
+    -- mappings = {
+    --   i = {
+    --     ["<esc>"] = actions.close
+    --   },
+    -- },
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -61,9 +61,18 @@ require('telescope').load_extension('media_files')
 
 local M = {}
 
+-- local path_display = function(opts, path)
+--           local tail = require("telescope.utils").path_tail(path)
+--           return string.format("%s (%s)", tail, path)
+--       end
+-- 
+-- local tail = require("telescope.utils").path_tail('~/.config/nvim/linked_dotfiles')
+
 M.search_dotfiles = function()
+    vim.cmd(':silent ! $HOME/.config/nvim/copy_dotfiles/copy_dotfiles.sh')
     require"telescope.builtin".find_files({
-        search_dirs = { '~/.config/nvim/dotfiles' },
+        search_dirs = { '~/.config/nvim/linked_dotfiles' },
+        prompt_title = "< Dot Files >",
         follow  = true,
         hidden = true,
         layout_strategy = "vertical",

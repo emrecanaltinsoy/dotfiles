@@ -26,7 +26,7 @@ local dotfiles = {
 
 vim.g.dashboard_custom_section = {
     a = {
-        description = { "  New File                SPC-b-n" },
+        description = { "  New Buffer              SPC-b-n" },
         command = ":enew",
     },
     b = {

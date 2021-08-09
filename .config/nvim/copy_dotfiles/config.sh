@@ -1,4 +1,4 @@
-symlink_dir="$HOME/.config/nvim/dotfiles"
+symlink_dir="$HOME/.config/nvim/linked_dotfiles"
 
 declare -A confedit_list
 confedit_list[confedit]="$HOME/.dmenu-scripts/config/config"

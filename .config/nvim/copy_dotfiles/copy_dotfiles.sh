@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-. config.sh
+. $HOME/.config/nvim/copy_dotfiles/config.sh
 
 main() {
   declare -A _clean_list
