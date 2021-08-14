@@ -255,7 +255,7 @@ schemes:
       white:   '#dfbf8e'
 
 # Colors
-colors: *dracula
+# colors: *dracula
 
 # Background opacity
 background_opacity: 0.95

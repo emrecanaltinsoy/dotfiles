@@ -1,6 +1,7 @@
-alias saud="sudo apt update"
-alias saug="sudo apt upgrade"
-alias saar="sudo apt autoremove"
+alias update="sudo apt update"
+alias upgrade="sudo apt upgrade"
+alias autoremove="sudo apt autoremove"
+alias install="sudo apt install"
 
 alias gs="git status"
 alias gp="git push"
@@ -8,6 +9,7 @@ alias gpom="git pull origin main"
 alias gd="git diff"
 alias gco="git checkout"
 alias gb="git branch"
+alias gm="git merge"
 
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
 alias confa="config add ."
@@ -30,3 +32,10 @@ alias qtileconfig="nvim ~/.config/qtile/config.py"
 alias awesomeconfig="nvim ~/.config/awesome/rc.lua"
 alias zshconfig="nvim ~/.config/zsh/.zshrc"
 alias nvimconfig="nvim ~/.config/nvim/init.lua"
+
+alias watch-gpu="watch -n1 nvidia-smi"
+
+alias start-docker="sudo systemctl start docker.socket"
+alias status-docker="systemctl status docker.socket"
+alias stop-docker="sudo systemctl stop docker.socket"
+
