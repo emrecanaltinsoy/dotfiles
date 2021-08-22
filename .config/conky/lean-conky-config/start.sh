@@ -7,8 +7,8 @@ font/install
 if [ "$1" = "-n" ]; then
     pause_flag=""
 else
-    pause_flag="--pause=5"
-    echo "Conky waiting 5 seconds to start..."
+    pause_flag="--pause=2"
+    echo "Conky waiting 2 seconds to start..."
 fi
 if conky --daemonize --quiet "$pause_flag" --config=./conky.conf ; then
     echo "Started"
