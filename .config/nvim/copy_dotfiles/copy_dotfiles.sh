@@ -15,7 +15,7 @@ main() {
     if [[ -L "$symlink_dir/${i}" ]]; then  # _${file_name[-1]}
       echo "$i symlink exists!"
     else
-      ln -s ${_clean_list[$i]} $symlink_dir/${i}}   # _${file_name[-1]
+      ln -s ${_clean_list[$i]} $symlink_dir/${i}   # _${file_name[-1]
       echo "$i symlink created!"
     fi
   done
