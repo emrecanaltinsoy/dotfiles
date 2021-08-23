@@ -65,7 +65,6 @@ local M = {}
 --           local tail = require("telescope.utils").path_tail(path)
 --           return string.format("%s (%s)", tail, path)
 --       end
--- 
 -- local tail = require("telescope.utils").path_tail('~/.config/nvim/linked_dotfiles')
 
 M.search_dotfiles = function()
@@ -77,7 +76,7 @@ M.search_dotfiles = function()
         hidden = true,
         layout_strategy = "vertical",
         sorting_strategy = "ascending",
-        path_display = {"shorten"},
+        path_display = {"tail"},
         layout_config = {
             height = 0.8,
             width = 0.5,
