@@ -2,7 +2,7 @@ alias update="sudo apt update"
 alias upgrade="sudo apt upgrade"
 alias autoremove="sudo apt autoremove"
 alias install="sudo apt install"
-alias remove-residual="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{print $2}')"
+alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=aggr " " $2} END {print aggr}')"
 
 alias gs="git status"
 alias gp="git push"
