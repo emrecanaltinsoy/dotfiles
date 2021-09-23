@@ -14,6 +14,8 @@ alias gb="git branch"
 alias gm="git merge"
 alias gl="git log"
 
+alias D="cd ~/Downloads"
+
 alias lg="lazygit"
 
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"

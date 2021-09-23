@@ -10,7 +10,7 @@
 DMENU="dmenu"
 # DMENU="rofi -dmenu"
 
-DMBROWSER="firefox"
+DMBROWSER="brave-browser"
 # DMBROWSER="qutebrowser"
 
 # DMTERM="st -e"

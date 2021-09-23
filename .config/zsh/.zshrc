@@ -80,7 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copydir copybuffer dirhistory history)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copydir copybuffer dirhistory history conda-zsh-completion)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -133,6 +133,8 @@ export PYSPARK_PYTHON=/usr/bin/python3
 
 export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
+
+export DATABASE_URL=postgres://$(whoami)
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
