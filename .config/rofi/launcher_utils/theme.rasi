@@ -1,11 +1,4 @@
-/*
- *
- * Author  : Aditya Shakya
- * Mail    : adi1090x@gmail.com
- * Github  : @adi1090x
- * Twitter : @adi1090x
- *
- */
+/* theme */
 
 configuration {
     font: 							"Iosevka Nerd Font 12";
@@ -22,9 +15,11 @@ configuration {
     display-ssh: 					"";
     display-drun: 					"";
     display-combi: 					"";
+    terminal:                       "alacritty";
+    /* run-command:                    "alacritty -e {cmd}"; */
 }
 
-@import "nordic.rasi"
+@import "colors/black.rasi"
 
 * {
     background-color:             	@bg;
@@ -151,7 +146,7 @@ button {
 }
 
 button selected {
-    background-color:             	@green;
+    background-color:             	@ac;
     text-color: 					@fg;
     border: 						0px;
     border-radius: 					100%;

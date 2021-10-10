@@ -45,10 +45,10 @@ SETUVAR _fish_abbr_grlast:git\x20push\x20origin\x20\x2bHEAD\x5e\x3amain
 SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_remove_2D_residual:sudo\x20/bin/remove_residuals\x2esh
 SETUVAR _fish_abbr_rm:rm\x20\x2di
-SETUVAR _fish_abbr_saar:sudo\x20apt\x20autoremove
-SETUVAR _fish_abbr_sai:sudo\x20apt\x20install
-SETUVAR _fish_abbr_saud:sudo\x20apt\x20update
-SETUVAR _fish_abbr_saug:sudo\x20apt\x20upgrade
+SETUVAR _fish_abbr_autoremove:sudo\x20apt\x20autoremove
+SETUVAR _fish_abbr_install:sudo\x20apt\x20install
+SETUVAR _fish_abbr_update:sudo\x20apt\x20update
+SETUVAR _fish_abbr_upgrade:sudo\x20apt\x20upgrade
 SETUVAR _fish_abbr_start_2D_docker:sudo\x20systemctl\x20start\x20docker\x2esocket
 SETUVAR _fish_abbr_start_2D_elasticsearch:sudo\x20systemctl\x20start\x20elasticsearch\x2eservice
 SETUVAR _fish_abbr_start_2D_mongodb:sudo\x20systemctl\x20start\x20mongod

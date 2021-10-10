@@ -1,5 +1,5 @@
 function fish_greeting
-	pfetch
+    neofetch
 end
 #ufetch
 

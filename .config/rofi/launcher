@@ -1,18 +1,8 @@
 #!/usr/bin/bash
 
-## Author  : Aditya Shakya
-## Mail    : adi1090x@gmail.com
-## Github  : @adi1090x
-## Twitter : @adi1090x
-
-# Available Styles
-# >> Created and tested on : rofi 1.6.0-1
-#
-# style_1     style_2     style_3     style_4     style_5     style_6     style_7
-
 theme="theme"
 
-dir="$HOME/.config/rofi/utils"
+dir="$HOME/.config/rofi/launcher_utils"
 styles=($(ls -p --hide="colors.rasi" $dir/styles))
 # color="${styles[$(( $RANDOM % 10 ))]}"
 # color="nordic.rasi"

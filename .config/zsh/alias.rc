@@ -7,6 +7,8 @@ alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=a
 alias gs="git status"
 alias gp="git push"
 alias gcm="git commit -m"
+alias gcan="git commit --amend --no-edit"
+alias grb='f() { git rebase -i HEAD~$1 };f'
 alias gpom="git pull origin main"
 alias gd="git diff"
 alias gco="git checkout"

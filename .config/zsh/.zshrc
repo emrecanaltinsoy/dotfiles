@@ -142,3 +142,4 @@ export DATABASE_URL=postgres://$(whoami)
 # colorscript -r
 # pfetch
 # fortune | cowsay -n
+neofetch
