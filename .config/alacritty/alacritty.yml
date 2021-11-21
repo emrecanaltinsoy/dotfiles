@@ -312,8 +312,8 @@ mouse_bindings:
 
 key_bindings:
     # (Windows, Linux, and BSD only)
-  - { key: V,         mods: Control|Shift, action: Paste                       }
-  - { key: C,         mods: Control|Shift, action: Copy                        }
+  - { key: V,         mods: Alt, action: Paste                       }
+  - { key: C,         mods: Alt, action: Copy                        }
   - { key: Insert,    mods: Shift,         action: PasteSelection              }
   - { key: Key0,      mods: Control,       action: ResetFontSize               }
   - { key: Equals,    mods: Control,       action: IncreaseFontSize            }
