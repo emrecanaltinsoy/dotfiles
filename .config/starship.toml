@@ -5,6 +5,7 @@ error_symbol = "[✘](bold red)"
 format = 'on [$symbol($profile )(\($region\) )]($style)'
 style = "bold blue"
 symbol = "🅰 "
+
 [aws.region_aliases]
 us-east-2 = "ue2"
 us-east-1 = "ue1"
@@ -19,16 +20,16 @@ tag_symbol = "🔖 "
 tag_disabled = false
 
 [git_status]
-conflicted = "🏳[${coun}](bold red)"
-untracked = "🤷[${count}](blue)"
-modified = "📝[${count}](yellow)"
-staged = '[++\($count\)](green)'
-deleted = "🗑[${count](red)"
-# stashed = "📦"
-# renamed = "👅"
-ahead = "[⇡${count]}(green)"
-diverged = "[⇕⇡${ahead_count}⇣${behind_cou](yellow)"
-behind = "[⇣${count](red)"
+conflicted = '🏳[\(${count}\)](bold red)'
+untracked = '🤷[\(${count}\)](blue)'
+modified = '📝[\(${count}\)](yellow)'
+staged = '[++\(${count}\)](green)'
+deleted = '🗑[\(${count}\)](red)'
+stashed = '📦'
+renamed = '👅'
+ahead = '[⇡\(${count}\)](green)'
+diverged = '[⇕⇡${ahead_count}⇣${behind_count}](yellow)'
+behind = '[⇣\(${count}\)](red)'
 
 [python]
 format = "[$symbol$version]($style)"
