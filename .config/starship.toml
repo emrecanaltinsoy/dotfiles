@@ -1,0 +1,49 @@
+[character]
+error_symbol = "[✘](bold red)"
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+style = "bold blue"
+symbol = "🅰 "
+[aws.region_aliases]
+us-east-2 = "ue2"
+us-east-1 = "ue1"
+
+[git_branch]
+symbol = "🌱 "
+truncation_length = 25
+
+[git_commit]
+commit_hash_length = 6
+tag_symbol = "🔖 "
+tag_disabled = false
+
+[git_status]
+conflicted = "🏳[${coun}](bold red)"
+untracked = "🤷[${count}](blue)"
+modified = "📝[${count}](yellow)"
+staged = '[++\($count\)](green)'
+deleted = "🗑[${count](red)"
+# stashed = "📦"
+# renamed = "👅"
+ahead = "[⇡${count]}(green)"
+diverged = "[⇕⇡${ahead_count}⇣${behind_cou](yellow)"
+behind = "[⇣${count](red)"
+
+[python]
+format = "[$symbol$version]($style)"
+style = "bold yellow"
+
+[conda]
+format = "[$symbol$environment ]($style)"
+style = "bold green"
+
+[rust]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[time]
+time_format = "%T"
+format = "🕙 $time($style) "
+style = "white"
+disabled = false
