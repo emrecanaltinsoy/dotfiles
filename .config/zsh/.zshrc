@@ -1,10 +1,30 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=$HOME/go/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
 
 
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
+
+if [[ ! `which rustup` ]] then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/conda-zsh-completion ]] then
+    git clone https://github.com/esc/conda-zsh-completion ~/.oh-my-zsh/custom/plugins/conda-zsh-completion
+fi
+
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]] then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+fi
+
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]] then
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/k ]] then
+    git clone https://github.com/supercrabtree/k ~/.oh-my-zsh/custom/plugins/k
+fi
 
 
 # ZSH_THEME="robbyrussell"
@@ -39,7 +59,7 @@ unset __conda_setup
 export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source "$HOME/.cargo/env"
 
 ## CLI Tools
