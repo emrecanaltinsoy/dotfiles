@@ -1,7 +1,7 @@
-# Path to your oh-my-zsh installation.
+# Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=/usr/local/go/bin:$PATH
-
+export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
+export PATH=$PATH:/sbin
 
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
@@ -26,6 +26,13 @@ if [[ ! -d ~/.oh-my-zsh/custom/plugins/k ]] then
     git clone https://github.com/supercrabtree/k ~/.oh-my-zsh/custom/plugins/k
 fi
 
+if [[ ! -d ~/.tmux/plugins/tpm ]] then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+if [[ ! -d ~/.tmuxifier ]] then
+    git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+fi
 
 # ZSH_THEME="robbyrussell"
 
@@ -58,6 +65,7 @@ unset __conda_setup
 
 export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
+export EDITOR=vim
 
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source "$HOME/.cargo/env"
@@ -68,6 +76,14 @@ eval "$(starship init zsh)"
 ### Mcfly
 eval "$(mcfly init zsh)"
 export MCFLY_RESULTS=20
+
+### Tmuxifier
+export PATH=$PATH:$HOME/.tmux/plugins/tmuxifier/bin
+eval "$(tmuxifier init -)"
+
+### SSH
+eval `ssh-agent` >> /dev/null
+ssh-add -q /home/emrecan/.ssh/personal_github
 
 neofetch
 
