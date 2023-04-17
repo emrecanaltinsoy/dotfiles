@@ -1,8 +1,9 @@
 ## Package Manager
-alias update="sudo apt update"
-alias upgrade="sudo apt upgrade"
-alias autoremove="sudo apt autoremove"
-alias install="sudo apt install"
+PKG_MANAGER=apt
+alias update="sudo $PKG_MANAGER update"
+alias upgrade="sudo $PKG_MANAGER upgrade"
+alias autoremove="sudo $PKG_MANAGER autoremove"
+alias install="sudo $PKG_MANAGER install"
 alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=aggr " " $2} END {print aggr}')"
 
 # alias update="sudo pacman -Syy"
@@ -13,18 +14,33 @@ alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=a
 ## Path
 alias add2path="export PYTHONPATH=$PYTHONPATH:$(pwd)"
 
+## Docker
+if [ -x "$(command -v docker)" ]; then
+    alias dexec='(){docker exec -it $1 /bin/bash;}'
+    alias docsr="docker stop $(docker ps -q) && docker rm $(docker ps -a -q)"
+fi
+
 ## Git
 alias gs="git status"
 alias gp="git push"
+alias gas="git add . && git stash"
+alias gsp="git stash pop && git restore --staged ."
+# alias gpsu="git push --set-upstream origin $(git branch --show-current)"
 alias gcm="git commit -m"
 alias gcan="git commit --amend --no-edit"
-alias grb='f() { git rebase -i HEAD~$1 };f'
 alias gpom="git pull origin main"
 alias gd="git diff"
 alias gco="git checkout"
 alias gb="git branch"
 alias gm="git merge"
 alias gl="git log"
+# alias grb='f() { git rebase -i HEAD~$1 };f'
+# alias git-pull-all='(){git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done }'
+
+## NPM Local Dev
+alias nrw="cd $HOME/Projects/dcr-ai-flagship/frontend/business/chatbot-web/lex-web-ui && npm run web"
+alias nrb="cd $HOME/Projects/dcr-ai-flagship/frontend/business/chatbot-web/lex-web-ui && npm run build:wc-dev-hot"
+alias deploy_dev_lambda="$HOME/Projects/dcr-dev-local && sam build && sam deploy"
 
 ## Config
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"

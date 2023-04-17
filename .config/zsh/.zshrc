@@ -6,8 +6,16 @@ export PATH=$PATH:/sbin
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
-if [[ ! `which rustup` ]] then
+## Install Rust if doesn't exist
+if [ ! -x "$(command -v rustup)" ]; then
+    echo "rustup is not installed! installing now."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
+## Install tmux if doesn't exist
+if [ ! -x "$(command -v tmux)" ]; then
+    echo "tmux is not installed! installing now."
+    sudo apt install tmux
 fi
 
 if [[ ! -d ~/.oh-my-zsh/custom/plugins/conda-zsh-completion ]] then
