@@ -8,4 +8,4 @@ __pycache__/
 !.xmonad
 !.zshenv
 !installed.txt
-!.tmux.conf
+!.tmux-layouts
