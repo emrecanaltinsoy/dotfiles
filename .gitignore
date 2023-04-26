@@ -9,3 +9,4 @@ __pycache__/
 !.zshenv
 !installed.txt
 !.tmux-layouts
+!.tmux.conf.local

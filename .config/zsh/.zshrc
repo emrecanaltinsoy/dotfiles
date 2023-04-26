@@ -34,9 +34,16 @@ if [[ ! -d ~/.oh-my-zsh/custom/plugins/k ]] then
     git clone https://github.com/supercrabtree/k ~/.oh-my-zsh/custom/plugins/k
 fi
 
-if [[ ! -d ~/.tmux/plugins/tpm ]] then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+if [[ ! -d ~/.tmux ]] then
+    git clone https://github.com/gpakosz/.tmux.git ~/.tmux
+    ln -s -f .tmux/.tmux.conf
+    cp .tmux/.tmux.conf.local .
 fi
+
+# if [[ ! -d ~/.tmux/plugins/tpm ]] then
+#     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# fi
 
 if [[ ! -d ~/.tmuxifier ]] then
     git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
@@ -86,7 +93,7 @@ eval "$(mcfly init zsh)"
 export MCFLY_RESULTS=20
 
 ### Tmuxifier
-export PATH=$PATH:$HOME/.tmux/plugins/tmuxifier/bin
+export PATH=$PATH:$HOME/.tmuxifier/bin
 eval "$(tmuxifier init -)"
 
 ### SSH
@@ -96,3 +103,5 @@ ssh-add -q /home/emrecan/.ssh/personal_github
 neofetch
 
 autoload -U compinit; compinit
+
+
