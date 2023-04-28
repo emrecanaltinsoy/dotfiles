@@ -10,6 +10,9 @@ window:
   #  columns: 0
   #  lines: 0
 
+  # Background opacity
+  opacity: 0.9
+
   # Window padding (changes require restart)
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
@@ -62,26 +65,26 @@ scrolling:
 font:
   # Normal (roman) font face
   normal:
-    family: "MesloLGS NF"
+    family: "JetBrainsMono Nerd Font"
     style: Regular
 
   # Bold font face
   bold:
-    family: "MesloLGS NF"
+    family: "JetBrainsMono Nerd Font"
     style: Bold
 
   # Italic font face
   italic:
-    family: "MesloLGS NF"
+    family: "JetBrainsMono Nerd Font"
     style: Italic
 
   # Bold italic font face
   bold_italic:
-    family: "MesloLGS NF"
+    family: "JetBrainsMono Nerd Font"
     style: Bold Italic
 
   # Font size
-  size: 11.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -121,7 +124,7 @@ schemes:
        magenta: '#B48EAD'
        cyan:    '#8FBCBB'
        white:   '#ECEFF4'
-       
+
   monokai_pro: &monokai_pro
     # Default colors
     primary:
@@ -177,7 +180,7 @@ schemes:
       magenta: '#6c71c4' # violet
       cyan:    '#93a1a1' # base1
       white:   '#fdf6e3' # base3
-  
+
   dracula: &dracula
     # Default colors
     primary:
@@ -206,8 +209,8 @@ schemes:
       magenta: '#ff92d0'
       cyan:    '#9aedfe'
       white:   '#e6e6e6'
-  
-  github-dark-dimmed: &github-dark-dimmed 
+
+  github-dark-dimmed: &github-dark-dimmed
     primary:
       background: '#2d333b'
       foreground: '#adbac7'
@@ -282,9 +285,6 @@ schemes:
 
 # Colors
 colors: *astranout
-
-# Background opacity
-background_opacity: 0.95
 
 # Allow terminal applications to change Alacritty's window title.
 dynamic_title: true
