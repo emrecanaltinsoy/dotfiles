@@ -63,12 +63,17 @@ alias nvimconfig="nvim ~/.config/nvim/init.lua"
 
 ## Command Replacement
 if [ -x "$(command -v exa)" ]; then
-    alias ls="exa"
+    # alias ls="exa"
+    alias ls='exa --git --icons --color=always --group-directories-first'
     alias la="exa -al"
 fi
 
 if [ -x "$(command -v bat)" ]; then
     alias cat="bat"
+fi
+
+if [ -x "$(command -v xcp)" ]; then
+    alias cp='xcp'
 fi
 
 alias watch="watch -n .5"

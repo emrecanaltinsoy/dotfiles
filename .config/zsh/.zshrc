@@ -16,8 +16,6 @@ source $ZSH/oh-my-zsh.sh
 ## Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-## Aliases
-source $HOME/.config/zsh/alias.rc
 
 ## Conda
 # >>> conda initialize >>>
@@ -43,6 +41,8 @@ export EDITOR=vim
 source "$HOME/.cargo/env"
 
 ## CLI Tools
+### Zoxide
+eval "$(zoxide init zsh)"
 ### Starship
 eval "$(starship init zsh)"
 ### Mcfly
@@ -56,6 +56,9 @@ eval "$(tmuxifier init -)"
 ### SSH
 eval `ssh-agent` >> /dev/null
 ssh-add -q /home/emrecan/.ssh/personal_github
+
+## Aliases
+source $HOME/.config/zsh/alias.rc
 
 neofetch
 
