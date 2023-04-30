@@ -7,6 +7,12 @@ if [ ! -x "$(command -v neofetch)" ]; then
     sudo apt install neofetch
 fi
 
+## Install xh if doesn't exist
+if [ ! -x "$(command -v xh)" ]; then
+    echo "xh is not installed! installing now."
+    curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
+fi
+
 ## Install fzf if doesn't exist
 if [ ! -x "$(command -v fzf)" ]; then
     echo "fzf is not installed! installing now."

@@ -54,8 +54,9 @@ export PATH=$PATH:$HOME/.tmuxifier/bin
 eval "$(tmuxifier init -)"
 
 ### SSH
-eval `ssh-agent` >> /dev/null
-ssh-add -q /home/emrecan/.ssh/personal_github
+if [[ -f ~/.config/zsh/ssh ]]; then
+    source ~/.config/zsh/ssh
+fi
 
 ## Aliases
 source $HOME/.config/zsh/alias.rc
@@ -63,5 +64,3 @@ source $HOME/.config/zsh/alias.rc
 neofetch
 
 autoload -U compinit; compinit
-
-

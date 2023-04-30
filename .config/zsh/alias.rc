@@ -76,6 +76,10 @@ if [ -x "$(command -v xcp)" ]; then
     alias cp='xcp'
 fi
 
+if [ -x "$(command -v xh)" ]; then
+    alias http='xh'
+fi
+
 alias watch="watch -n .5"
 alias watch-gpu="watch -n .5 nvidia-smi"
 alias change-terminal="sudo update-alternatives --config x-terminal-emulator"
