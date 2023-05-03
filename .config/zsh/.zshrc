@@ -1,7 +1,7 @@
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
-export PATH=$PATH:/sbin
+export PATH=$PATH:/sbin:$HOME/.config/bin
 
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
@@ -50,6 +50,7 @@ eval "$(mcfly init zsh)"
 export MCFLY_RESULTS=20
 
 ### Tmuxifier
+export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
 export PATH=$PATH:$HOME/.tmuxifier/bin
 eval "$(tmuxifier init -)"
 
