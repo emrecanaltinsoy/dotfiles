@@ -1,6 +1,18 @@
 ############
 # NEOFETCH #
 ############
+
+
+# Install neovim if doesn't exist
+if [[ ! -d ~/.config/nvim ]]; then
+    echo "lazyvim is not installed! installing now."
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak
+    mv ~/.local/state/nvim ~/.local/state/nvim.bak
+    mv ~/.cache/nvim ~/.cache/nvim.bak
+    git clone https://github.com/LazyVim/starter ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
+fi
+
 # Install neofetch if doesn't exist
 if [ ! -x "$(command -v neofetch)" ]; then
     echo "neofetch is not installed! installing now."
