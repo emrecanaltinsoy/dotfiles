@@ -1,6 +1,13 @@
 ############
-# NEOFETCH #
+# PACKAGES #
 ############
+
+# Install zellij if doesn't exist
+if [ ! -x "$(command -v zellij)" ]; then
+    echo "zellij is not installed! installing now."
+    cargo install --locked zellij
+fi
+
 
 
 # Install neovim if doesn't exist
