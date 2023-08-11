@@ -1,7 +1,7 @@
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
-export PATH=$PATH:/sbin:$HOME/.config/bin
+export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin
 
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8

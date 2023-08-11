@@ -135,3 +135,4 @@ export PATH="$HOME/bin:$PATH"
 
 # fish
 alias config='/usr/bin/git --git-dir=/home/emrecan/dotfiles/ --work-tree=/home/emrecan'
+. "$HOME/.cargo/env"
