@@ -2,6 +2,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
 export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
