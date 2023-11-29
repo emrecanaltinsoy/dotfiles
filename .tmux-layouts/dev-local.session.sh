@@ -8,10 +8,10 @@ if initialize_session "dev-local"; then
 
   # Create a new window inline within session layout definition.
   new_window "dev-local"
-  split_h 50
+  split_h 30
   run_cmd "nrb"
   split_v 50
-  send_keys "nrw"
+  run_cmd "nrw"
   # Load a defined window layout.
   #load_window "example"
 

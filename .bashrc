@@ -116,23 +116,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/emrecan/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/emrecan/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/emrecan/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/emrecan/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 export PATH="$HOME/bin:$PATH"
 
 # fish
 alias config='/usr/bin/git --git-dir=/home/emrecan/dotfiles/ --work-tree=/home/emrecan'
 . "$HOME/.cargo/env"
+

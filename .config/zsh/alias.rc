@@ -26,7 +26,6 @@ alias gp="git push"
 alias gas="git add . && git stash"
 alias gsp="git stash pop && git restore --staged ."
 alias gri="git rebase -i"
-# alias gpsu="git push --set-upstream origin $(git branch --show-current)"
 alias gcm="git commit -m"
 alias gcan="git commit --amend --no-edit"
 alias gpom="git pull origin main"
@@ -35,13 +34,17 @@ alias gco="git checkout"
 alias gb="git branch"
 alias gm="git merge"
 alias gl="git log"
+
+# alias gpsu="git push --set-upstream origin $(git branch --show-current)"
 # alias grb='f() { git rebase -i HEAD~$1 };f'
 # alias git-pull-all='(){git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done }'
+
+alias create_aws_cred="/home/emrecan/Projects/aws-saml-cli-authentication/create_aws_cred"
+alias deploy_local_lambda="/home/emrecan/Projects/dcr-ai-flagship/scripting/deploy_local_lambda/deploy.sh"
 
 ## NPM Local Dev
 alias nrw="cd $HOME/Projects/dcr-ai-flagship/frontend/business/chatbot-web/lex-web-ui && npm run web"
 alias nrb="cd $HOME/Projects/dcr-ai-flagship/frontend/business/chatbot-web/lex-web-ui && npm run build:wc-dev-hot"
-alias deploy_dev_lambda="$HOME/Projects/dcr-dev-local && sam build && sam deploy --no-fail-on-empty-changeset"
 
 ## Config
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"

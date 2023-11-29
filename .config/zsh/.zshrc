@@ -40,6 +40,11 @@ export EDITOR=vim
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source "$HOME/.cargo/env"
 
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 ## CLI Tools
 ### Zoxide
 eval "$(zoxide init zsh)"
