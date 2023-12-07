@@ -11,29 +11,15 @@ export LANG=C.UTF-8
 source $HOME/.config/zsh/install_packages.sh
 
 ## Plugins
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history conda-zsh-completion docker docker-compose)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose)
+
+# Removed
+# conda-zsh-completion
 
 source $ZSH/oh-my-zsh.sh
 
 ## Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-
-## Conda
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
