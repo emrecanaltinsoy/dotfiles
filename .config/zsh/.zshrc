@@ -1,8 +1,7 @@
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
-export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin
-export NVM_DIR="$HOME/.nvm"
+export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin:/opt/nvim-linux64/bin:$HOME/nvim-linux64/bin
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 export PNPM_HOME="/home/emrecan/.local/share/pnpm"
@@ -42,7 +41,11 @@ eval "$(pyenv init -)"
 
 ## CLI Tools
 ### Zoxide
+<<<<<<< Updated upstream
 eval "$(zoxide init zsh --cmd cd)"
+=======
+eval "$(zoxide init --cmd cd zsh)"
+>>>>>>> Stashed changes
 ### Starship
 eval "$(starship init zsh)"
 ### Mcfly
