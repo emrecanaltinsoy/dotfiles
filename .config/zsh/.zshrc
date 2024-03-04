@@ -41,11 +41,7 @@ eval "$(pyenv init -)"
 
 ## CLI Tools
 ### Zoxide
-<<<<<<< Updated upstream
 eval "$(zoxide init zsh --cmd cd)"
-=======
-eval "$(zoxide init --cmd cd zsh)"
->>>>>>> Stashed changes
 ### Starship
 eval "$(starship init zsh)"
 ### Mcfly
