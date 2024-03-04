@@ -5,6 +5,13 @@ export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+export PNPM_HOME="/home/emrecan/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
@@ -35,7 +42,7 @@ eval "$(pyenv init -)"
 
 ## CLI Tools
 ### Zoxide
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
 ### Starship
 eval "$(starship init zsh)"
 ### Mcfly
