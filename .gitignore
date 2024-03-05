@@ -10,3 +10,4 @@ __pycache__/
 !installed.txt
 !.tmux-layouts
 !.tmux.conf.local
+!sync_dotfiles.sh
