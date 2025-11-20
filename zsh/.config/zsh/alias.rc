@@ -1,15 +1,40 @@
-## Package Manager
-PKG_MANAGER=apt
-alias update="sudo $PKG_MANAGER update"
-alias upgrade="sudo $PKG_MANAGER upgrade"
-alias autoremove="sudo $PKG_MANAGER autoremove"
-alias install="sudo $PKG_MANAGER install"
-alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=aggr " " $2} END {print aggr}')"
-
-# alias update="sudo pacman -Syy"
-# alias upgrade="sudo pacman -Syu"
-# alias autoremove="pacman -Qdtq | sudo pacman -Rs -"
-# alias install="sudo pacman -S"
+## Package manager aliases
+if [[ -f /etc/arch-release ]]; then
+    # Check if yay is available, use it instead of pacman
+    if command -v yay &> /dev/null; then
+        alias update="yay -Sy"
+        alias upgrade="yay -Syu"
+        alias install="yay -S"
+        alias uninstall="yay -R"
+        alias autoremove="yay -Rns \$(yay -Qtdq)"
+    else
+        alias update="sudo pacman -Syy"
+        alias upgrade="sudo pacman -Syu"
+        alias install="sudo pacman -S"
+        alias uninstall="sudo pacman -R"
+        alias autoremove="sudo pacman -Rns \$(pacman -Qtdq)"
+    fi
+elif [[ -f /etc/redhat-release ]]; then
+    alias update="sudo yum check-update"
+    alias upgrade="sudo yum update"
+    alias install="sudo yum install"
+    alias uninstall="sudo yum remove"
+    alias autoremove="sudo yum autoremove"
+elif [[ -f /etc/alpine-release ]]; then
+    alias update="sudo apk update"
+    alias upgrade="sudo apk upgrade"
+    alias install="sudo apk add"
+    alias uninstall="sudo apk del"
+    alias autoremove="sudo apk cache clean"
+else
+    # Generic fallback apt
+    alias update="sudo apt update"
+    alias upgrade="sudo apt upgrade"
+    alias install="sudo apt install"
+    alias uninstall="sudo apt remove"
+    alias autoremove="sudo apt autoremove"
+    alias remove-residuals="sudo apt purge \$(dpkg -l | grep '^rc' | awk '{aggr=aggr \" \" \$2} END {print aggr}')"
+fi
 
 ## Path
 alias add2path="export PYTHONPATH=$PYTHONPATH:$(pwd)"

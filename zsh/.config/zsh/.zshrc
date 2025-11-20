@@ -1,3 +1,8 @@
+## Aliases
+if [[ -f $HOME/.config/zsh/alias.rc ]]; then
+  source $HOME/.config/zsh/alias.rc
+fi
+
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
@@ -71,10 +76,6 @@ if [[ -f $HOME/.config/zsh/ssh ]]; then
   source ~/.config/zsh/ssh
 fi
 
-## Aliases
-if [[ -f $HOME/.config/zsh/alias.rc ]]; then
-  source $HOME/.config/zsh/alias.rc
-fi
 
 ## Secrets
 if [[ -f $HOME/.config/zsh/secrets ]]; then

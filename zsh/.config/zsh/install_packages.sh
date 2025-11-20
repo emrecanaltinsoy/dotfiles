@@ -35,7 +35,7 @@ fi
 ############
 if [ ! -x "$(command -v tmux)" ]; then
   echo "tmux is not installed! installing now."
-  sudo apt install tmux
+  install tmux
 fi
 
 if [[ ! -d ~/.tmux ]]; then
@@ -65,7 +65,7 @@ fi
 # Install neofetch if doesn't exist
 if [ ! -x "$(command -v neofetch)" ]; then
   echo "neofetch is not installed! installing now."
-  sudo apt install neofetch
+  install neofetch
 fi
 
 ## Install xh if doesn't exist
@@ -77,7 +77,7 @@ fi
 ## Install fzf if doesn't exist
 if [ ! -x "$(command -v fzf)" ]; then
   echo "fzf is not installed! installing now."
-  sudo apt install fzf
+  install fzf
 fi
 
 ############
@@ -98,7 +98,7 @@ fi
 ## Install alacritty if doesn't exist
 # if [ ! -x "$(command -v alacritty)" ]; then
 #     echo "alacritty is not installed! installing now."
-#     sudo apt install libfontconfig1-dev libfontconfig
+#     install libfontconfig1-dev libfontconfig
 #     cargo install alacritty
 # fi
 
@@ -174,12 +174,18 @@ if [ ! -x "$(command -v tokei)" ]; then
   cargo install tokei -q --locked
 fi
 
+## Install tokei if doesn't exist
+if [ ! -x "$(command -v yazi)" ]; then
+  echo "yazi is not installed! installing now."
+  cargo install --force yazi-build -q
+fi
+
 ################
 ### Dotfiles ###
 ################
 if [ ! -x "$(command -v stow)" ]; then
   echo "stow is not installed! installing now."
-  sudo apt install stow
+  install stow
 fi
 
 if [[ ! -d ~/stow-dotfiles ]]; then
