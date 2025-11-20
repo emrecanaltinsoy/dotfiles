@@ -1,0 +1,15 @@
+customCommands:
+  - key: "<c-f>"
+    context: "localBranches"
+    command: "git fetch -p"
+  - key: "b"
+    context: "localBranches"
+    prompts:
+      - type: "input"
+        title: "What is the branch name?"
+        key: "Branch"
+        suggestions:
+          preset: "branches"
+    command: "git merge-base {{.Form.Branch}} {{.SelectedLocalBranch.Name}}"
+    outputTitle: "Merge Base Hash {{.Form.Branch}} {{.SelectedLocalBranch.Name}}"
+    showOutput: true

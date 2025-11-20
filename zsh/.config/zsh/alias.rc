@@ -1,0 +1,124 @@
+## Package Manager
+PKG_MANAGER=apt
+alias update="sudo $PKG_MANAGER update"
+alias upgrade="sudo $PKG_MANAGER upgrade"
+alias autoremove="sudo $PKG_MANAGER autoremove"
+alias install="sudo $PKG_MANAGER install"
+alias remove-residuals="sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{aggr=aggr " " $2} END {print aggr}')"
+
+# alias update="sudo pacman -Syy"
+# alias upgrade="sudo pacman -Syu"
+# alias autoremove="pacman -Qdtq | sudo pacman -Rs -"
+# alias install="sudo pacman -S"
+
+## Path
+alias add2path="export PYTHONPATH=$PYTHONPATH:$(pwd)"
+
+## Docker
+# if [ -x "$(command -v docker)" ]; then
+#     alias dexec='(){docker exec -it $1 /bin/bash;}'
+#     alias docsr="docker stop $(docker ps -q) && docker rm $(docker ps -a -q)"
+# fi
+
+## NVIM
+alias nv="nvim"
+alias v="nvim"
+alias vh="nvim ."
+
+## Git
+if [ -x "$(command -v docker)" ]; then
+    git config --global alias.upstream '!git push -u origin HEAD'
+fi
+
+alias gs="git status"
+alias gp="git upstream"
+alias gas="git add . && git stash"
+alias gsp="git stash pop && git restore --staged ."
+alias gri="git rebase -i"
+alias gcm="git commit -m"
+alias gcan="git commit --amend --no-edit"
+alias gpom="git pull origin main"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias gm="git merge"
+alias gl="git log"
+alias gfp="git fetch -p"
+alias gpull="git pull"
+alias glo="git log --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+
+# alias gpsu="git push --set-upstream origin $(git branch --show-current)"
+# alias grb='f() { git rebase -i HEAD~$1 };f'
+# alias git-pull-all='(){git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done }'
+
+alias create_aws_cred="/home/emrecan/Projects/aws-saml-cli-authentication/create_aws_cred"
+alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local_lambda/deploy.sh"
+
+## NPM Local Dev
+alias nrw="cd $HOME/Projects/dcr-ai-flagship/scripting && ./frontendRunWeb.sh"
+alias nrb="cd $HOME/Projects/dcr-ai-flagship/scripting && nvm use v16; ./frontendRunBuild.sh"
+
+## Chezmoi
+alias cm="chezmoi"
+
+## VSCode
+alias c="code"
+alias ch="code ."
+
+## Config
+alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
+alias confa="config add ."
+alias confb="config branch"
+alias confcm="config commit -a -m"
+alias confco="config checkout"
+alias confd="config diff -M"
+alias confl="config log"
+alias confm="config merge"
+alias confpull="config pull origin main"
+alias confpush="config push"
+alias confs="config status"
+
+alias qtileconfig="nvim ~/.config/qtile/config.py"
+alias awesomeconfig="nvim ~/.config/awesome/rc.lua"
+alias zshconfig="nvim ~/.config/zsh/.zshrc"
+alias nvimconfig="nvim ~/.config/nvim/init.lua"
+
+
+## Command Replacement
+if [ -x "$(command -v exa)" ]; then
+    # alias ls="exa"
+    alias ls='exa --git --icons --color=always --group-directories-first'
+    alias la="exa -al"
+fi
+
+if [ -x "$(command -v bat)" ]; then
+    alias cat="bat"
+fi
+
+if [ -x "$(command -v xcp)" ]; then
+    alias cp='xcp'
+fi
+
+if [ -x "$(command -v xh)" ]; then
+    alias http='xh'
+fi
+
+if [ -x "$(command -v zellij)" ]; then
+    alias zlr='zellij run -- '
+fi
+
+alias watch="watch -n .5"
+alias watch-gpu="watch -n .5 nvidia-smi"
+alias change-terminal="sudo update-alternatives --config x-terminal-emulator"
+
+## Services
+alias start-docker="sudo systemctl start docker.socket"
+alias status-docker="systemctl status docker.socket"
+alias stop-docker="sudo systemctl stop docker.socket"
+alias start-mysql="sudo systemctl start mysql.service"
+alias status-mysql="systemctl status mysql.service"
+alias stop-mysql="sudo systemctl stop mysql.service"
+alias start-postgres="sudo systemctl start postgresql.service"
+alias status-postgres="systemctl status postgresql.service"
+alias stop-postgres="sudo systemctl stop postgresql.service"
+
