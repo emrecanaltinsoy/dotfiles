@@ -1,15 +1,3 @@
-## Plugins
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
-
-# Removed
-# conda-zsh-completion
-
-source $ZSH/oh-my-zsh.sh
-## Aliases
-if [[ -f $HOME/.config/zsh/alias.rc ]]; then
-  source $HOME/.config/zsh/alias.rc
-fi
-
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
@@ -31,8 +19,19 @@ esac
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
-source $HOME/.config/zsh/install_packages.sh
+## Plugins
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
 
+# Removed
+# conda-zsh-completion
+
+source $ZSH/oh-my-zsh.sh
+## Aliases
+if [[ -f $HOME/.config/zsh/alias.rc ]]; then
+  source $HOME/.config/zsh/alias.rc
+fi
+
+source $HOME/.config/zsh/install_packages.sh
 
 ## Compilation flags
 # export ARCHFLAGS="-arch x86_64"
