@@ -8,16 +8,15 @@ if initialize_session "dev-local"; then
 
   # Create a new window inline within session layout definition.
   new_window "build-run"
+  new_window "dcr-ai-flagship"
   new_window "terminal"
-  new_window "neovim"
 
   select_window "build-run"
   run_cmd "nrb"
   split_h 50
   run_cmd "nrw"
-  # Load a defined window layout.
 
-  select_window "neovim"
+  select_window "dcr-ai-flagship"
   run_cmd "nvim ."
 
   # Select the default active window on session creation.

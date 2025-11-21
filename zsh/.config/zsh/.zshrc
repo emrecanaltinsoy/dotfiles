@@ -1,3 +1,10 @@
+## Plugins
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
+
+# Removed
+# conda-zsh-completion
+
+source $ZSH/oh-my-zsh.sh
 ## Aliases
 if [[ -f $HOME/.config/zsh/alias.rc ]]; then
   source $HOME/.config/zsh/alias.rc
@@ -26,13 +33,6 @@ export LANG=C.UTF-8
 
 source $HOME/.config/zsh/install_packages.sh
 
-## Plugins
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
-
-# Removed
-# conda-zsh-completion
-
-source $ZSH/oh-my-zsh.sh
 
 ## Compilation flags
 # export ARCHFLAGS="-arch x86_64"
