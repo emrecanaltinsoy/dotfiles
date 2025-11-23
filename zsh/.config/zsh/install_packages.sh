@@ -10,10 +10,6 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
-if [[ ! -d ~/.oh-my-zsh/custom/plugins/conda-zsh-completion ]]; then
-  git clone https://github.com/esc/conda-zsh-completion ~/.oh-my-zsh/custom/plugins/conda-zsh-completion
-fi
-
 if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 fi
@@ -108,12 +104,6 @@ if [ ! -x "$(command -v starship)" ]; then
   curl -sS https://starship.rs/install.sh | sh
 fi
 
-## Install mcfly if doesn't exist
-# if [ ! -x "$(command -v mcfly)" ]; then
-#     echo "mcfly is not installed! installing now."
-#     cargo install mcfly -q
-# fi
-
 ## Install bat if doesn't exist
 if [ ! -x "$(command -v bat)" ]; then
   echo "bat is not installed! installing now."
@@ -186,19 +176,4 @@ fi
 if [ ! -x "$(command -v stow)" ]; then
   echo "stow is not installed! installing now."
   install stow
-fi
-
-if [[ ! -d ~/stow-dotfiles ]]; then
-  printf "stow-dotfiles is missing! Pulling the latest version from github...\n"
-  git clone https://github.com/emrecanaltinsoy/stow-dotfiles.git ~/stow-dotfiles
-  cd ~/stow-dotfiles || exit
-  printf "Apply stow dotfiles? [y/N]: "
-  read -r response
-  response=${response:-N}
-  if [[ "$response" =~ ^[Yy]$ ]]; then
-    printf "Applying stow dotfiles...\n"
-    stow */
-  else
-    printf "Skipping stow dotfiles application.\n"
-  fi
 fi

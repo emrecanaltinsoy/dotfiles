@@ -22,16 +22,11 @@ export LANG=C.UTF-8
 ## Plugins
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
 
-# Removed
-# conda-zsh-completion
-
 source $ZSH/oh-my-zsh.sh
 ## Aliases
 if [[ -f $HOME/.config/zsh/alias.rc ]]; then
   source $HOME/.config/zsh/alias.rc
 fi
-
-source $HOME/.config/zsh/install_packages.sh
 
 ## Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -46,12 +41,9 @@ source "$HOME/.cargo/env"
 ## CLI Tools
 ### Zoxide
 eval "$(zoxide init zsh --cmd cd)"
+
 ### Starship
 eval "$(starship init zsh)"
-
-# ### Mcfly
-# eval "$(mcfly init zsh)"
-# export MCFLY_RESULTS=20
 
 ### Tmuxifier
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"

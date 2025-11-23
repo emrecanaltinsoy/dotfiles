@@ -39,6 +39,9 @@ fi
 ## Path
 alias add2path="export PYTHONPATH=$PYTHONPATH:$(pwd)"
 
+## Package Installer Script
+alias install_packages="source $HOME/.config/zsh/install_packages.sh"
+
 ## Docker
 # if [ -x "$(command -v docker)" ]; then
 #     alias dexec='(){docker exec -it $1 /bin/bash;}'
