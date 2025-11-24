@@ -2,6 +2,8 @@
 
 shopt -s expand_aliases
 
+source "$HOME/.bash_aliases"
+
 if [ ! -x "$(command -v tmux)" ]; then
   echo "tmux is not installed! installing now."
   install tmux || exit 1

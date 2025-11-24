@@ -2,6 +2,8 @@
 
 shopt -s expand_aliases
 
+source "$HOME/.bash_aliases"
+
 ## Install fzf if doesn't exist
 if [ ! -x "$(command -v fzf)" ]; then
   echo "fzf is not installed! installing now."

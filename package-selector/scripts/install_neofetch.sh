@@ -2,6 +2,8 @@
 
 shopt -s expand_aliases
 
+source "$HOME/.bash_aliases"
+
 # Install neofetch if doesn't exist
 if [ ! -x "$(command -v neofetch)" ]; then
   echo "neofetch is not installed! installing now."
