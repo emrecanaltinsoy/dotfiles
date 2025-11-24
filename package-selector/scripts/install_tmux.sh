@@ -6,7 +6,7 @@ source "$HOME/.bash_aliases"
 
 if [ ! -x "$(command -v tmux)" ]; then
   echo "tmux is not installed! installing now."
-  install tmux || exit 1
+  install -y tmux || exit 1
 else
   echo "tmux is already installed."
 fi
