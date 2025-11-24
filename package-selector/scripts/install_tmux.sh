@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+shopt -s expand_aliases
+
 if [ ! -x "$(command -v tmux)" ]; then
   echo "tmux is not installed! installing now."
-  install tmux
+  install tmux || exit 1
 else
   echo "tmux is already installed."
 fi
