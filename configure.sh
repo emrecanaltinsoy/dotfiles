@@ -8,6 +8,10 @@ CURRENT_SHELL=$(awk -F: -v user="$USER" '$1 == user {print $NF}' /etc/passwd)
 ## Get Aliases for Installation
 source "$SCRIPT_DIR/zsh/.config/zsh/alias.rc"
 
+## Update and Upgrade System
+printf "Updating and upgrading system packages...\n"
+update && upgrade -y
+
 ###########
 ### ZSH ###
 ###########
@@ -127,7 +131,8 @@ read -r response_pkg
 
 case "$response_pkg" in
 [yY]*)
-  uv run "$SCRIPT_DIR/package-selector/main.py"
+  cd "$SCRIPT_DIR/package-selector" || exit
+  uv venv && uv sync && uv run main.py
   ;;
 *)
   printf "Skipping symlink creation. Exiting.\n"
