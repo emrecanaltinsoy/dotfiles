@@ -108,7 +108,7 @@ read -r response
 case "$response" in
 [yY]*)
   printf "Creating symlinks with stow...\n"
-  stow */
+  stow --adopt */
   printf "Dotfiles symlinked successfully!\n"
   ;;
 *)
