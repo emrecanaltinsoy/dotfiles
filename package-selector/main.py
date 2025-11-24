@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import os
 import subprocess
+from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Static
-from textual.containers import Vertical, ScrollableContainer
+from textual.containers import Vertical, Horizontal, ScrollableContainer
 from textual.reactive import reactive
 from textual.binding import Binding
 
@@ -28,6 +29,7 @@ PACKAGES = [
     "yazi",
     "zellij",
 ]
+CURRENT_DIR = Path(__file__).parent.resolve()
 
 
 class PackageSelector(App):
@@ -51,11 +53,17 @@ class PackageSelector(App):
         margin: 0 0 1 0;
     }
     
+    .package-row {
+        height: 3;
+        margin: 0 1;
+    }
+    
     .package-item {
         height: 3;
-        margin: 0 2;
+        margin: 0 1;
         border: solid $primary;
-        width: 100%;
+        width: 1fr;
+        min-width: 20;
     }
     
     .package-item:hover {
@@ -79,6 +87,8 @@ class PackageSelector(App):
     BINDINGS = [
         Binding("up,k", "cursor_up", "Move up"),
         Binding("down,j", "cursor_down", "Move down"),
+        Binding("left,h", "cursor_left", "Move left"),
+        Binding("right,l", "cursor_right", "Move right"),
         Binding("space", "toggle_selection", "Toggle selection"),
         Binding("a", "toggle_all", "Toggle all packages"),
         Binding("enter", "quit_and_show", "Confirm and quit"),
@@ -87,18 +97,34 @@ class PackageSelector(App):
 
     selected_packages = reactive(set())
     current_index = reactive(0)
+    
+    def get_grid_position(self, index: int) -> tuple[int, int]:
+        """Convert linear index to (row, col) grid position."""
+        return index // 3, index % 3
+    
+    def get_linear_index(self, row: int, col: int) -> int:
+        """Convert (row, col) grid position to linear index."""
+        return row * 3 + col
 
     def compose(self) -> ComposeResult:
         yield Header()
         with Vertical():
             yield Static("📦 Package Selector 📦", classes="title")
             yield Static(
-                "Use ↑↓ or hj to move, SPACE to select, A to toggle all, ENTER to confirm",
+                "Use ↑↓←→ or hjkl to navigate, SPACE to select, A to toggle all, ENTER to confirm",
                 classes="instructions",
             )
             with ScrollableContainer():
-                for i, package in enumerate(PACKAGES):
-                    yield Static("", classes="package-item", id=f"package-{i}")
+                # Create rows of 3 packages each
+                for row_idx in range(0, len(PACKAGES), 3):
+                    with Horizontal(classes="package-row"):
+                        for col_idx in range(3):
+                            pkg_idx = row_idx + col_idx
+                            if pkg_idx < len(PACKAGES):
+                                yield Static("", classes="package-item", id=f"package-{pkg_idx}")
+                            else:
+                                # Empty placeholder for incomplete rows
+                                yield Static("", classes="package-item")
             yield Static("", classes="status-bar", id="status")
         yield Footer()
 
@@ -138,18 +164,42 @@ class PackageSelector(App):
         status_widget.update(status_text)
 
     def action_cursor_up(self) -> None:
-        """Move cursor up."""
-        if self.current_index > 0:
-            self.current_index -= 1
-            self.update_display()
-            self.scroll_to_current()
+        """Move cursor up in grid."""
+        row, col = self.get_grid_position(self.current_index)
+        if row > 0:
+            new_index = self.get_linear_index(row - 1, col)
+            if new_index < len(PACKAGES):
+                self.current_index = new_index
+                self.update_display()
+                self.scroll_to_current()
 
     def action_cursor_down(self) -> None:
-        """Move cursor down."""
-        if self.current_index < len(PACKAGES) - 1:
-            self.current_index += 1
+        """Move cursor down in grid."""
+        row, col = self.get_grid_position(self.current_index)
+        new_index = self.get_linear_index(row + 1, col)
+        if new_index < len(PACKAGES):
+            self.current_index = new_index
             self.update_display()
             self.scroll_to_current()
+    
+    def action_cursor_left(self) -> None:
+        """Move cursor left in grid."""
+        row, col = self.get_grid_position(self.current_index)
+        if col > 0:
+            new_index = self.get_linear_index(row, col - 1)
+            self.current_index = new_index
+            self.update_display()
+            self.scroll_to_current()
+    
+    def action_cursor_right(self) -> None:
+        """Move cursor right in grid."""
+        row, col = self.get_grid_position(self.current_index)
+        if col < 2:  # Maximum 3 columns (0, 1, 2)
+            new_index = self.get_linear_index(row, col + 1)
+            if new_index < len(PACKAGES):
+                self.current_index = new_index
+                self.update_display()
+                self.scroll_to_current()
 
     def scroll_to_current(self) -> None:
         """Scroll to make current item visible."""
@@ -187,7 +237,7 @@ class PackageSelector(App):
 
 def run_install_script(package: str) -> bool:
     """Run install script for a package and return success status."""
-    script_path = f"scripts/install_{package}.sh"
+    script_path = f"{CURRENT_DIR}/scripts/install_{package}.sh"
 
     if not os.path.exists(script_path):
         print(f"❌ Script not found: {script_path}")
