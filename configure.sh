@@ -35,7 +35,7 @@ fi
 ############
 if [ ! -d ~/.oh-my-zsh ]; then
   printf "oh-my-zsh is not installed! installing now...\n"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 else
   printf "oh-my-zsh is already installed.\n"
 fi
@@ -132,7 +132,10 @@ read -r response_pkg
 case "$response_pkg" in
 [yY]*)
   cd "$SCRIPT_DIR/package-selector" || exit
-  uv venv && uv sync && uv run main.py
+  if [ ! -d .venv ]; then
+    uv venv
+  fi
+  uv sync && uv run main.py
   ;;
 *)
   printf "Skipping symlink creation. Exiting.\n"
