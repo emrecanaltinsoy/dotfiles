@@ -40,15 +40,21 @@ source "$HOME/.cargo/env"
 
 ## CLI Tools
 ### Zoxide
-eval "$(zoxide init zsh --cmd cd)"
+if [ -x "$(command -v zoxide)" ]; then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
 
 ### Starship
-eval "$(starship init zsh)"
+if [ -x "$(command -v starship)" ]; then
+  eval "$(starship init zsh)"
+fi
 
 ### Tmuxifier
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
 export PATH=$PATH:$HOME/.tmuxifier/bin
-eval "$(tmuxifier init -)"
+if [ -x "$(command -v tmux)" ]; then
+  eval "$(tmuxifier init -)"
+fi
 
 # zsh essentials
 HISTFILE="$HOME/.config/zsh/.histfile" # Save 100000 lines of history
@@ -67,13 +73,14 @@ if [[ -f $HOME/.config/zsh/ssh ]]; then
   source ~/.config/zsh/ssh
 fi
 
-
 ## Secrets
 if [[ -f $HOME/.config/zsh/secrets ]]; then
   source $HOME/.config/zsh/secrets
 fi
 
-neofetch
+if [ -x "$(command -v neofetch)" ]; then
+  neofetch
+fi
 
 ## NVM
 # place this after nvm initialization!
