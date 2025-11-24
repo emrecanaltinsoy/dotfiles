@@ -97,11 +97,11 @@ class PackageSelector(App):
 
     selected_packages = reactive(set())
     current_index = reactive(0)
-    
+
     def get_grid_position(self, index: int) -> tuple[int, int]:
         """Convert linear index to (row, col) grid position."""
         return index // 3, index % 3
-    
+
     def get_linear_index(self, row: int, col: int) -> int:
         """Convert (row, col) grid position to linear index."""
         return row * 3 + col
@@ -121,7 +121,9 @@ class PackageSelector(App):
                         for col_idx in range(3):
                             pkg_idx = row_idx + col_idx
                             if pkg_idx < len(PACKAGES):
-                                yield Static("", classes="package-item", id=f"package-{pkg_idx}")
+                                yield Static(
+                                    "", classes="package-item", id=f"package-{pkg_idx}"
+                                )
                             else:
                                 # Empty placeholder for incomplete rows
                                 yield Static("", classes="package-item")
@@ -181,7 +183,7 @@ class PackageSelector(App):
             self.current_index = new_index
             self.update_display()
             self.scroll_to_current()
-    
+
     def action_cursor_left(self) -> None:
         """Move cursor left in grid."""
         row, col = self.get_grid_position(self.current_index)
@@ -190,7 +192,7 @@ class PackageSelector(App):
             self.current_index = new_index
             self.update_display()
             self.scroll_to_current()
-    
+
     def action_cursor_right(self) -> None:
         """Move cursor right in grid."""
         row, col = self.get_grid_position(self.current_index)
@@ -245,9 +247,7 @@ def run_install_script(package: str) -> bool:
 
     try:
         print(f"📦 Installing {package}...")
-        result = subprocess.run(
-            ["bash", script_path], capture_output=True, text=True, timeout=30
-        )
+        result = subprocess.run(["bash", script_path], capture_output=True, text=True)
 
         if result.returncode == 0:
             print(f"✅ Successfully installed {package}")
@@ -256,9 +256,9 @@ def run_install_script(package: str) -> bool:
             print(f"❌ Failed to install {package}: {result.stderr}")
             return False
 
-    except subprocess.TimeoutExpired:
-        print(f"⏰ Timeout installing {package}")
-        return False
+    # except subprocess.TimeoutExpired:
+    #     print(f"⏰ Timeout installing {package}")
+    #     return False
     except Exception as e:
         print(f"💥 Error installing {package}: {e}")
         return False
