@@ -13,6 +13,14 @@ printf "Updating and upgrading system packages...\n"
 update && upgrade -y
 ## Install necessary dependencies
 install -y libfontconfig1-dev libfontconfig || exit 1
+## Install build tools based on distro
+if [[ -f /etc/arch-release ]]; then
+  yes | install base-devel
+elif [[ -f /etc/redhat-release ]]; then
+  yes | install gcc
+elif [[ -f /etc/lsb-release ]]; then
+  install -y build-essential
+fi
 
 ###########
 ### ZSH ###
