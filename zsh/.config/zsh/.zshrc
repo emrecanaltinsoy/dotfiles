@@ -86,6 +86,7 @@ fi
 # place this after nvm initialization!
 autoload -U add-zsh-hook
 
+
 load-nvmrc() {
   local nvmrc_path
   nvmrc_path="$(nvm_find_nvmrc)"
@@ -104,9 +105,10 @@ load-nvmrc() {
     nvm use default
   fi
 }
-
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+if [ -x "$(command -v nvm)" ]; then
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
