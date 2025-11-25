@@ -160,7 +160,7 @@ class PackageSelector(App):
         if selected_count == 0:
             status_text = "No packages selected"
         elif selected_count == 1:
-            status_text = f"1 package selected"
+            status_text = "1 package selected"
         else:
             status_text = f"{selected_count} packages selected"
         status_widget.update(status_text)
@@ -247,18 +247,33 @@ def run_install_script(package: str) -> bool:
 
     try:
         print(f"📦 Installing {package}...")
-        result = subprocess.run(["bash", script_path], capture_output=True, text=True)
+        print("-" * 40)
 
-        if result.returncode == 0:
+        # Run subprocess with real-time output
+        with subprocess.Popen(
+            ["bash", script_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            universal_newlines=True,
+            bufsize=1,
+        ) as process:
+            # Stream output in real-time
+            if process.stdout:
+                for line in iter(process.stdout.readline, ""):
+                    if line.strip():
+                        print(f"  {line.rstrip()}")
+
+            process.wait()
+            print("-" * 40)
+
+        if process.returncode == 0:
             print(f"✅ Successfully installed {package}")
             return True
         else:
-            print(f"❌ Failed to install {package}: {result.stderr}")
+            print(f"❌ Failed to install {package} (exit code: {process.returncode})")
             return False
 
-    # except subprocess.TimeoutExpired:
-    #     print(f"⏰ Timeout installing {package}")
-    #     return False
     except Exception as e:
         print(f"💥 Error installing {package}: {e}")
         return False
