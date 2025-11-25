@@ -11,6 +11,8 @@ source "$SCRIPT_DIR/zsh/.config/zsh/alias.rc"
 ## Update and Upgrade System
 printf "Updating and upgrading system packages...\n"
 update && upgrade -y
+## Install necessary dependencies
+install -y libfontconfig1-dev libfontconfig || exit 1
 
 ###########
 ### ZSH ###
