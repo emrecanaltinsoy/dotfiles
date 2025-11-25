@@ -3,7 +3,8 @@
 ## Install starship if doesn't exist
 if [ ! -x "$(command -v starship)" ]; then
   echo "starship is not installed! installing now."
-  curl -sS https://starship.rs/install.sh | sh
+  mkdir -p ~/.bin
+  curl -sS https://starship.rs/install.sh | sh -s -- -y -b ~/.bin
 else
   echo "starship is already installed."
 fi
