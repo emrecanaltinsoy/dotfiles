@@ -69,25 +69,10 @@ return {
         "tsx",
         "typescript",
         "vim",
+        "vue",
         "yaml",
       },
     },
-  },
-
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      -- add tsx and treesitter
-      vim.list_extend(opts.ensure_installed, {
-        "tsx",
-        "typescript",
-        "python",
-        "vue",
-      })
-    end,
   },
 
   -- add jsonls and schemastore packages, and setup treesitter for json, json5 and jsonc
@@ -98,12 +83,44 @@ return {
     "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
-        "stylua",
+        "biome",
+        "bash-debug-adapter",
+        "bash-language-server",
+        "black",
+        "copilot-language-server",
+        "css-lsp",
+        "docker-compose-language-service",
+        "dockerfile-language-server",
+        "emmet-ls",
+        "eslint-lsp",
+        "flake8",
+        "hadolint",
+        "html-lsp",
+        "iferr",
+        "impl",
+        "isort",
+        "js-debug-adapter",
+        "json-lsp",
+        "lua-language-server",
+        "markdown-toc",
+        "markdownlint-cli2",
+        "marksman",
+        "pyright",
+        "ruff",
+        "selene",
         "shellcheck",
         "shfmt",
-        "flake8",
-        "black",
-        "ruff",
+        "stylua",
+        "tailwindcss-language-server",
+        "taplo",
+        "terraform",
+        "terraform-ls",
+        "tflint",
+        "tfsec",
+        "tree-sitter-cli",
+        "vtsls",
+        "vue-language-server",
+        "yaml-language-server",
       },
     },
   },
