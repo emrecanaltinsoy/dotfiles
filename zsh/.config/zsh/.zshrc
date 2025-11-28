@@ -24,8 +24,8 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuf
 
 source $ZSH/oh-my-zsh.sh
 ## Aliases
-if [[ -f $HOME/.config/zsh/alias.rc ]]; then
-  source $HOME/.config/zsh/alias.rc
+if [[ -f $HOME/.config/zsh/shared-aliases ]]; then
+  source $HOME/.config/zsh/shared-aliases
 fi
 
 ## Compilation flags

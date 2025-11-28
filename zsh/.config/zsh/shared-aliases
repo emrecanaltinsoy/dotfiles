@@ -36,19 +36,16 @@ else
   alias remove-residuals="sudo apt purge \$(dpkg -l | grep '^rc' | awk '{aggr=aggr \" \" \$2} END {print aggr}')"
 fi
 
-## Path
-alias add2path="export PYTHONPATH=$PYTHONPATH:$(pwd)"
-
 ## NVIM
 alias nv="nvim"
 alias v="nvim"
 alias vh="nvim ."
 
-## Git
-if [ -x "$(command -v docker)" ]; then
-  git config --global alias.upstream '!git push -u origin HEAD'
-fi
+## CLI Tools
+alias lg="lazygit"
 
+## Git
+git config --global alias.upstream '!git push -u origin HEAD'
 alias gs="git status"
 alias gp="git upstream"
 alias gas="git add . && git stash"
@@ -72,31 +69,6 @@ alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local
 ## NPM Local Dev
 alias nrw="cd $HOME/Projects/dcr-ai-flagship/scripting && ./frontendRunWeb.sh"
 alias nrb="cd $HOME/Projects/dcr-ai-flagship/scripting && nvm use v16; ./frontendRunBuild.sh"
-
-## Chezmoi
-alias cm="chezmoi"
-
-## VSCode
-alias c="code"
-alias ch="code ."
-
-## Config
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
-alias confa="config add ."
-alias confb="config branch"
-alias confcm="config commit -a -m"
-alias confco="config checkout"
-alias confd="config diff -M"
-alias confl="config log"
-alias confm="config merge"
-alias confpull="config pull origin main"
-alias confpush="config push"
-alias confs="config status"
-
-alias qtileconfig="nvim ~/.config/qtile/config.py"
-alias awesomeconfig="nvim ~/.config/awesome/rc.lua"
-alias zshconfig="nvim ~/.config/zsh/.zshrc"
-alias nvimconfig="nvim ~/.config/nvim/init.lua"
 
 ## Command Replacement
 if [ -x "$(command -v exa)" ]; then
@@ -124,14 +96,3 @@ fi
 alias watch="watch -n .5"
 alias watch-gpu="watch -n .5 nvidia-smi"
 alias change-terminal="sudo update-alternatives --config x-terminal-emulator"
-
-## Services
-alias start-docker="sudo systemctl start docker.socket"
-alias status-docker="systemctl status docker.socket"
-alias stop-docker="sudo systemctl stop docker.socket"
-alias start-mysql="sudo systemctl start mysql.service"
-alias status-mysql="systemctl status mysql.service"
-alias stop-mysql="sudo systemctl stop mysql.service"
-alias start-postgres="sudo systemctl start postgresql.service"
-alias status-postgres="systemctl status postgresql.service"
-alias stop-postgres="sudo systemctl stop postgresql.service"
