@@ -6,7 +6,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 CURRENT_SHELL=$(awk -F: -v user="$USER" '$1 == user {print $NF}' /etc/passwd)
 
 ## Get Aliases for Installation
-source "$SCRIPT_DIR/zsh/.config/zsh/alias.rc"
+source "$SCRIPT_DIR/zsh/.config/zsh/shared-aliases"
 
 ## Update and Upgrade System
 printf "Updating and upgrading system packages...\n"
