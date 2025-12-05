@@ -10,6 +10,9 @@ from textual.binding import Binding
 
 
 PACKAGES = [
+    "neovim",
+    "lazygit",
+    "opencode",
     "alacritty",
     "tmux",
     "neofetch",

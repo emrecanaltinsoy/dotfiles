@@ -12,4 +12,4 @@ customCommands:
           preset: "branches"
     command: "git merge-base {{.Form.Branch}} {{.SelectedLocalBranch.Name}}"
     outputTitle: "Merge Base Hash {{.Form.Branch}} {{.SelectedLocalBranch.Name}}"
-    showOutput: true
+    output: popup

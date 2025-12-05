@@ -2,7 +2,7 @@
 
 shopt -s expand_aliases
 
-source "$HOME/.bash_aliases"
+source "$HOME/.config/zsh/shared-aliases"
 
 if [ ! -x "$(command -v tmux)" ]; then
   echo "tmux is not installed! installing now."

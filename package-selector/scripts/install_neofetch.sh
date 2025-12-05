@@ -2,7 +2,7 @@
 
 shopt -s expand_aliases
 
-source "$HOME/.bash_aliases"
+source "$HOME/.config/zsh/shared-aliases"
 
 # Install neofetch if doesn't exist
 if [ ! -x "$(command -v neofetch)" ]; then
