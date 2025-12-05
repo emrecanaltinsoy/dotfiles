@@ -8,6 +8,8 @@ done
 
 . "$HOME/.local/bin/env"
 
+export GPG_TTY=$(tty)
+
 ## Package manager aliases
 if [[ -f /etc/arch-release ]]; then
   # Check if yay is available, use it instead of pacman
