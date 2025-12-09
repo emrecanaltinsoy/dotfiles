@@ -10,6 +10,7 @@ from textual.binding import Binding
 
 
 PACKAGES = [
+    "awscli",
     "neovim",
     "nvm",
     "lazygit",

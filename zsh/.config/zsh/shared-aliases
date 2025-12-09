@@ -77,7 +77,7 @@ alias gfp="git fetch -p"
 alias gpull="git pull"
 alias glo="git log --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
-alias create_aws_cred="/home/emrecan/Projects/aws-saml-cli-authentication/create_aws_cred"
+alias create_aws_cred="/home/emrecan/Projects/aws-authentication/create_aws_cred"
 alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local_lambda/deploy.sh"
 
 ## NPM Local Dev
