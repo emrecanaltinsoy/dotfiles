@@ -11,6 +11,7 @@ from textual.binding import Binding
 
 PACKAGES = [
     "neovim",
+    "nvm",
     "lazygit",
     "opencode",
     "alacritty",
