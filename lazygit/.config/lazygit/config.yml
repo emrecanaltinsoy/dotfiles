@@ -1,3 +1,8 @@
+git:
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium --oneline {{branchName}} --"
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
 customCommands:
   - key: "<c-f>"
     context: "localBranches"

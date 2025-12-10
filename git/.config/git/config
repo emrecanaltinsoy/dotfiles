@@ -1,0 +1,51 @@
+# BEGIN ANSIBLE MANAGED BLOCK
+[http]
+  proxy = http://127.0.0.1:9000
+[https]
+  proxy = http://127.0.0.1:9000
+# END ANSIBLE MANAGED BLOCK
+[user]
+	signingkey = 260365214503B692
+	name = Emrecan Altinsoy
+	email = emrecan.altinsoy@se.com
+[core]
+  pager = delta
+	editor = nvim
+  excludesfile = ~/.config/git/gitignore_global
+[credential]
+	helper = cache
+[diff]
+	algorithm = patience
+	compactionHeuristic = true
+	tool = nvimdiff
+[difftool "nvimdiff"]
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd L\"
+[merge]
+	tool = nvimdiff4
+	prompt = false
+[mergetool "nvimdiff4"]
+  cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[commit]
+	template = ~/.config/git/commit_template
+	verbose = true
+	gpgSign = true
+[tag]
+	gpgsign = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = side-by-side line-numbers decorations
+	navigate = true
+	whitespace-error-style = 22 reverse
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+  file-decoration-style = none
+[mergetool]
+	keepBackup = false
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[alias]
+	upstream = !git push -u origin HEAD

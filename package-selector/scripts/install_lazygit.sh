@@ -2,9 +2,17 @@
 
 shopt -s expand_aliases
 
+source "$HOME/.config/zsh/shared-aliases"
+
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-if [[ ! -f "$HOME/lazygit" ]]; then
+if [ ! -x "$(command -v git)" ]; then
+  install git
+else
+  echo "git already installed. skipping"
+fi
+
+if [ ! -x "$(command -v lazygit)" ]; then
   cd "$HOME" || exit 1
   wget https://github.com/jesseduffield/lazygit/releases/download/v0.56.0/lazygit_0.56.0_linux_x86_64.tar.gz -O "$HOME/lazygit_0.56.0_linux_x86_64.tar.gz"
   tar xzvf lazygit_0.56.0_linux_x86_64.tar.gz
@@ -14,4 +22,10 @@ if [[ ! -f "$HOME/lazygit" ]]; then
   cd "$SCRIPT_DIR" || exit 1
 else
   echo "lazygit already exists. skipping."
+fi
+
+if [ ! -x "$(command -v delta)" ]; then
+  cargo install git-delta -q
+else
+  echo "delta already installed. skipping"
 fi
