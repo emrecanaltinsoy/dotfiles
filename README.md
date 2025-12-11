@@ -13,13 +13,17 @@ Each directory in this repository represents a "package" that can be installed i
 ```
 stow-dotfiles/
 ├── alacritty/          # Alacritty terminal emulator config
+├── bash/               # Bash shell configuration
+├── git/                # Git configuration and templates
 ├── lazygit/            # Lazygit configuration
 ├── neofetch/           # Neofetch system info config
 ├── nvim/               # Neovim configuration
 ├── opencode/           # OpenCode configuration
+├── package-selector/   # Interactive package installer (not stowed)
 ├── starship/           # Starship prompt config
 ├── tmux/               # Tmux configuration and layouts
 ├── topgrade/           # Topgrade system updater config
+├── zellij/             # Zellij terminal multiplexer config
 └── zsh/                # Zsh shell configuration
 ```
 
@@ -85,6 +89,17 @@ stow zsh starship
 cd ~/stow-dotfiles
 stow nvim lazygit opencode
 ```
+
+## Package Selector Tool
+
+This repository includes an interactive package installer tool in the `package-selector/` directory. It provides a TUI (Text User Interface) for selecting and installing common CLI tools and development packages.
+
+```bash
+cd package-selector
+uv run python main.py
+```
+
+See [package-selector/README.md](package-selector/README.md) for detailed documentation.
 
 ## How It Works
 
