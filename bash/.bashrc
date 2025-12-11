@@ -2,6 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 #
+export GPG_TTY=$(tty)
 
 export PATH="$HOME/bin:$HOME/.bin:$HOME/.config/bin:$HOME/.local/bin:/sbin:$PATH"
 export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH" # Golang
@@ -153,3 +154,15 @@ export PATH=$PATH:$HOME/.tmuxifier/bin
 eval "$(tmuxifier init -)"
 
 complete -C /usr/bin/terraform terraform
+# BEGIN ANSIBLE MANAGED BLOCK
+# Include .bashrc.d folder for specific ansible dev feature
+if [[ -d "$HOME/.bashrc.d" ]]; then
+  for file in $(ls ${HOME}/.bashrc.d/ | sort -n | grep '.bashrc$' 2>/dev/null); do
+    if [[ "$file" == *.bashrc ]]; then
+      source "${HOME}/.bashrc.d/${file}"
+    fi
+  done
+fi
+# END ANSIBLE MANAGED BLOCK
+
+. "$HOME/.local/bin/env"

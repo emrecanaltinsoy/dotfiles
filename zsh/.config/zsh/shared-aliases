@@ -1,17 +1,3 @@
-# BEGIN ANSIBLE MANAGED BLOCK
-# Include .bashrc.d folder for specific ansible dev feature if available
-if [[ -d "$HOME/.bashrc.d" ]]; then
-  for file in $(ls ${HOME}/.bashrc.d/ | sort -n | grep '.bashrc$' 2>/dev/null);
-  do
-    source "${HOME}/.bashrc.d/${file}"
-  done
-fi
-# END ANSIBLE MANAGED BLOCK
-
-. "$HOME/.local/bin/env"
-
-export GPG_TTY=$(tty)
-
 ## Package manager aliases
 if [[ -f /etc/arch-release ]]; then
   # Check if yay is available, use it instead of pacman

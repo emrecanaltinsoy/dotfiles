@@ -1,3 +1,5 @@
+export GPG_TTY=$(tty)
+
 # Pat/ to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
@@ -117,3 +119,18 @@ source $HOME/.config/zsh/starship_comp
 
 # autoload -U compinit
 compinit
+
+# BEGIN ANSIBLE MANAGED BLOCK
+# Include .bashrc.d folder for specific ansible dev feature
+if [[ -d "$HOME/.bashrc.d" ]]; then
+  for file in $(ls ${HOME}/.bashrc.d/ | sort -n | grep '.bashrc$' 2>/dev/null);
+  do
+    if [[ "$file" == *.bashrc ]]; then
+      source "${HOME}/.bashrc.d/${file}"
+    fi
+  done
+fi
+# END ANSIBLE MANAGED BLOCK
+
+. "$HOME/.local/bin/env"
+
