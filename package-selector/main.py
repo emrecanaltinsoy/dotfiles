@@ -11,6 +11,8 @@ from textual.binding import Binding
 
 PACKAGES = [
     "awscli",
+    "terraform",
+    "sops",
     "neovim",
     "nvm",
     "lazygit",

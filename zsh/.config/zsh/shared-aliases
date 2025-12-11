@@ -31,7 +31,7 @@ if [[ -f /etc/arch-release ]]; then
 elif [[ -f /etc/redhat-release ]]; then
   alias update="sudo yum check-update"
   alias upgrade="sudo yum update"
-  alias install="sudo yum install"
+  alias install="sudo yum install -y"
   alias uninstall="sudo yum remove"
   alias autoremove="sudo yum autoremove"
 elif [[ -f /etc/alpine-release ]]; then
@@ -44,7 +44,7 @@ else
   # Generic fallback apt
   alias update="sudo apt update"
   alias upgrade="sudo apt upgrade"
-  alias install="sudo apt install"
+  alias install="sudo apt install -y"
   alias uninstall="sudo apt remove"
   alias autoremove="sudo apt autoremove"
   alias remove-residuals="sudo apt purge \$(dpkg -l | grep '^rc' | awk '{aggr=aggr \" \" \$2} END {print aggr}')"
