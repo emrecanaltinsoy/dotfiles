@@ -14,6 +14,10 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH=/home/emrecan/.opencode/bin:$PATH
 
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+
 export PNPM_HOME="/home/emrecan/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
