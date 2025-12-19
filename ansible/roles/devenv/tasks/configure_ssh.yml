@@ -1,0 +1,14 @@
+---
+# Configure SSH
+
+- name: Generate ssh key id_ed25519
+  command: ssh-keygen -t ed25519 -C {{ user_email }} -f {{ ansible_user_dir }}/.ssh/id_ed25519
+  args:
+    creates: "{{ ansible_user_dir }}/.ssh/id_ed25519"
+
+- name: Copy SSH configuration for Keychain Manager
+  copy:
+    src: files/ssh_keychain.bashrc
+    dest: "{{ ansible_user_dir }}/.bashrc.d/1_ssh_keychain.bashrc"
+    mode: 0600
+

@@ -1,0 +1,20 @@
+---
+# tasks file for roles/devenv
+- name: Install dependencies
+  import_tasks:
+    file: install_dependencies.yml
+- name: Configure GPG
+  import_tasks:
+    file: configure_gpg.yml
+- name: Configure SSH
+  import_tasks:
+    file: configure_ssh.yml
+- name: Configure Git
+  import_tasks:
+    file: configure_git.yml
+- name: Install GH CLI
+  import_tasks:
+    file: install_gh_cli.yml
+- name: Install ZSH
+  import_tasks:
+    file: install_zsh.yml

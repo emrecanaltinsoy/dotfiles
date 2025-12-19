@@ -1,0 +1,8 @@
+- name: Configure WSL
+  hosts: wsl
+  vars_files:
+    - secrets.yml
+  roles:
+    - discovery
+    - devenv
+    - docker

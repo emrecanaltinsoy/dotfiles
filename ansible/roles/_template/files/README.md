@@ -1,0 +1,1 @@
+Contains static files that you want to deploy to your managed hosts.

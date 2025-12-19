@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Install docker and enable the service
+
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  galaxy_tags: []
+
+dependencies: []

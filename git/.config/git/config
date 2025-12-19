@@ -1,9 +1,3 @@
-# BEGIN ANSIBLE MANAGED BLOCK
-[http]
-  proxy = http://127.0.0.1:9000
-[https]
-  proxy = http://127.0.0.1:9000
-# END ANSIBLE MANAGED BLOCK
 [user]
 	signingkey = 260365214503B692
 	name = Emrecan Altinsoy

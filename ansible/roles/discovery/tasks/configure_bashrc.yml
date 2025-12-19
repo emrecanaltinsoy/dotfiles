@@ -1,0 +1,13 @@
+---
+# tasks file for bashrc configuration
+- name: Test if .bashrc.d folder exists
+  stat:
+    path: "{{ ansible_user_dir }}/.bashrc.d"
+  register: bashrcd_folder
+
+- name: Create bashrc.d folder
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc.d"
+    state: directory
+    mode: 0700
+  when: not bashrcd_folder.stat.exists

@@ -1,0 +1,45 @@
+---
+# Update and install dependencies
+
+- name: Add git-core PPA
+  shell: |
+    sudo -E add-apt-repository -y ppa:git-core/ppa
+  become: true
+  args:
+    executable: /bin/bash
+    creates: /etc/apt/sources.list.d/git-core-ubuntu-ppa-*.list
+
+- name: Update apt dependencies
+  become: true
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+  ignore_errors: true
+
+- name: Install apt dependencies
+  become: true
+  apt:
+    name:
+      - build-essential
+      - curl
+      - git
+      - gnupg
+      - gpg
+      - gpg-agent
+      - jq
+      - keychain
+      - openssh-client
+      - python3
+      - python3-pip
+      - python3-venv
+      - python3-wheel
+      - python3-dev
+      - socat
+      - software-properties-common
+      - unzip
+      - wget
+      - zip
+      - zsh
+      - stow
+    state: present

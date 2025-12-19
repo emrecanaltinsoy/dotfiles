@@ -1,9 +1,6 @@
 /*
 !.gitignore
 !.zshrc
-!alias.rc
-!.p10k.zsh
 !install_packages.sh
 !starship_comp
-!ssh
 !shared-aliases

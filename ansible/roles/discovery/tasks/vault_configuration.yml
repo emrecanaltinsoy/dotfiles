@@ -1,0 +1,14 @@
+---
+# Check Vault configuration
+- name: Ensure user_email is defined
+  assert:
+    that: "user_email is defined"
+    fail_msg: "user_email is not defined. Please set the user_email in secrets.yml (show README.md)"
+- name: Ensure user_fullname is defined
+  assert:
+    that: "user_fullname is defined"
+    fail_msg: "user_fullname is not defined. Please set the user_fullname in secrets.yml (show README.md)"
+- name: Ensure user_passphrase is defined
+  assert:
+    that: "user_passphrase is defined"
+    fail_msg: "user_passphrase is not defined. Please set the user_passphrase in secrets.yml (show README.md)"

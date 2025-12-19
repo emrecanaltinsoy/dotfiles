@@ -74,11 +74,6 @@ setopt HIST_IGNORE_DUPS     # Don't record an entry that was just recorded again
 setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space.
 
-### SSH
-if [[ -f $HOME/.config/zsh/ssh ]]; then
-  source ~/.config/zsh/ssh
-fi
-
 ## Secrets
 if [[ -f $HOME/.config/zsh/secrets ]]; then
   source $HOME/.config/zsh/secrets

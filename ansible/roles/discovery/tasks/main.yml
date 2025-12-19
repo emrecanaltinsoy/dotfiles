@@ -1,0 +1,11 @@
+---
+# tasks file for roles/discovery
+- name: Discover Vault configuration
+  import_tasks:
+    file: vault_configuration.yml
+- name: Cleanup previous configuration
+  import_tasks:
+    file: cleanup_previous_configuration.yml
+- name: Configure bashrc
+  import_tasks:
+    file: configure_bashrc.yml
