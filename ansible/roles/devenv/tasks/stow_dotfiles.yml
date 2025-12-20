@@ -47,6 +47,14 @@
   changed_when: stow_result.rc == 0
   failed_when: false
 
+- name: Reset repository to origin/main after stow adopt
+  shell: |
+    cd "{{ dotfiles_repo }}"
+    git reset --hard @{u}
+  args:
+    executable: /bin/bash
+  changed_when: false
+
 - name: Report stow results
   debug:
     msg: "Stowed {{ item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
