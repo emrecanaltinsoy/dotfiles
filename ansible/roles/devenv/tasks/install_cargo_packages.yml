@@ -41,12 +41,12 @@
       - name: xh
         bin: xh
         locked: true
-      - name: yazi-fm
-        bin: yazi
-        locked: true
-      - name: zellij
-        bin: zellij
-        locked: true
+      # - name: yazi-fm
+      #   bin: yazi
+      #   locked: true
+      # - name: zellij
+      #   bin: zellij
+      #   locked: true
       - name: zoxide
         bin: zoxide
         locked: true
