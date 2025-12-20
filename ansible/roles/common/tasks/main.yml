@@ -1,0 +1,5 @@
+---
+# tasks file for roles/common
+- name: Source .zshrc
+  import_tasks:
+    file: source_zshrc.yml

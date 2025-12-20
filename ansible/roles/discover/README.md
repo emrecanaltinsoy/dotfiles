@@ -1,31 +1,84 @@
 Discover
-=========
+========
 
-This role is used to gather information and set variable for the deployment.
+Gathers information about the current environment and validates required configuration. This role should run before other roles to detect the environment and ensure all required variables are defined.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Ansible 2.1 or higher
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+This role validates that the following variables are defined (typically in a vault-encrypted `secrets.yml`):
+
+| Variable | Description |
+|----------|-------------|
+| `user_email` | User's email address (required) |
+| `user_fullname` | User's full name (required) |
+| `user_passphrase` | Passphrase for GPG key (required) |
+
+### Exported Facts
+
+This role sets the following facts for use by other roles:
+
+| Fact | Description |
+|------|-------------|
+| `IS_WSL` | Boolean indicating if running in Windows Subsystem for Linux |
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None. This role should be run first in the playbook.
+
+Tasks
+-----
+
+### 1. Detect WSL Environment
+
+Checks `/proc/version` for Microsoft/WSL indicators and sets the `IS_WSL` fact. This fact is used by other roles to skip or modify behavior for WSL environments.
+
+### 2. Vault Configuration Validation
+
+Validates that required secrets are defined:
+- `user_email`
+- `user_fullname`
+- `user_passphrase`
+
+Fails with descriptive error messages if any required variable is missing.
+
+### 3. Cleanup Previous Configuration
+
+Removes legacy configuration files/folders from previous deployments:
+- Removes `~/.bashrc.d` folder
+
+### 4. Configure Bashrc
+
+Creates the `~/.bashrc.d` directory structure with proper permissions (0700) for modular bash configuration.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+- hosts: localhost
+  vars_files:
+    - secrets.yml
+  roles:
+    - discover  # Run first to detect environment
+    - devenv
+    - common
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Example `secrets.yml`:
+
+```yaml
+user_email: "john.doe@example.com"
+user_fullname: "John Doe"
+user_passphrase: "your-secure-passphrase"
+```
+
+Encrypt with: `ansible-vault encrypt secrets.yml`
 
 License
 -------
@@ -35,4 +88,4 @@ MIT
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Emrecan Altinsoy

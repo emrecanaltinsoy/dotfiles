@@ -64,7 +64,7 @@ function test_ssh_key_on_gh(){
 function export_ssh_key_to_gh(){
   # Export default ssh-key to GitHub
   if [ -f ~/.ssh/id_ed25519.pub ]; then
-    gh ssh-key add ${HOME}/.ssh/id_ed25519.pub --title "wsl ${HOSTNAME} ssh key"
+    gh ssh-key add ${HOME}/.ssh/id_ed25519.pub --title "$(hostname) ssh key"
     test_ssh_key_on_gh
   else
     echo "SSH public key ~/.ssh/id_ed25519.pub not found. Please restart deployment"

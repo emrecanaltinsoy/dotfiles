@@ -1,5 +1,5 @@
-- name: Configure WSL
-  hosts: wsl
+- name: Configure Local
+  hosts: local
   vars_files:
     - secrets.yml
   roles:
