@@ -78,3 +78,10 @@
   set_fact:
     shell_changed_message: "Default shell changed to zsh. Please logout and login again, then restart the deployment for changes to take effect."
   when: current_shell.stdout != zsh_path.stdout
+
+- name: Initialize zsh shell
+  shell: zsh -c 'source ~/.zshrc'
+  args:
+    executable: /bin/bash
+  changed_when: false
+  ignore_errors: true

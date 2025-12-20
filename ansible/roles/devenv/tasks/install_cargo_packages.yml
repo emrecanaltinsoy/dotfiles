@@ -64,9 +64,18 @@
   register: package_checks
   ignore_errors: true
   changed_when: false
+  no_log: true
   when:
     - cargo_check.rc == 0
     - not (item.skip_wsl | default(false) and IS_WSL)
+
+- name: Display cargo package status
+  debug:
+    msg: "{{ item.item.name }}: {{ 'installed' if item.rc == 0 else 'will be installed' }}"
+  loop: "{{ package_checks.results }}"
+  when:
+    - cargo_check.rc == 0
+    - item.rc is defined
 
 - name: Install missing cargo packages
   shell: |
