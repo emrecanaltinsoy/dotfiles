@@ -1,0 +1,12 @@
+---
+# Bootstrap playbook for remote servers without Python
+# Run this before site.yml on fresh servers
+# Safe to run even if Python is already installed
+
+- name: Bootstrap Python on remote servers
+  hosts: servers
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install Python 3
+      raw: apt-get update && apt-get install -y python3

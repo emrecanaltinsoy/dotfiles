@@ -161,6 +161,87 @@ Now follow the [Quick Start](#quick-start-ubuntu) instructions above.
 
 ---
 
+## Running on Remote Servers
+
+You can deploy this configuration to remote Ubuntu servers by modifying the inventory file.
+
+### Inventory File (hosts)
+
+The `hosts` file defines which machines Ansible will target:
+
+```ini
+[local]
+localhost ansible_host=127.0.0.1 ansible_connection=local
+
+[servers]
+server1 ansible_host=192.168.1.100 ansible_user=ubuntu
+server2 ansible_host=192.168.1.101 ansible_user=ubuntu ansible_port=2222
+
+[servers:vars]
+ansible_ssh_private_key_file=~/.ssh/id_ed25519
+```
+
+### Common Inventory Variables
+
+| Variable | Description |
+|----------|-------------|
+| `ansible_host` | IP address or hostname |
+| `ansible_user` | SSH username |
+| `ansible_port` | SSH port (default: 22) |
+| `ansible_connection` | Connection type: `ssh`, `local`, `docker` |
+| `ansible_ssh_private_key_file` | Path to SSH private key |
+
+### Copy SSH Key to Remote Server
+
+Before running Ansible, copy your SSH public key to the remote server:
+
+```Shell
+ssh-copy-id -i ~/.ssh/id_ed25519.pub ubuntu@192.168.1.100
+```
+
+This will prompt for the remote user's password and enable passwordless SSH authentication.
+
+**Using a different port:**
+
+```Shell
+ssh-copy-id -i ~/.ssh/id_ed25519.pub -p 2222 ubuntu@192.168.1.100
+```
+
+**Verify connection:**
+
+```Shell
+ssh ubuntu@192.168.1.100
+```
+
+### Bootstrap Remote Servers (if Python is not installed)
+
+Ansible requires Python on the remote host. If Python 3 is not installed, run the bootstrap playbook first:
+
+```Shell
+ansible-playbook bootstrap.yml -i hosts -l servers --ask-become-pass
+```
+
+This uses the `raw` module which doesn't require Python on the remote host.
+
+### Deploy to Remote Servers
+
+Run on all servers in a group:
+
+```Shell
+ansible-playbook site.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
+```
+
+Run on a single server:
+
+```Shell
+ansible-playbook site.yml -i hosts -l server1 --ask-become-pass --ask-vault-pass
+```
+
+> [!NOTE]
+> Make sure SSH access is configured before running the playbook.
+
+---
+
 ## How to reduce the size of the WSL Disk
 
 The disk file grows over time, but cleanup inside WSL does not automatically shrink the disk file.
