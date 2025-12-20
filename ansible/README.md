@@ -6,6 +6,23 @@ We will install these distribution for WSL:
   - Docker: To use docker inside WSL
   - Git: With SSH and GPG configuration for signing commit
   - Github CLI (gh)
+  - ZSH: With Oh-My-Zsh and plugins (syntax-highlighting, autosuggestions, k, fzf-history-search)
+  - Starship: Cross-shell prompt
+  - Neovim: Modern vim editor
+  - Tmux: Terminal multiplexer with Oh-My-Tmux and Tmuxifier
+  - AWS CLI
+  - Terraform
+  - NVM: Node Version Manager
+  - OpenCode: AI coding assistant
+  - SOPS: Secrets management
+  - Lazygit: Git TUI
+  - xh: HTTP client
+  - Rust: Via rustup
+  - uv: Python package manager
+  - fzf: Fuzzy finder
+  - neofetch: System info display
+  - Cargo packages: bat, exa, fd-find, git-delta, procs, rm-improved, ripgrep, tokei, topgrade, xcp, yazi, zellij, zoxide
+  - Stow: For managing dotfiles symlinks
 
 ## Setup WSL (On Windows)
 
@@ -127,8 +144,10 @@ cd ${HOME}/stow-dotfiles/ansible/ && ansible-playbook site.yml -i hosts --ask-be
 
 ### Post-Install
 
-```
-source ${HOME}/.bashrc
+After deployment, logout and login again (or restart WSL) to use ZSH as your default shell.
+
+```Shell
+source ${HOME}/.zshrc
 ```
 
 > [!IMPORTANT]  
