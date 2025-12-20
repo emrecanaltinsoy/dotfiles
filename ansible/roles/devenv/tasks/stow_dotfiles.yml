@@ -41,6 +41,8 @@
   args:
     executable: /bin/bash
   loop: "{{ dotfile_dirs }}"
+  loop_control:
+    label: "{{ item }}"
   register: stow_result
   changed_when: stow_result.rc == 0
   failed_when: false
@@ -49,4 +51,6 @@
   debug:
     msg: "Stowed {{ item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
   loop: "{{ stow_result.results }}"
+  loop_control:
+    label: "{{ item.item }}"
   when: stow_result.results is defined

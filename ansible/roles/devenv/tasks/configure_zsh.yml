@@ -79,9 +79,28 @@
     shell_changed_message: "Default shell changed to zsh. Please logout and login again, then restart the deployment for changes to take effect."
   when: current_shell.stdout != zsh_path.stdout
 
-- name: Initialize zsh shell
+- name: Check if .zshrc exists in home directory
+  stat:
+    path: "{{ ansible_user_dir }}/.zshrc"
+  register: zshrc_home
+
+- name: Check if .zshrc exists in .config/zsh
+  stat:
+    path: "{{ ansible_user_dir }}/.config/zsh/.zshrc"
+  register: zshrc_config
+
+- name: Initialize zsh shell from home directory
   shell: zsh -c 'source ~/.zshrc'
   args:
     executable: /bin/bash
   changed_when: false
   ignore_errors: true
+  when: zshrc_home.stat.exists
+
+- name: Initialize zsh shell from .config/zsh
+  shell: zsh -c 'source ~/.config/zsh/.zshrc'
+  args:
+    executable: /bin/bash
+  changed_when: false
+  ignore_errors: true
+  when: not zshrc_home.stat.exists and zshrc_config.stat.exists
