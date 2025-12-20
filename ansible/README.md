@@ -61,7 +61,7 @@ user_passphrase: "passphrase_to_generate_new_gpg_key"
 ### Deploy environment
 
 ```Shell
-cd ${HOME}/stow-dotfiles/ansible/ && ansible-playbook site.yml -i hosts --ask-become-pass --ask-vault-pass
+cd ${HOME}/stow-dotfiles/ansible/ && ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
 > [!NOTE]  
@@ -228,13 +228,13 @@ This uses the `raw` module which doesn't require Python on the remote host.
 Run on all servers in a group:
 
 ```Shell
-ansible-playbook site.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
 ```
 
 Run on a single server:
 
 ```Shell
-ansible-playbook site.yml -i hosts -l server1 --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts -l server1 --ask-become-pass --ask-vault-pass
 ```
 
 > [!NOTE]

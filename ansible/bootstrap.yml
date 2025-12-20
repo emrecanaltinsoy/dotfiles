@@ -1,6 +1,6 @@
 ---
 # Bootstrap playbook for remote servers without Python
-# Run this before site.yml on fresh servers
+# Run this before setup.yml on fresh servers
 # Safe to run even if Python is already installed
 
 - name: Bootstrap Python on remote servers
