@@ -61,10 +61,12 @@
   args:
     executable: /bin/bash
   loop: "{{ cargo_packages }}"
+  loop_control:
+    label: "{{ item.name }}"
   register: package_checks
   ignore_errors: true
   changed_when: false
-  no_log: true
+  failed_when: false
   when:
     - cargo_check.rc == 0
     - not (item.skip_wsl | default(false) and IS_WSL)
@@ -73,6 +75,8 @@
   debug:
     msg: "{{ item.item.name }}: {{ 'installed' if item.rc == 0 else 'will be installed' }}"
   loop: "{{ package_checks.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
   when:
     - cargo_check.rc == 0
     - item.rc is defined
@@ -84,6 +88,8 @@
   args:
     executable: /bin/bash
   loop: "{{ package_checks.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
   when:
     - cargo_check.rc == 0
     - item.rc is defined
