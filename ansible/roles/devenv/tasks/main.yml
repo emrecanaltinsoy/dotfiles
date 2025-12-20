@@ -24,3 +24,6 @@
 - name: Install Additional Packages
   import_tasks:
     file: install_packages.yml
+- name: Stow Dotfiles
+  import_tasks:
+    file: stow_dotfiles.yml

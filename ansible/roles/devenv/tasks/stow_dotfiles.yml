@@ -1,0 +1,52 @@
+---
+# Stow dotfiles to home directory
+
+- name: Define dotfile directories to stow
+  set_fact:
+    dotfile_dirs:
+      - alacrity
+      - bash
+      - git
+      - lazygit
+      - neofetch
+      - nvim
+      - opencode
+      - starship
+      - tmux
+      - topgrade
+      - zellij
+      - zsh
+
+- name: Get repository root directory
+  set_fact:
+    dotfiles_repo: "{{ playbook_dir | dirname }}"
+
+- name: Check if stow is installed
+  shell: command -v stow
+  register: stow_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install stow if not present
+  become: true
+  apt:
+    name: stow
+    state: present
+  when: stow_check.rc != 0
+
+- name: Stow dotfile directories
+  shell: |
+    cd "{{ dotfiles_repo }}"
+    stow --adopt {{ item }} -t "$HOME"
+  args:
+    executable: /bin/bash
+  loop: "{{ dotfile_dirs }}"
+  register: stow_result
+  changed_when: stow_result.rc == 0
+  failed_when: false
+
+- name: Report stow results
+  debug:
+    msg: "Stowed {{ item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
+  loop: "{{ stow_result.results }}"
+  when: stow_result.results is defined
