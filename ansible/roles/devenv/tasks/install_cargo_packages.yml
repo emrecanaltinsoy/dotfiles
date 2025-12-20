@@ -38,6 +38,9 @@
       - name: xcp
         bin: xcp
         locked: true
+      - name: xh
+        bin: xh
+        locked: true
       - name: yazi-fm
         bin: yazi
         locked: true

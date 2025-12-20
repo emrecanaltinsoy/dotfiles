@@ -184,16 +184,3 @@
     repo: https://github.com/jimeh/tmuxifier.git
     dest: "{{ ansible_user_dir }}/.tmuxifier"
   when: not tmuxifier_dir.stat.exists
-
-# xh
-- name: Check if xh is installed
-  shell: command -v xh
-  register: xh_check
-  ignore_errors: true
-  changed_when: false
-
-- name: Install xh
-  shell: curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
-  args:
-    executable: /bin/bash
-  when: xh_check.rc != 0
