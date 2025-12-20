@@ -101,6 +101,31 @@ uv run python main.py
 
 See [package-selector/README.md](package-selector/README.md) for detailed documentation.
 
+## Automated Setup with Ansible
+
+For a complete automated development environment setup, use the Ansible playbooks in the `ansible/` directory. This will install all required tools, configure Git with GPG signing, set up Zsh with Oh-My-Zsh, and stow all dotfiles automatically.
+
+### Quick Start
+
+```bash
+# Install Ansible
+sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
+
+# Clone and enter the repository
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+
+# Create encrypted secrets file
+EDITOR=nano ansible-vault create secrets.yml
+
+# Run the setup playbook
+ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+```
+
+See [ansible/README.md](ansible/README.md) for detailed documentation including:
+- Remote server deployment
+- WSL setup instructions
+- Available roles and what they install
+
 ## How It Works
 
 When you run `stow nvim`, Stow will create symbolic links like:
