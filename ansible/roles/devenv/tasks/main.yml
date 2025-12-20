@@ -12,9 +12,15 @@
 - name: Configure Git
   import_tasks:
     file: configure_git.yml
+- name: Install ZSH
+  import_tasks:
+    file: configure_zsh.yml
 - name: Install GH CLI
   import_tasks:
     file: install_gh_cli.yml
-- name: Install ZSH
+- name: Install Cargo Packages
   import_tasks:
-    file: install_zsh.yml
+    file: install_cargo_packages.yml
+- name: Install Additional Packages
+  import_tasks:
+    file: install_packages.yml

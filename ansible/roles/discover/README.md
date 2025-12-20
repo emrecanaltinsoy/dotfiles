@@ -1,4 +1,4 @@
-Discovery
+Discover
 =========
 
 This role is used to gather information and set variable for the deployment.

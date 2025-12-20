@@ -1,0 +1,199 @@
+---
+# Install additional packages (non-cargo)
+
+# AWS CLI
+- name: Check if AWS CLI is installed
+  shell: command -v aws
+  register: aws_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install AWS CLI
+  shell: |
+    cd "$HOME"
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip -o awscliv2.zip
+    sudo ./aws/install
+    rm -rf awscliv2.zip aws
+  args:
+    executable: /bin/bash
+  when: aws_check.rc != 0
+
+# Lazygit
+- name: Check if lazygit is installed
+  shell: command -v lazygit
+  register: lazygit_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install lazygit
+  shell: |
+    cd "$HOME"
+    wget https://github.com/jesseduffield/lazygit/releases/download/v0.56.0/lazygit_0.56.0_linux_x86_64.tar.gz -O lazygit.tar.gz
+    tar xzf lazygit.tar.gz
+    mkdir -p "$HOME/.bin"
+    mv lazygit "$HOME/.bin/lazygit"
+    rm -f lazygit.tar.gz LICENSE README.md
+  args:
+    executable: /bin/bash
+  when: lazygit_check.rc != 0
+
+# Neovim
+- name: Check if neovim is installed
+  stat:
+    path: "{{ ansible_user_dir }}/nvim-linux-x86_64"
+  register: nvim_check
+
+- name: Install neovim
+  shell: |
+    cd "$HOME"
+    wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz -O nvim-linux-x86_64.tar.gz
+    tar xzf nvim-linux-x86_64.tar.gz
+    rm nvim-linux-x86_64.tar.gz
+  args:
+    executable: /bin/bash
+  when: not nvim_check.stat.exists
+
+# NVM
+- name: Check if nvm is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.nvm/nvm.sh"
+  register: nvm_check
+
+- name: Install nvm
+  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  args:
+    executable: /bin/bash
+  when: not nvm_check.stat.exists
+
+# OpenCode
+- name: Check if opencode is installed
+  shell: command -v opencode
+  register: opencode_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install opencode
+  shell: curl -fsSL https://opencode.ai/install | bash
+  args:
+    executable: /bin/bash
+  when: opencode_check.rc != 0
+
+# SOPS
+- name: Check if sops is installed
+  shell: command -v sops
+  register: sops_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install sops
+  shell: |
+    mkdir -p "$HOME/.bin"
+    wget https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64 -O "$HOME/.bin/sops"
+    chmod +x "$HOME/.bin/sops"
+  args:
+    executable: /bin/bash
+  when: sops_check.rc != 0
+
+# Starship
+- name: Check if starship is installed
+  shell: command -v starship
+  register: starship_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install starship
+  shell: |
+    mkdir -p "$HOME/.bin"
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.bin"
+  args:
+    executable: /bin/bash
+  when: starship_check.rc != 0
+
+# Terraform
+- name: Check if HashiCorp GPG key exists
+  stat:
+    path: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  register: hashicorp_gpg
+
+- name: Check if terraform is installed
+  shell: command -v terraform
+  register: terraform_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Add HashiCorp GPG key
+  shell: wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  args:
+    executable: /bin/bash
+  when:
+    - terraform_check.rc != 0
+    - not hashicorp_gpg.stat.exists
+
+- name: Add HashiCorp apt repository
+  shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+  args:
+    executable: /bin/bash
+  when: terraform_check.rc != 0
+
+- name: Install terraform
+  become: true
+  apt:
+    name: terraform
+    state: present
+    update_cache: yes
+  when: terraform_check.rc != 0
+
+# Tmux and Oh-My-Tmux
+- name: Check if tmux is installed
+  shell: command -v tmux
+  register: tmux_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install tmux
+  become: true
+  apt:
+    name: tmux
+    state: present
+  when: tmux_check.rc != 0
+
+- name: Check if oh-my-tmux is installed
+  stat:
+    path: "{{ ansible_user_dir }}/oh-my-tmux"
+  register: omt_dir
+
+- name: Install oh-my-tmux
+  shell: |
+    cd "$HOME"
+    git clone --single-branch https://github.com/gpakosz/.tmux.git oh-my-tmux
+    mkdir -p "$HOME/.config/tmux"
+    ln -s -f "$HOME/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
+  args:
+    executable: /bin/bash
+  when: not omt_dir.stat.exists
+
+- name: Check if tmuxifier is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.tmuxifier"
+  register: tmuxifier_dir
+
+- name: Install tmuxifier
+  git:
+    repo: https://github.com/jimeh/tmuxifier.git
+    dest: "{{ ansible_user_dir }}/.tmuxifier"
+  when: not tmuxifier_dir.stat.exists
+
+# xh
+- name: Check if xh is installed
+  shell: command -v xh
+  register: xh_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install xh
+  shell: curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
+  args:
+    executable: /bin/bash
+  when: xh_check.rc != 0

@@ -1,0 +1,16 @@
+---
+# Detect if running in WSL environment
+
+- name: Check if running in WSL
+  shell: grep -qiE "(microsoft|wsl)" /proc/version
+  register: wsl_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Set IS_WSL fact
+  set_fact:
+    IS_WSL: "{{ wsl_check.rc == 0 }}"
+
+- name: Display WSL detection result
+  debug:
+    msg: "Running in WSL: {{ IS_WSL }}"

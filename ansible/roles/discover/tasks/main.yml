@@ -1,5 +1,8 @@
 ---
-# tasks file for roles/discovery
+# tasks file for roles/discover
+- name: Detect WSL environment
+  import_tasks:
+    file: detect_wsl.yml
 - name: Discover Vault configuration
   import_tasks:
     file: vault_configuration.yml

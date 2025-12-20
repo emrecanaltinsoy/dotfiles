@@ -1,0 +1,80 @@
+---
+# Install ZSH and Oh-My-Zsh with plugins
+
+- name: Check if oh-my-zsh is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.oh-my-zsh"
+  register: omz_dir
+
+- name: Install Oh-My-Zsh
+  shell: |
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  args:
+    executable: /bin/bash
+  when: not omz_dir.stat.exists
+
+- name: Check if zsh-syntax-highlighting plugin is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+  register: zsh_syntax_highlighting_dir
+
+- name: Install zsh-syntax-highlighting plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+  when: not zsh_syntax_highlighting_dir.stat.exists
+
+- name: Check if zsh-autosuggestions plugin is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  register: zsh_autosuggestions_dir
+
+- name: Install zsh-autosuggestions plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  when: not zsh_autosuggestions_dir.stat.exists
+
+- name: Check if k plugin is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/k"
+  register: k_dir
+
+- name: Install k plugin
+  git:
+    repo: https://github.com/supercrabtree/k
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/k"
+  when: not k_dir.stat.exists
+
+- name: Check if zsh-fzf-history-search plugin is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
+  register: zsh_fzf_history_search_dir
+
+- name: Install zsh-fzf-history-search plugin
+  git:
+    repo: https://github.com/joshskidmore/zsh-fzf-history-search
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
+  when: not zsh_fzf_history_search_dir.stat.exists
+
+- name: Get current user shell
+  shell: "getent passwd {{ ansible_user_id }} | cut -d: -f7"
+  register: current_shell
+  changed_when: false
+
+- name: Get zsh path
+  shell: which zsh
+  register: zsh_path
+  changed_when: false
+
+- name: Set zsh as default shell
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: "{{ zsh_path.stdout }}"
+  when: current_shell.stdout != zsh_path.stdout
+
+- name: Track shell change notification
+  set_fact:
+    shell_changed_message: "Default shell changed to zsh. Please logout and login again, then restart the deployment for changes to take effect."
+  when: current_shell.stdout != zsh_path.stdout

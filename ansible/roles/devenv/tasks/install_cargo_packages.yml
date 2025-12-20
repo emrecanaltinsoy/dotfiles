@@ -1,0 +1,81 @@
+---
+# Install cargo packages
+
+- name: Define cargo packages to install
+  set_fact:
+    cargo_packages:
+      - name: alacritty
+        bin: alacritty
+        locked: true
+        skip_wsl: true
+      - name: bat
+        bin: bat
+        locked: true
+      - name: exa
+        bin: exa
+        locked: true
+      - name: fd-find
+        bin: fd
+        locked: true
+      - name: git-delta
+        bin: delta
+        locked: true
+      - name: procs
+        bin: procs
+        locked: true
+      - name: rm-improved
+        bin: rip
+        locked: true
+      - name: ripgrep
+        bin: rg
+        locked: true
+      - name: tokei
+        bin: tokei
+        locked: true
+      - name: topgrade
+        bin: topgrade
+        locked: true
+      - name: xcp
+        bin: xcp
+        locked: true
+      - name: yazi-fm
+        bin: yazi
+        locked: true
+      - name: zellij
+        bin: zellij
+        locked: true
+      - name: zoxide
+        bin: zoxide
+        locked: true
+
+- name: Check if cargo is available
+  shell: command -v cargo
+  register: cargo_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Check which cargo packages are already installed
+  shell: |
+    source "$HOME/.cargo/env" 2>/dev/null || true
+    command -v {{ item.bin }}
+  args:
+    executable: /bin/bash
+  loop: "{{ cargo_packages }}"
+  register: package_checks
+  ignore_errors: true
+  changed_when: false
+  when:
+    - cargo_check.rc == 0
+    - not (item.skip_wsl | default(false) and IS_WSL)
+
+- name: Install missing cargo packages
+  shell: |
+    source "$HOME/.cargo/env" 2>/dev/null || true
+    cargo install {{ item.item.name }} --locked -q
+  args:
+    executable: /bin/bash
+  loop: "{{ package_checks.results }}"
+  when:
+    - cargo_check.rc == 0
+    - item.rc is defined
+    - item.rc != 0

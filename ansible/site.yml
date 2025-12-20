@@ -3,6 +3,11 @@
   vars_files:
     - secrets.yml
   roles:
-    - discovery
+    - discover
     - devenv
     - docker
+  post_tasks:
+    - name: Display shell change notification
+      debug:
+        msg: "{{ shell_changed_message }}"
+      when: shell_changed_message is defined
