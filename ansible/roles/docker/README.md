@@ -6,7 +6,7 @@ Installs Docker Engine using the official installation script and configures it 
 Requirements
 ------------
 
-- Ansible 2.1 or higher
+- Ansible 2.9 or higher
 - Ubuntu/Debian-based system
 - sudo privileges
 - curl installed on the target system

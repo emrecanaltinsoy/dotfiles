@@ -281,6 +281,39 @@ detail vdisk
 
 MIT
 
+## Testing
+
+This project uses [Molecule](https://molecule.readthedocs.io/) for testing Ansible roles.
+
+### Prerequisites
+
+```bash
+cd ansible
+uv sync  # Install dependencies including molecule
+```
+
+### Running Tests
+
+```bash
+# Run full test suite (create, converge, idempotence, verify, destroy)
+uv run molecule test
+
+# Keep instance after test for debugging
+uv run molecule test --destroy=never
+
+# Run individual steps
+uv run molecule create    # Create test container
+uv run molecule converge  # Run playbook
+uv run molecule verify    # Run verification tests
+uv run molecule destroy   # Cleanup
+```
+
+### Test Configuration
+
+- **Platform**: Ubuntu 22.04 (Docker)
+- **Test variables**: Defined in `molecule/default/molecule.yml`
+- **Verification**: `molecule/default/verify.yml` validates role outputs
+
 ## Author
 
 Emrecan Altinsoy

@@ -6,7 +6,8 @@ Gathers information about the current environment and validates required configu
 Requirements
 ------------
 
-- Ansible 2.1 or higher
+- Ansible 2.9 or higher
+- Debian-based system (Ubuntu, Debian, etc.)
 
 Role Variables
 --------------
@@ -48,12 +49,7 @@ Validates that required secrets are defined:
 
 Fails with descriptive error messages if any required variable is missing.
 
-### 3. Cleanup Previous Configuration
-
-Removes legacy configuration files/folders from previous deployments:
-- Removes `~/.bashrc.d` folder
-
-### 4. Configure Bashrc
+### 3. Configure Bashrc
 
 Creates the `~/.bashrc.d` directory structure with proper permissions (0700) for modular bash configuration.
 

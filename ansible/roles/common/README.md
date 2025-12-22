@@ -6,7 +6,7 @@ Contains common tasks that are shared across other roles. Currently handles sour
 Requirements
 ------------
 
-- Ansible 2.1 or higher
+- Ansible 2.9 or higher
 - Zsh shell installed on the target system
 
 Role Variables

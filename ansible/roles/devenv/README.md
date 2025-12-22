@@ -6,7 +6,7 @@ Configures a complete development environment including Git with GPG commit sign
 Requirements
 ------------
 
-- Ansible 2.1 or higher
+- Ansible 2.9 or higher
 - Ubuntu/Debian-based system (uses apt)
 - sudo privileges for package installation
 
