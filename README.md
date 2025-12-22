@@ -1,117 +1,30 @@
-# Dotfiles with GNU Stow
+# Dotfiles with Ansible Deployment
 
-This repository contains my personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/), a symlink farm manager that makes it easy to organize and deploy configuration files.
+Automated development environment setup for Linux using Ansible. Supports Debian-based (Ubuntu, Debian) and RedHat-based (Rocky Linux, CentOS, Fedora) systems, including Windows Subsystem for Linux (WSL).
 
-## What is GNU Stow?
+## What Gets Installed
 
-GNU Stow is a tool that creates symbolic links from a central directory to your home directory (or any target directory). This allows you to keep all your dotfiles organized in one place while having them appear in their expected locations.
+| Category | Tools |
+|----------|-------|
+| **Container** | Docker (Debian) / Podman (RedHat) |
+| **Version Control** | Git (with SSH/GPG signing), GitHub CLI, Lazygit |
+| **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
+| **Editor** | Neovim |
+| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, Alacritty |
+| **Cloud/IaC** | AWS CLI, Terraform, SOPS |
+| **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
+| **CLI Tools** | bat, exa, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
+| **Other** | OpenCode, neofetch, Stow |
 
-## Repository Structure
+## Quick Start
 
-Each directory in this repository represents a "package" that can be installed independently:
-
-```
-stow-dotfiles/
-├── alacritty/          # Alacritty terminal emulator config
-├── bash/               # Bash shell configuration
-├── git/                # Git configuration and templates
-├── lazygit/            # Lazygit configuration
-├── neofetch/           # Neofetch system info config
-├── nvim/               # Neovim configuration
-├── opencode/           # OpenCode configuration
-├── package-selector/   # Interactive package installer (not stowed)
-├── starship/           # Starship prompt config
-├── tmux/               # Tmux configuration and layouts
-├── topgrade/           # Topgrade system updater config
-├── zellij/             # Zellij terminal multiplexer config
-└── zsh/                # Zsh shell configuration
-```
-
-## Installation
-
-### Prerequisites
-
-Make sure you have GNU Stow installed:
-
-```bash
-# Ubuntu/Debian
-sudo apt install stow
-
-# macOS with Homebrew
-brew install stow
-
-# Arch Linux
-sudo pacman -S stow
-```
-
-### Setup Instructions
-
-1. **Clone the repository to your home directory:**
-   ```bash
-   cd ~
-   git clone https://github.com/your-username/stow-dotfiles.git
-   cd stow-dotfiles
-   ```
-
-2. **Install all packages at once:**
-   ```bash
-   stow */
-   ```
-
-3. **Or install specific packages individually:**
-   ```bash
-   # Install only Neovim config
-   stow nvim
-   
-   # Install Zsh and Starship configs
-   stow zsh starship
-   
-   # Install terminal-related configs
-   stow alacritty tmux
-   ```
-
-### Examples
-
-**Install everything:**
-```bash
-cd ~/stow-dotfiles
-stow */
-```
-
-**Install only shell-related configurations:**
-```bash
-cd ~/stow-dotfiles
-stow zsh starship
-```
-
-**Install development tools:**
-```bash
-cd ~/stow-dotfiles
-stow nvim lazygit opencode
-```
-
-## Package Selector Tool
-
-This repository includes an interactive package installer tool in the `package-selector/` directory. It provides a TUI (Text User Interface) for selecting and installing common CLI tools and development packages.
-
-```bash
-cd package-selector
-uv run python main.py
-```
-
-See [package-selector/README.md](package-selector/README.md) for detailed documentation.
-
-## Automated Setup with Ansible
-
-For a complete automated development environment setup, use the Ansible playbooks in the `ansible/` directory. This will install all required tools, configure Git with GPG signing, set up Zsh with Oh-My-Zsh, and stow all dotfiles automatically.
-
-### Quick Start
+### Ubuntu/Debian
 
 ```bash
 # Install Ansible
 sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
 
-# Clone and enter the repository
+# Clone the repository
 cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
 
 # Create encrypted secrets file
@@ -121,59 +34,129 @@ EDITOR=nano ansible-vault create secrets.yml
 ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
-See [ansible/README.md](ansible/README.md) for detailed documentation including:
-- Remote server deployment
-- WSL setup instructions
-- Available roles and what they install
-
-## How It Works
-
-When you run `stow nvim`, Stow will create symbolic links like:
-- `~/.config/nvim/` → `~/stow-dotfiles/nvim/.config/nvim/`
-
-This way, your actual config files stay organized in the repository, but applications can find them in their expected locations.
-
-## Managing Dotfiles
-
-### Adding New Configurations
-
-1. Create a new directory for the application
-2. Recreate the directory structure as it should appear in your home directory
-3. Place your config files in the appropriate subdirectories
-4. Run `stow <package-name>` to install
-
-### Removing Configurations
-
-To remove a package's symlinks:
-```bash
-stow -D <package-name>
-```
-
-### Updating Configurations
-
-Since the files are symlinked, any changes you make to the actual config files will automatically be reflected in the repository. Just commit and push your changes:
+### Rocky Linux/RHEL/Fedora
 
 ```bash
-git add .
-git commit -m "Update nvim configuration"
-git push
+# Install Ansible
+sudo dnf install -y git python3 python3-pip ansible
+
+# Clone and run setup (same as above)
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+EDITOR=nano ansible-vault create secrets.yml
+ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
-## Troubleshooting
+### Secrets Configuration
 
-**Conflict with existing files:**
-If you have existing config files, Stow will warn you about conflicts. You'll need to either:
-- Remove the existing files, or
-- Move them to backup locations
+The `secrets.yml` file should contain:
 
-**Example of handling conflicts:**
+```yaml
+user_email: "email"
+user_fullname: "Firstname Lastname"
+user_passphrase: "passphrase_to_generate_new_gpg_key"
+```
+
+### Post-Install
+
+After deployment, logout and login again to use Zsh as your default shell, then:
+
 ```bash
-# Backup existing config
-mv ~/.config/nvim ~/.config/nvim.backup
-
-# Then install the package
-stow nvim
+source ${HOME}/.zshrc
 ```
+
+## Ansible Roles
+
+| Role | Description |
+|------|-------------|
+| [discover](ansible/roles/discover/README.md) | Environment detection and configuration validation |
+| [base](ansible/roles/base/README.md) | System dependencies, Rust, and uv |
+| [git](ansible/roles/git/README.md) | Git configuration with GPG signing and SSH |
+| [shell](ansible/roles/shell/README.md) | Zsh with Oh-My-Zsh and plugins |
+| [github](ansible/roles/github/README.md) | GitHub CLI installation |
+| [cargo](ansible/roles/cargo/README.md) | Rust/Cargo CLI tools |
+| [tools](ansible/roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
+| [dotfiles](ansible/roles/dotfiles/README.md) | Stow dotfiles to home directory |
+| [docker](ansible/roles/docker/README.md) | Docker (Debian) or Podman (RedHat) installation |
+| [common](ansible/roles/common/README.md) | Shared tasks (zshrc sourcing) |
+
+## Repository Structure
+
+```
+stow-dotfiles/
+├── ansible/            # Ansible playbooks and roles
+│   ├── roles/          # Modular roles for each component
+│   ├── molecule/       # Molecule test configuration
+│   ├── setup.yml       # Main deployment playbook
+│   └── bootstrap.yml   # Bootstrap for remote servers
+├── alacritty/          # Alacritty terminal config
+├── bash/               # Bash shell configuration
+├── git/                # Git configuration
+├── lazygit/            # Lazygit configuration
+├── neofetch/           # Neofetch config
+├── nvim/               # Neovim configuration
+├── opencode/           # OpenCode configuration
+├── package-selector/   # Interactive package installer
+├── starship/           # Starship prompt config
+├── tmux/               # Tmux configuration
+├── topgrade/           # Topgrade config
+├── zellij/             # Zellij config
+└── zsh/                # Zsh shell configuration
+```
+
+## Testing with Molecule
+
+The Ansible roles are tested using [Molecule](https://molecule.readthedocs.io/):
+
+```bash
+cd ansible
+uv sync  # Install dependencies
+
+# Run full test suite on Ubuntu 24.04 (default)
+uv run molecule test
+
+# Test on other distributions
+MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible uv run molecule test
+MOLECULE_IMAGE=geerlingguy/docker-rockylinux9-ansible uv run molecule test
+```
+
+## Remote Server Deployment
+
+Deploy to remote servers by configuring the inventory file:
+
+```ini
+# ansible/hosts
+[servers]
+server1 ansible_host=192.168.1.100 ansible_user=ubuntu
+
+[servers:vars]
+ansible_ssh_private_key_file=~/.ssh/id_ed25519
+```
+
+```bash
+# Copy SSH key first
+ssh-copy-id -i ~/.ssh/id_ed25519.pub ubuntu@192.168.1.100
+
+# Bootstrap if Python is not installed
+ansible-playbook bootstrap.yml -i hosts -l servers --ask-become-pass
+
+# Deploy
+ansible-playbook setup.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
+```
+
+## WSL Setup
+
+For Windows Subsystem for Linux setup instructions, see [ansible/README.md](ansible/README.md#wsl-setup-windows).
+
+## Package Selector Tool
+
+An interactive TUI tool for selecting and installing CLI tools:
+
+```bash
+cd package-selector
+uv run python main.py
+```
+
+See [package-selector/README.md](package-selector/README.md) for details.
 
 ## License
 

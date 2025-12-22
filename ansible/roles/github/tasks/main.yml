@@ -2,7 +2,7 @@
 # Configure GH CLI
 
 # Debian/Ubuntu installation
-- name: Install GitHub CLI if not already installed (Debian)
+- name: Debian - Install GitHub CLI
   become: true
   ansible.builtin.shell: |
     mkdir -p -m 755 /etc/apt/keyrings \
@@ -17,21 +17,22 @@
   when: ansible_facts['os_family'] == "Debian"
 
 # RedHat/Rocky installation
-- name: Add GitHub CLI repository (RedHat)
-  become: true
-  ansible.builtin.shell: |
-    dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-  args:
-    executable: /bin/bash
-    creates: /etc/yum.repos.d/gh-cli.repo
+- name: RedHat - Install GitHub CLI
   when: ansible_facts['os_family'] == "RedHat"
+  block:
+    - name: Add GitHub CLI repository
+      become: true
+      ansible.builtin.shell: |
+        dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+      args:
+        executable: /bin/bash
+        creates: /etc/yum.repos.d/gh-cli.repo
 
-- name: Install GitHub CLI (RedHat)
-  become: true
-  ansible.builtin.dnf:
-    name: gh
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
+    - name: Install GitHub CLI
+      become: true
+      ansible.builtin.dnf:
+        name: gh
+        state: present
 
 - name: Copy GH CLI Auth Token
   ansible.builtin.copy:

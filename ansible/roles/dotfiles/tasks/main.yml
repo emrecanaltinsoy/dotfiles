@@ -7,80 +7,73 @@
     msg: "Skipping stow tasks (skip_stow=true)"
   when: skip_stow | default(false) | bool
 
-- name: Define dotfile directories to stow
-  ansible.builtin.set_fact:
-    dotfile_dirs:
-      - alacrity
-      - bash
-      - git
-      - lazygit
-      - neofetch
-      - nvim
-      - opencode
-      - starship
-      - tmux
-      - topgrade
-      - zellij
-      - zsh
+- name: Stow dotfiles
   when: not (skip_stow | default(false) | bool)
+  block:
+    - name: Define dotfile directories to stow
+      ansible.builtin.set_fact:
+        dotfile_dirs:
+          - alacrity
+          - bash
+          - git
+          - lazygit
+          - neofetch
+          - nvim
+          - opencode
+          - starship
+          - tmux
+          - topgrade
+          - zellij
+          - zsh
 
-- name: Get repository root directory
-  ansible.builtin.set_fact:
-    dotfiles_repo: "{{ playbook_dir | dirname }}"
-  when: not (skip_stow | default(false) | bool)
+    - name: Get repository root directory
+      ansible.builtin.set_fact:
+        dotfiles_repo: "{{ playbook_dir | dirname }}"
 
-- name: Check if stow is installed
-  ansible.builtin.shell: command -v stow
-  register: stow_check
-  failed_when: false
-  changed_when: false
-  when: not (skip_stow | default(false) | bool)
+    - name: Check if stow is installed
+      ansible.builtin.shell: command -v stow
+      register: stow_check
+      failed_when: false
+      changed_when: false
 
-- name: Install stow if not present
-  become: true
-  ansible.builtin.apt:
-    name: stow
-    state: present
-  when:
-    - not (skip_stow | default(false) | bool)
-    - stow_check.rc != 0
+    - name: Install stow if not present
+      become: true
+      ansible.builtin.apt:
+        name: stow
+        state: present
+      when: stow_check.rc != 0
 
-- name: Check stow status for dotfile directories
-  ansible.builtin.shell: |
-    cd "{{ dotfiles_repo }}"
-    stow --no --verbose {{ item }} -t "$HOME" 2>&1 || true
-  args:
-    executable: /bin/bash
-  loop: "{{ dotfile_dirs }}"
-  loop_control:
-    label: "{{ item }}"
-  register: stow_check_result
-  changed_when: false
-  when: not (skip_stow | default(false) | bool)
+    - name: Check stow status for dotfile directories
+      ansible.builtin.shell: |
+        cd "{{ dotfiles_repo }}"
+        stow --no --verbose {{ item }} -t "$HOME" 2>&1 || true
+      args:
+        executable: /bin/bash
+      loop: "{{ dotfile_dirs }}"
+      loop_control:
+        label: "{{ item }}"
+      register: stow_check_result
+      changed_when: false
 
-- name: Stow dotfile directories
-  ansible.builtin.shell: |
-    cd "{{ dotfiles_repo }}"
-    stow --override ".*" {{ item.item }} -t "$HOME"
-  args:
-    executable: /bin/bash
-  loop: "{{ stow_check_result.results | default([]) }}"
-  loop_control:
-    label: "{{ item.item | default('skipped') }}"
-  register: stow_result
-  changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
-  failed_when: stow_result.rc != 0 and 'No packages' not in stow_result.stderr
-  when:
-    - not (skip_stow | default(false) | bool)
-    - stow_check_result.results is defined
+    - name: Stow dotfile directories
+      ansible.builtin.shell: |
+        cd "{{ dotfiles_repo }}"
+        stow --override ".*" {{ item.item }} -t "$HOME"
+      args:
+        executable: /bin/bash
+      loop: "{{ stow_check_result.results | default([]) }}"
+      loop_control:
+        label: "{{ item.item | default('skipped') }}"
+      register: stow_result
+      changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
+      failed_when: stow_result.rc != 0 and 'No packages' not in stow_result.stderr
+      when: stow_check_result.results is defined
 
-- name: Report stow results
-  ansible.builtin.debug:
-    msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
-    verbosity: 1
-  loop: "{{ stow_result.results | default([]) }}"
-  loop_control:
-    label: "{{ item.item.item | default('skipped') }}"
-  when:
-    - not (skip_stow | default(false) | bool)
-    - stow_result.results is defined
+    - name: Report stow results
+      ansible.builtin.debug:
+        msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
+        verbosity: 1
+      loop: "{{ stow_result.results | default([]) }}"
+      loop_control:
+        label: "{{ item.item.item | default('skipped') }}"
+      when: stow_result.results is defined

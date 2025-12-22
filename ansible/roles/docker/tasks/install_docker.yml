@@ -2,32 +2,32 @@
 # Install Docker (Debian) or Podman (RedHat)
 
 # Debian/Ubuntu - use get.docker.com convenience script
-- name: Download Docker if not already installed (Debian)
-  become: true
-  ansible.builtin.shell: |
-    curl -fsSL https://get.docker.com -o - | bash
-  args:
-    executable: /bin/bash
-    creates: /usr/bin/docker
+- name: Debian - Install Docker
   when: ansible_facts['os_family'] == "Debian"
+  block:
+    - name: Download and install Docker
+      become: true
+      ansible.builtin.shell: |
+        curl -fsSL https://get.docker.com -o - | bash
+      args:
+        executable: /bin/bash
+        creates: /usr/bin/docker
 
-- name: Add docker group (Debian)
-  become: true
-  ansible.builtin.group:
-    name: docker
-    state: present
-  when: ansible_facts['os_family'] == "Debian"
+    - name: Add docker group
+      become: true
+      ansible.builtin.group:
+        name: docker
+        state: present
 
-- name: Add user to docker group (Debian)
-  become: true
-  ansible.builtin.user:
-    name: "{{ ansible_facts['user_id'] }}"
-    groups: docker
-    append: yes
-  when: ansible_facts['os_family'] == "Debian"
+    - name: Add user to docker group
+      become: true
+      ansible.builtin.user:
+        name: "{{ ansible_facts['user_id'] }}"
+        groups: docker
+        append: yes
 
 # RedHat/Rocky - use Podman (native container runtime)
-- name: Install Podman (RedHat)
+- name: RedHat - Install Podman
   become: true
   ansible.builtin.dnf:
     name:

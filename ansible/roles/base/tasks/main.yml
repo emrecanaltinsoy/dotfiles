@@ -2,102 +2,100 @@
 # Update and install dependencies
 
 # Debian/Ubuntu specific tasks
-- name: Check if git-core PPA exists
-  ansible.builtin.shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
-  register: git_ppa_check
-  failed_when: false
-  changed_when: false
+- name: Debian - Install base dependencies
   when: ansible_facts['os_family'] == "Debian"
+  block:
+    - name: Check if git-core PPA exists
+      ansible.builtin.shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
+      register: git_ppa_check
+      failed_when: false
+      changed_when: false
 
-- name: Add git-core PPA
-  ansible.builtin.shell: |
-    sudo -E add-apt-repository -y ppa:git-core/ppa
-  become: true
-  args:
-    executable: /bin/bash
-  when:
-    - ansible_facts['os_family'] == "Debian"
-    - git_ppa_check.rc != 0
+    - name: Add git-core PPA
+      ansible.builtin.shell: |
+        sudo -E add-apt-repository -y ppa:git-core/ppa
+      become: true
+      args:
+        executable: /bin/bash
+      when: git_ppa_check.rc != 0
 
-- name: Update apt dependencies
-  become: true
-  ansible.builtin.apt:
-    upgrade: dist
-    update_cache: yes
-    cache_valid_time: 3600
-  failed_when: false
-  when: ansible_facts['os_family'] == "Debian"
+    - name: Update apt dependencies
+      become: true
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: yes
+        cache_valid_time: 3600
+      failed_when: false
 
-- name: Install apt dependencies
-  become: true
-  ansible.builtin.apt:
-    name:
-      - build-essential
-      - curl
-      - fzf
-      - git
-      - gnupg
-      - gpg
-      - gpg-agent
-      - jq
-      - keychain
-      - neofetch
-      - openssh-client
-      - python3
-      - python3-pip
-      - python3-venv
-      - python3-wheel
-      - python3-dev
-      - socat
-      - software-properties-common
-      - unzip
-      - wget
-      - zip
-      - zsh
-      - stow
-    state: present
-  when: ansible_facts['os_family'] == "Debian"
+    - name: Install apt dependencies
+      become: true
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - curl
+          - fzf
+          - git
+          - gnupg
+          - gpg
+          - gpg-agent
+          - jq
+          - keychain
+          - neofetch
+          - openssh-client
+          - python3
+          - python3-pip
+          - python3-venv
+          - python3-wheel
+          - python3-dev
+          - socat
+          - software-properties-common
+          - unzip
+          - wget
+          - zip
+          - zsh
+          - stow
+        state: present
 
 # RedHat/Rocky specific tasks
-- name: Update dnf dependencies
-  become: true
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
-    update_cache: yes
-  failed_when: false
+- name: RedHat - Install base dependencies
   when: ansible_facts['os_family'] == "RedHat"
+  block:
+    - name: Update dnf dependencies
+      become: true
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      failed_when: false
 
-- name: Install EPEL repository
-  become: true
-  ansible.builtin.dnf:
-    name: epel-release
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
+    - name: Install EPEL repository
+      become: true
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
 
-- name: Install dnf dependencies
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - "@Development Tools"
-      - fzf
-      - git
-      - gnupg2
-      - jq
-      - keychain
-      - neofetch
-      - openssh-clients
-      - python3
-      - python3-pip
-      - python3-devel
-      - socat
-      - unzip
-      - wget
-      - zip
-      - zsh
-      - stow
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
+    - name: Install dnf dependencies
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - "@Development Tools"
+          - fzf
+          - git
+          - gnupg2
+          - jq
+          - keychain
+          - neofetch
+          - openssh-clients
+          - python3
+          - python3-pip
+          - python3-devel
+          - socat
+          - unzip
+          - wget
+          - zip
+          - zsh
+          - stow
+        state: present
 
 # Install Rust (via rustup) and uv (Python package manager)
 

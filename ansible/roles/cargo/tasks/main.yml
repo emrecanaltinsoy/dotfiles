@@ -6,50 +6,35 @@
     cargo_packages:
       - name: alacritty
         bin: alacritty
-        locked: true
         skip_wsl: true
       - name: bat
         bin: bat
-        locked: true
       - name: exa
         bin: exa
-        locked: true
       - name: fd-find
         bin: fd
-        locked: true
       - name: git-delta
         bin: delta
-        locked: true
       - name: procs
         bin: procs
-        locked: true
       - name: rm-improved
         bin: rip
-        locked: true
       - name: ripgrep
         bin: rg
-        locked: true
       - name: tokei
         bin: tokei
-        locked: true
       - name: topgrade
         bin: topgrade
-        locked: true
       - name: xcp
         bin: xcp
-        locked: true
       - name: xh
         bin: xh
-        locked: true
       # - name: yazi-fm
       #   bin: yazi
-      #   locked: true
       # - name: zellij
       #   bin: zellij
-      #   locked: true
       - name: zoxide
         bin: zoxide
-        locked: true
 
 - name: Check if cargo is available
   ansible.builtin.shell: |
@@ -61,42 +46,48 @@
   failed_when: false
   changed_when: false
 
-- name: Check which cargo packages are already installed
-  ansible.builtin.shell: |
-    source "$HOME/.cargo/env" 2>/dev/null || true
-    command -v {{ item.bin }}
-  args:
-    executable: /bin/bash
-  loop: "{{ cargo_packages }}"
-  loop_control:
-    label: "{{ item.name }}"
-  register: package_checks
-  failed_when: false
-  changed_when: false
-  when:
-    - cargo_check.rc == 0
-    - not (item.skip_wsl | default(false) and IS_WSL)
+- name: Install cargo packages
+  when: cargo_check.rc == 0
+  block:
+    - name: Check which cargo packages are already installed
+      ansible.builtin.shell: |
+        source "$HOME/.cargo/env" 2>/dev/null || true
+        command -v {{ item.bin }}
+      args:
+        executable: /bin/bash
+      loop: "{{ cargo_packages }}"
+      loop_control:
+        label: "{{ item.name }}"
+      register: package_checks
+      failed_when: false
+      changed_when: false
+      when: not (item.skip_wsl | default(false) and IS_WSL)
 
-- name: Display cargo package status
-  ansible.builtin.debug:
-    msg: "{{ item.item.name }}: {{ 'installed' if item.rc == 0 else 'will be installed' }}"
-  loop: "{{ package_checks.results }}"
-  loop_control:
-    label: "{{ item.item.name }}"
-  when:
-    - cargo_check.rc == 0
-    - item.rc is defined
+    - name: Build list of missing cargo packages
+      ansible.builtin.set_fact:
+        missing_cargo_packages: "{{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'ne', 0) | map(attribute='item.name') | list }}"
 
-- name: Install missing cargo packages
-  ansible.builtin.shell: |
-    source "$HOME/.cargo/env" 2>/dev/null || true
-    cargo install {{ item.item.name }} --locked -q
-  args:
-    executable: /bin/bash
-  loop: "{{ package_checks.results }}"
-  loop_control:
-    label: "{{ item.item.name }}"
-  when:
-    - cargo_check.rc == 0
-    - item.rc is defined
-    - item.rc != 0
+    - name: Display cargo package status
+      ansible.builtin.debug:
+        msg: "Installed: {{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'eq', 0) | map(attribute='item.name') | list | join(', ') | default('none', true) }}"
+
+    - name: Display missing cargo packages
+      ansible.builtin.debug:
+        msg: "Will be installed: {{ missing_cargo_packages | join(', ') }}"
+      when: missing_cargo_packages | length > 0
+
+    - name: Install all missing cargo packages
+      ansible.builtin.shell: |
+        source "$HOME/.cargo/env" 2>/dev/null || true
+        cargo install {{ missing_cargo_packages | join(' ') }} --locked
+      args:
+        executable: /bin/bash
+      when: missing_cargo_packages | length > 0
+      register: cargo_install_result
+
+    - name: Display installation result
+      ansible.builtin.debug:
+        msg: "Successfully installed: {{ missing_cargo_packages | join(', ') }}"
+      when:
+        - missing_cargo_packages | length > 0
+        - cargo_install_result is succeeded
