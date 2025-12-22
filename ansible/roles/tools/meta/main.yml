@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Developer tools (lazygit, neovim, tmux, terraform, etc.)
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - development
+    - tools
+    - neovim
+    - tmux
+
+dependencies:
+  - base

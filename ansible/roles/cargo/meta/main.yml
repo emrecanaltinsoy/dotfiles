@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Rust/Cargo CLI tools (bat, exa, ripgrep, etc.)
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - rust
+    - cargo
+    - cli
+
+dependencies:
+  - base

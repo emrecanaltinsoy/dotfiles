@@ -37,7 +37,7 @@
         success_msg: "bashrc.d directory exists with correct permissions"
 
     # ============================================
-    # Devenv Role Verification
+    # Git Role Verification
     # ============================================
     - name: Check git user.name is configured
       ansible.builtin.command: git config --global user.name
@@ -73,6 +73,9 @@
           - ssh_dir.stat.isdir
         success_msg: ".ssh directory exists"
 
+    # ============================================
+    # Shell Role Verification
+    # ============================================
     - name: Check if zsh is installed
       ansible.builtin.command: which zsh
       register: zsh_check

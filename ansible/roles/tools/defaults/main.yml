@@ -1,0 +1,7 @@
+---
+# defaults file for roles/tools
+
+# Package versions - update these to upgrade tools
+lazygit_version: "0.44.1"
+nvm_version: "0.40.1"
+sops_version: "3.9.0"

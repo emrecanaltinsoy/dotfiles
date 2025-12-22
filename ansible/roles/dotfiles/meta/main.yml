@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Stow dotfiles to home directory
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - dotfiles
+    - stow
+    - configuration
+
+dependencies:
+  - base

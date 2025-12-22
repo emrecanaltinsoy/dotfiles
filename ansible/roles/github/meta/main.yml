@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: GitHub CLI installation and configuration
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - github
+    - cli
+    - git
+
+dependencies:
+  - git

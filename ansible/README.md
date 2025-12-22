@@ -21,7 +21,13 @@ Automated development environment setup for Ubuntu using Ansible. Works on both 
 | Role | Description |
 |------|-------------|
 | [discover](roles/discover/README.md) | Environment detection and configuration validation |
-| [devenv](roles/devenv/README.md) | Development tools, shell, and dotfiles configuration |
+| [base](roles/base/README.md) | System dependencies, Rust, and uv |
+| [git](roles/git/README.md) | Git configuration with GPG signing and SSH |
+| [shell](roles/shell/README.md) | Zsh with Oh-My-Zsh and plugins |
+| [github](roles/github/README.md) | GitHub CLI installation |
+| [cargo](roles/cargo/README.md) | Rust/Cargo CLI tools |
+| [tools](roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
+| [dotfiles](roles/dotfiles/README.md) | Stow dotfiles to home directory |
 | [docker](roles/docker/README.md) | Docker Engine installation |
 | [common](roles/common/README.md) | Shared tasks (zshrc sourcing) |
 

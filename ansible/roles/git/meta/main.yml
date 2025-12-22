@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Git configuration with GPG commit signing and SSH key management
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - git
+    - gpg
+    - ssh
+    - security
+
+dependencies:
+  - base

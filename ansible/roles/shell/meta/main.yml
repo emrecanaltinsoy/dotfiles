@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Emrecan Altinsoy
+  description: Zsh shell with Oh-My-Zsh and plugins
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - shell
+    - zsh
+    - ohmyzsh
+
+dependencies:
+  - base

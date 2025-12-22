@@ -6,7 +6,13 @@
 
   roles:
     - discover
-    - devenv
+    - base
+    - git
+    - shell
+    - github
+    - cargo
+    - tools
+    - dotfiles
     - docker
 
   post_tasks:

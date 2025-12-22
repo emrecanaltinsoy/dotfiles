@@ -1,0 +1,24 @@
+---
+# tasks file for roles/git
+
+- name: Configure GPG
+  ansible.builtin.import_tasks:
+    file: configure_gpg.yml
+  tags:
+    - git
+    - gpg
+    - security
+
+- name: Configure SSH
+  ansible.builtin.import_tasks:
+    file: configure_ssh.yml
+  tags:
+    - git
+    - ssh
+    - security
+
+- name: Configure Git
+  ansible.builtin.import_tasks:
+    file: configure_git.yml
+  tags:
+    - git
