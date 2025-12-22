@@ -5,7 +5,7 @@
 - name: Check if AWS CLI is installed
   ansible.builtin.shell: command -v aws
   register: aws_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install AWS CLI
@@ -26,9 +26,13 @@
 
 # Lazygit
 - name: Check if lazygit is installed
-  ansible.builtin.shell: command -v lazygit
+  ansible.builtin.shell: |
+    export PATH="$HOME/.bin:$PATH"
+    command -v lazygit
+  args:
+    executable: /bin/bash
   register: lazygit_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install lazygit
@@ -51,7 +55,7 @@
 # Neovim
 - name: Check if neovim is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/nvim-linux-x86_64"
+    path: "{{ ansible_facts['user_dir'] }}/nvim-linux-x86_64"
   register: nvim_check
 
 - name: Install neovim
@@ -72,7 +76,7 @@
 # NVM
 - name: Check if nvm is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.nvm/nvm.sh"
+    path: "{{ ansible_facts['user_dir'] }}/.nvm/nvm.sh"
   register: nvm_check
 
 - name: Install nvm
@@ -88,9 +92,13 @@
 
 # OpenCode
 - name: Check if opencode is installed
-  ansible.builtin.shell: command -v opencode
+  ansible.builtin.shell: |
+    export PATH="$HOME/.opencode/bin:$PATH"
+    command -v opencode
+  args:
+    executable: /bin/bash
   register: opencode_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install opencode
@@ -106,9 +114,13 @@
 
 # SOPS
 - name: Check if sops is installed
-  ansible.builtin.shell: command -v sops
+  ansible.builtin.shell: |
+    export PATH="$HOME/.bin:$PATH"
+    command -v sops
+  args:
+    executable: /bin/bash
   register: sops_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install sops
@@ -127,9 +139,13 @@
 
 # Starship
 - name: Check if starship is installed
-  ansible.builtin.shell: command -v starship
+  ansible.builtin.shell: |
+    export PATH="$HOME/.bin:$PATH"
+    command -v starship
+  args:
+    executable: /bin/bash
   register: starship_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install starship
@@ -154,7 +170,7 @@
 - name: Check if terraform is installed
   ansible.builtin.shell: command -v terraform
   register: terraform_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Add HashiCorp GPG key
@@ -190,7 +206,7 @@
 - name: Check if tmux is installed
   ansible.builtin.shell: command -v tmux
   register: tmux_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install tmux
@@ -202,7 +218,7 @@
 
 - name: Check if oh-my-tmux is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/oh-my-tmux"
+    path: "{{ ansible_facts['user_dir'] }}/oh-my-tmux"
   register: omt_dir
 
 - name: Install oh-my-tmux
@@ -222,11 +238,11 @@
 
 - name: Check if tmuxifier is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.tmuxifier"
+    path: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
   register: tmuxifier_dir
 
 - name: Install tmuxifier
   ansible.builtin.git:
     repo: https://github.com/jimeh/tmuxifier.git
-    dest: "{{ ansible_user_dir }}/.tmuxifier"
+    dest: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
   when: not tmuxifier_dir.stat.exists

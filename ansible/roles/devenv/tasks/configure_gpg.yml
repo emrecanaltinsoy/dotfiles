@@ -6,41 +6,40 @@
   register: gpg_key_check
   changed_when: false
   failed_when: false
-  ignore_errors: true
 
 - name: Generate GPG key configuration from template
   ansible.builtin.template:
     src: templates/gpg-key-gen.conf.j2
-    dest: "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
+    dest: "{{ ansible_facts['user_dir'] }}/.gnupg/gpg-key-gen.conf"
     mode: "0400"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
   no_log: true
 
 - name: Generate gnupg key
-  ansible.builtin.command: gpg --batch --gen-key "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
+  ansible.builtin.command: gpg --batch --gen-key "{{ ansible_facts['user_dir'] }}/.gnupg/gpg-key-gen.conf"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
   no_log: true
 
 - name: Delete gpg-key-gen configuration file
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
+    path: "{{ ansible_facts['user_dir'] }}/.gnupg/gpg-key-gen.conf"
     state: absent
 
 - name: Copy GPG template configuration
   ansible.builtin.template:
     src: templates/gpg-agent.conf.j2
-    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    dest: "{{ ansible_facts['user_dir'] }}/.gnupg/gpg-agent.conf"
     mode: "0600"
 
 - name: Change .gnupg folder permissions
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.gnupg"
+    path: "{{ ansible_facts['user_dir'] }}/.gnupg"
     mode: "0700"
 
 - name: Export GPG Public Key for GH CLI
-  ansible.builtin.shell: gpg --armor --export "{{ user_email }}" > "{{ ansible_user_dir }}/.gnupg/default_gh_gpg.pub"
+  ansible.builtin.shell: gpg --armor --export "{{ user_email }}" > "{{ ansible_facts['user_dir'] }}/.gnupg/default_gh_gpg.pub"
   args:
-    creates: "{{ ansible_user_dir }}/.gnupg/default_gh_gpg.pub"
+    creates: "{{ ansible_facts['user_dir'] }}/.gnupg/default_gh_gpg.pub"
 
 - name: Retrieve GPG key ID for signing commits
   ansible.builtin.shell: gpg --list-secret-keys --with-colons --keyid-format=long "{{ user_email }}" | grep 'sec' | awk -F':' '{print $5}' | grep -v ':'

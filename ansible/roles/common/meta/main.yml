@@ -1,6 +1,8 @@
 ---
 galaxy_info:
   author: Emrecan Altinsoy
+  namespace: emrecan
+  role_name: common
   description: Contains common tasks
 
   license: MIT

@@ -3,7 +3,7 @@
 
 - name: Check if oh-my-zsh is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
   register: omz_dir
 
 - name: Install Oh-My-Zsh
@@ -15,50 +15,50 @@
 
 - name: Check if zsh-syntax-highlighting plugin is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   register: zsh_syntax_highlighting_dir
 
 - name: Install zsh-syntax-highlighting plugin
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   when: not zsh_syntax_highlighting_dir.stat.exists
 
 - name: Check if zsh-autosuggestions plugin is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
   register: zsh_autosuggestions_dir
 
 - name: Install zsh-autosuggestions plugin
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
   when: not zsh_autosuggestions_dir.stat.exists
 
 - name: Check if k plugin is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/k"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/k"
   register: k_dir
 
 - name: Install k plugin
   ansible.builtin.git:
     repo: https://github.com/supercrabtree/k
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/k"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/k"
   when: not k_dir.stat.exists
 
 - name: Check if zsh-fzf-history-search plugin is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
   register: zsh_fzf_history_search_dir
 
 - name: Install zsh-fzf-history-search plugin
   ansible.builtin.git:
     repo: https://github.com/joshskidmore/zsh-fzf-history-search
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
   when: not zsh_fzf_history_search_dir.stat.exists
 
 - name: Get current user shell
-  ansible.builtin.shell: "getent passwd {{ ansible_user_id }} | cut -d: -f7"
+  ansible.builtin.shell: "getent passwd {{ ansible_facts['user_id'] }} | cut -d: -f7"
   register: current_shell
   changed_when: false
 
@@ -70,7 +70,7 @@
 - name: Set zsh as default shell
   become: true
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts['user_id'] }}"
     shell: "{{ zsh_path.stdout }}"
   when: current_shell.stdout != zsh_path.stdout
 
@@ -81,12 +81,12 @@
 
 - name: Check if .zshrc exists in home directory
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.zshrc"
+    path: "{{ ansible_facts['user_dir'] }}/.zshrc"
   register: zshrc_home
 
 - name: Check if .zshrc exists in .config/zsh
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.config/zsh/.zshrc"
+    path: "{{ ansible_facts['user_dir'] }}/.config/zsh/.zshrc"
   register: zshrc_config
 
 - name: Initialize zsh shell from home directory
@@ -94,7 +94,7 @@
   args:
     executable: /bin/bash
   changed_when: false
-  ignore_errors: true
+  failed_when: false
   when: zshrc_home.stat.exists
 
 - name: Initialize zsh shell from .config/zsh
@@ -102,5 +102,5 @@
   args:
     executable: /bin/bash
   changed_when: false
-  ignore_errors: true
+  failed_when: false
   when: not zshrc_home.stat.exists and zshrc_config.stat.exists

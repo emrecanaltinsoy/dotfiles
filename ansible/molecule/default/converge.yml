@@ -1,0 +1,16 @@
+---
+# Converge playbook - mirrors setup.yml but without secrets.yml
+- name: Configure Local (Test)
+  hosts: all
+  gather_facts: true
+
+  roles:
+    - discover
+    - devenv
+    - docker
+
+  post_tasks:
+    - name: Display shell change notification
+      ansible.builtin.debug:
+        msg: "{{ shell_changed_message }}"
+      when: shell_changed_message is defined

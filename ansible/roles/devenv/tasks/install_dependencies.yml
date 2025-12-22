@@ -4,7 +4,7 @@
 - name: Check if git-core PPA exists
   ansible.builtin.shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
   register: git_ppa_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Add git-core PPA
@@ -21,7 +21,7 @@
     upgrade: dist
     update_cache: yes
     cache_valid_time: 3600
-  ignore_errors: true
+  failed_when: false
 
 - name: Install apt dependencies
   become: true
@@ -55,9 +55,13 @@
 # Install Rust (via rustup) and uv (Python package manager)
 
 - name: Check if rustup is installed
-  ansible.builtin.shell: command -v rustup
+  ansible.builtin.shell: |
+    source "$HOME/.cargo/env" 2>/dev/null || true
+    command -v rustup
+  args:
+    executable: /bin/bash
   register: rustup_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install rustup
@@ -65,11 +69,16 @@
   args:
     executable: /bin/bash
   when: rustup_check.rc != 0
+  changed_when: true
 
 - name: Check if uv is installed
-  ansible.builtin.shell: command -v uv
+  ansible.builtin.shell: |
+    source "$HOME/.local/bin/env" 2>/dev/null || true
+    command -v uv
+  args:
+    executable: /bin/bash
   register: uv_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Install uv
@@ -77,3 +86,4 @@
   args:
     executable: /bin/bash
   when: uv_check.rc != 0
+  changed_when: true

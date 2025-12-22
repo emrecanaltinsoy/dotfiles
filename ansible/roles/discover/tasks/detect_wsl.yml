@@ -4,7 +4,7 @@
 - name: Check if running in WSL
   ansible.builtin.shell: grep -qiE "(microsoft|wsl)" /proc/version
   register: wsl_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Set IS_WSL fact

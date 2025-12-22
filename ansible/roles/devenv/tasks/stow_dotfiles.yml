@@ -1,5 +1,11 @@
 ---
 # Stow dotfiles to home directory
+# Set skip_stow: true to skip this task (useful for molecule testing)
+
+- name: Skip stow in test environment
+  ansible.builtin.debug:
+    msg: "Skipping stow tasks (skip_stow=true)"
+  when: skip_stow | default(false) | bool
 
 - name: Define dotfile directories to stow
   ansible.builtin.set_fact:
@@ -16,23 +22,28 @@
       - topgrade
       - zellij
       - zsh
+  when: not (skip_stow | default(false) | bool)
 
 - name: Get repository root directory
   ansible.builtin.set_fact:
     dotfiles_repo: "{{ playbook_dir | dirname }}"
+  when: not (skip_stow | default(false) | bool)
 
 - name: Check if stow is installed
   ansible.builtin.shell: command -v stow
   register: stow_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
+  when: not (skip_stow | default(false) | bool)
 
 - name: Install stow if not present
   become: true
   ansible.builtin.apt:
     name: stow
     state: present
-  when: stow_check.rc != 0
+  when:
+    - not (skip_stow | default(false) | bool)
+    - stow_check.rc != 0
 
 - name: Check stow status for dotfile directories
   ansible.builtin.shell: |
@@ -45,6 +56,7 @@
     label: "{{ item }}"
   register: stow_check_result
   changed_when: false
+  when: not (skip_stow | default(false) | bool)
 
 - name: Stow dotfile directories
   ansible.builtin.shell: |
@@ -52,18 +64,23 @@
     stow --override ".*" {{ item.item }} -t "$HOME"
   args:
     executable: /bin/bash
-  loop: "{{ stow_check_result.results }}"
+  loop: "{{ stow_check_result.results | default([]) }}"
   loop_control:
-    label: "{{ item.item }}"
+    label: "{{ item.item | default('skipped') }}"
   register: stow_result
   changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
   failed_when: stow_result.rc != 0 and 'No packages' not in stow_result.stderr
+  when:
+    - not (skip_stow | default(false) | bool)
+    - stow_check_result.results is defined
 
 - name: Report stow results
   ansible.builtin.debug:
     msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
     verbosity: 1
-  loop: "{{ stow_result.results }}"
+  loop: "{{ stow_result.results | default([]) }}"
   loop_control:
-    label: "{{ item.item.item }}"
-  when: stow_result.results is defined
+    label: "{{ item.item.item | default('skipped') }}"
+  when:
+    - not (skip_stow | default(false) | bool)
+    - stow_result.results is defined

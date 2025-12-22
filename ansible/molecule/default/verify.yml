@@ -1,0 +1,116 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    # ============================================
+    # Discover Role Verification
+    # ============================================
+    - name: Check if running in WSL
+      ansible.builtin.shell: grep -qiE "(microsoft|wsl)" /proc/version
+      register: wsl_check
+      failed_when: false
+      changed_when: false
+
+    - name: Set IS_WSL fact
+      ansible.builtin.set_fact:
+        IS_WSL: "{{ wsl_check.rc == 0 }}"
+
+    - name: Verify IS_WSL fact exists
+      ansible.builtin.assert:
+        that:
+          - IS_WSL is defined
+        success_msg: "IS_WSL fact is defined: {{ IS_WSL }}"
+
+    - name: Verify bashrc.d directory exists
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/.bashrc.d"
+      register: bashrc_d_stat
+
+    - name: Assert bashrc.d directory exists with correct permissions
+      ansible.builtin.assert:
+        that:
+          - bashrc_d_stat.stat.exists
+          - bashrc_d_stat.stat.isdir
+          - bashrc_d_stat.stat.mode == "0700"
+        success_msg: "bashrc.d directory exists with correct permissions"
+
+    # ============================================
+    # Devenv Role Verification
+    # ============================================
+    - name: Check git user.name is configured
+      ansible.builtin.command: git config --global user.name
+      register: git_user_name
+      changed_when: false
+
+    - name: Assert git user.name is set correctly
+      ansible.builtin.assert:
+        that:
+          - git_user_name.stdout == "Test User"
+        success_msg: "Git user.name is configured correctly"
+
+    - name: Check git user.email is configured
+      ansible.builtin.command: git config --global user.email
+      register: git_user_email
+      changed_when: false
+
+    - name: Assert git user.email is set correctly
+      ansible.builtin.assert:
+        that:
+          - git_user_email.stdout == "test@example.com"
+        success_msg: "Git user.email is configured correctly"
+
+    - name: Check if .ssh directory exists
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/.ssh"
+      register: ssh_dir
+
+    - name: Assert .ssh directory exists
+      ansible.builtin.assert:
+        that:
+          - ssh_dir.stat.exists
+          - ssh_dir.stat.isdir
+        success_msg: ".ssh directory exists"
+
+    - name: Check if zsh is installed
+      ansible.builtin.command: which zsh
+      register: zsh_check
+      changed_when: false
+      failed_when: false
+
+    - name: Assert zsh is installed
+      ansible.builtin.assert:
+        that:
+          - zsh_check.rc == 0
+        success_msg: "zsh is installed"
+
+    # ============================================
+    # Docker Role Verification
+    # ============================================
+    - name: Check if docker group exists
+      ansible.builtin.getent:
+        database: group
+        key: docker
+      register: docker_group
+      failed_when: false
+
+    - name: Assert docker group exists
+      ansible.builtin.assert:
+        that:
+          - docker_group is defined
+        success_msg: "Docker group exists"
+      when: ansible_facts['virtualization_type'] != "docker"
+
+    - name: Check if docker is installed
+      ansible.builtin.command: which docker
+      register: docker_check
+      changed_when: false
+      failed_when: false
+
+    - name: Assert docker is installed
+      ansible.builtin.assert:
+        that:
+          - docker_check.rc == 0
+        success_msg: "Docker is installed"
+      when: ansible_facts['virtualization_type'] != "docker"

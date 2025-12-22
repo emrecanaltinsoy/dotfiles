@@ -1,6 +1,8 @@
 ---
 galaxy_info:
   author: Emrecan Altinsoy
+  namespace: emrecan
+  role_name: discover
   description: Discover current files and configuration
 
   license: MIT

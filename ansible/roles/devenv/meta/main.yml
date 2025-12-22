@@ -1,6 +1,8 @@
 ---
 galaxy_info:
   author: Emrecan Altinsoy
+  namespace: emrecan
+  role_name: devenv
   description: Configure development environment (git configuration with signing commit)
 
   license: MIT

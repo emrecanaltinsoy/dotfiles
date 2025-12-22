@@ -5,6 +5,6 @@
 
 - name: Ensure bashrc.d folder exists with correct permissions
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.bashrc.d"
+    path: "{{ ansible_facts['user_dir'] }}/.bashrc.d"
     state: directory
     mode: "0700"

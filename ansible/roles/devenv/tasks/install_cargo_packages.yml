@@ -52,9 +52,13 @@
         locked: true
 
 - name: Check if cargo is available
-  ansible.builtin.shell: command -v cargo
+  ansible.builtin.shell: |
+    source "$HOME/.cargo/env" 2>/dev/null || true
+    command -v cargo
+  args:
+    executable: /bin/bash
   register: cargo_check
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Check which cargo packages are already installed
@@ -67,9 +71,8 @@
   loop_control:
     label: "{{ item.name }}"
   register: package_checks
-  ignore_errors: true
-  changed_when: false
   failed_when: false
+  changed_when: false
   when:
     - cargo_check.rc == 0
     - not (item.skip_wsl | default(false) and IS_WSL)

@@ -1,6 +1,8 @@
 ---
 galaxy_info:
   author: Emrecan Altinsoy
+  namespace: emrecan
+  role_name: docker
   description: Install docker and enable the service
 
   license: MIT
