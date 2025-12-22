@@ -1,2 +1,12 @@
 ---
 # defaults file for roles/devenv
+
+# Package versions - update these to upgrade tools
+lazygit_version: "0.44.1"
+nvm_version: "0.40.1"
+sops_version: "3.9.0"
+
+# Test defaults for Molecule (override in secrets.yml for production)
+# user_email: "test@example.com"
+# user_fullname: "Test User"
+# user_passphrase: "test-passphrase"

@@ -1,9 +1,8 @@
 ---
 # tasks file for roles/docker
 - name: Install Docker
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: install_docker.yml
 - name: Start Docker service
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: start_docker_service.yml
-

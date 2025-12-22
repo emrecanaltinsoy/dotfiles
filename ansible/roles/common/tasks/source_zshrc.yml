@@ -2,17 +2,17 @@
 # Source zshrc depending on the location
 
 - name: Check if .zshrc exists in home directory
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_user_dir }}/.zshrc"
   register: zshrc_home
 
 - name: Check if .zshrc exists in .config/zsh
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_user_dir }}/.config/zsh/.zshrc"
   register: zshrc_config
 
 - name: Initialize zsh shell from home directory
-  shell: zsh -c 'source ~/.zshrc'
+  ansible.builtin.shell: zsh -c 'source ~/.zshrc'
   args:
     executable: /bin/bash
   changed_when: false
@@ -20,7 +20,7 @@
   when: zshrc_home.stat.exists
 
 - name: Initialize zsh shell from .config/zsh
-  shell: zsh -c 'source ~/.config/zsh/.zshrc'
+  ansible.builtin.shell: zsh -c 'source ~/.config/zsh/.zshrc'
   args:
     executable: /bin/bash
   changed_when: false

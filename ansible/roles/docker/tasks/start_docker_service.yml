@@ -2,7 +2,8 @@
 # Start Docker service
 - name: Enable docker service
   become: true
-  service:
+  ansible.builtin.service:
     name: docker
     enabled: yes
     state: started
+  when: ansible_virtualization_type != "docker"

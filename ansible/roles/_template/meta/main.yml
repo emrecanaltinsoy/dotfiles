@@ -1,3 +1,4 @@
+---
 # Contains metadata about the role, including dependencies on other roles.
 galaxy_info:
   author: Firstname Lastname

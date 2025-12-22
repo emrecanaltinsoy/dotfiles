@@ -2,7 +2,7 @@
 # Stow dotfiles to home directory
 
 - name: Define dotfile directories to stow
-  set_fact:
+  ansible.builtin.set_fact:
     dotfile_dirs:
       - alacrity
       - bash
@@ -18,24 +18,24 @@
       - zsh
 
 - name: Get repository root directory
-  set_fact:
+  ansible.builtin.set_fact:
     dotfiles_repo: "{{ playbook_dir | dirname }}"
 
 - name: Check if stow is installed
-  shell: command -v stow
+  ansible.builtin.shell: command -v stow
   register: stow_check
   ignore_errors: true
   changed_when: false
 
 - name: Install stow if not present
   become: true
-  apt:
+  ansible.builtin.apt:
     name: stow
     state: present
   when: stow_check.rc != 0
 
 - name: Stow dotfile directories
-  shell: |
+  ansible.builtin.shell: |
     cd "{{ dotfiles_repo }}"
     stow --adopt {{ item }} -t "$HOME"
   args:
@@ -47,16 +47,16 @@
   changed_when: stow_result.rc == 0
   failed_when: false
 
-- name: Reset repository to origin/main after stow adopt
-  shell: |
-    cd "{{ dotfiles_repo }}"
-    git reset --hard @{u}
-  args:
-    executable: /bin/bash
-  changed_when: false
+# - name: Reset repository to origin/main after stow adopt
+#   ansible.builtin.shell: |
+#     cd "{{ dotfiles_repo }}"
+#     git reset --hard @{u}
+#   args:
+#     executable: /bin/bash
+#   changed_when: false
 
 - name: Report stow results
-  debug:
+  ansible.builtin.debug:
     msg: "Stowed {{ item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
   loop: "{{ stow_result.results }}"
   loop_control:

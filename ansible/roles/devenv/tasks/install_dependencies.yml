@@ -2,13 +2,13 @@
 # Update and install dependencies
 
 - name: Check if git-core PPA exists
-  shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
+  ansible.builtin.shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
   register: git_ppa_check
   ignore_errors: true
   changed_when: false
 
 - name: Add git-core PPA
-  shell: |
+  ansible.builtin.shell: |
     sudo -E add-apt-repository -y ppa:git-core/ppa
   become: true
   args:
@@ -17,7 +17,7 @@
 
 - name: Update apt dependencies
   become: true
-  apt:
+  ansible.builtin.apt:
     upgrade: dist
     update_cache: yes
     cache_valid_time: 3600
@@ -25,7 +25,7 @@
 
 - name: Install apt dependencies
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - build-essential
       - curl
@@ -55,25 +55,25 @@
 # Install Rust (via rustup) and uv (Python package manager)
 
 - name: Check if rustup is installed
-  shell: command -v rustup
+  ansible.builtin.shell: command -v rustup
   register: rustup_check
   ignore_errors: true
   changed_when: false
 
 - name: Install rustup
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  ansible.builtin.shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   args:
     executable: /bin/bash
   when: rustup_check.rc != 0
 
 - name: Check if uv is installed
-  shell: command -v uv
+  ansible.builtin.shell: command -v uv
   register: uv_check
   ignore_errors: true
   changed_when: false
 
 - name: Install uv
-  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  ansible.builtin.shell: curl -LsSf https://astral.sh/uv/install.sh | sh
   args:
     executable: /bin/bash
   when: uv_check.rc != 0

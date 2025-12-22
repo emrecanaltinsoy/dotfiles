@@ -1,14 +1,14 @@
 ---
 # tasks file for roles/discover
 - name: Detect WSL environment
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: detect_wsl.yml
 - name: Discover Vault configuration
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: vault_configuration.yml
 - name: Cleanup previous configuration
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: cleanup_previous_configuration.yml
 - name: Configure bashrc
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: configure_bashrc.yml

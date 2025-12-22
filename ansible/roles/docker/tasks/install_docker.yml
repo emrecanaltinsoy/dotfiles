@@ -2,7 +2,7 @@
 # Install Docker
 - name: Download Docker if not already installed
   become: true
-  shell: |
+  ansible.builtin.shell: |
     curl -fsSL https://get.docker.com -o - | bash
   args:
     executable: /bin/bash
@@ -10,18 +10,13 @@
 
 - name: Add docker group
   become: true
-  group:
+  ansible.builtin.group:
     name: docker
     state: present
 
-- name: Get the current user running the deploy
-  become: false
-  shell: whoami
-  register: current_username
-
 - name: Add user to docker group
   become: true
-  user:
-    name: "{{ current_username.stdout }}"
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
     groups: docker
     append: yes

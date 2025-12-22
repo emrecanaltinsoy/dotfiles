@@ -1,29 +1,29 @@
 ---
 # tasks file for roles/devenv
 - name: Install dependencies
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: install_dependencies.yml
 - name: Configure GPG
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: configure_gpg.yml
 - name: Configure SSH
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: configure_ssh.yml
 - name: Configure Git
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: configure_git.yml
 - name: Install ZSH
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: configure_zsh.yml
 - name: Install GH CLI
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: install_gh_cli.yml
 - name: Install Cargo Packages
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: install_cargo_packages.yml
 - name: Install Additional Packages
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: install_packages.yml
 - name: Stow Dotfiles
-  import_tasks:
+  ansible.builtin.import_tasks:
     file: stow_dotfiles.yml

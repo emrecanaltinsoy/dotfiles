@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Emrecan Altinsoy
   description: Configure development environment (git configuration with signing commit)

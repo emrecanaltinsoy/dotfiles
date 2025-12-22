@@ -2,51 +2,51 @@
 # Configure GPG
 
 - name: Check if GPG key exists
-  command: gpg --list-keys --with-colons --fingerprint "{{ user_email }}"
+  ansible.builtin.command: gpg --list-keys --with-colons --fingerprint "{{ user_email }}"
   register: gpg_key_check
   changed_when: false
   failed_when: false
   ignore_errors: true
 
 - name: Generate GPG key configuration from template
-  template:
+  ansible.builtin.template:
     src: templates/gpg-key-gen.conf.j2
     dest: "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
-    mode: 0400
+    mode: "0400"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
 
 - name: Generate gnupg key
-  command: gpg --batch --gen-key "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
+  ansible.builtin.command: gpg --batch --gen-key "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
 
 - name: Delete gpg-key-gen configuration file
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
     state: absent
 
 - name: Copy GPG template configuration
-  template:
+  ansible.builtin.template:
     src: templates/gpg-agent.conf.j2
     dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
-    mode: 0600
+    mode: "0600"
 
 - name: Change .gnupg folder permissions
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.gnupg"
-    mode: 0700
+    mode: "0700"
 
 - name: Export GPG Public Key for GH CLI
-  shell: gpg --armor --export "{{ user_email }}" > "{{ ansible_user_dir }}/.gnupg/default_gh_gpg.pub"
+  ansible.builtin.shell: gpg --armor --export "{{ user_email }}" > "{{ ansible_user_dir }}/.gnupg/default_gh_gpg.pub"
   args:
     creates: "{{ ansible_user_dir }}/.gnupg/default_gh_gpg.pub"
 
 - name: Retrieve GPG key ID for signing commits
-  shell: gpg --list-secret-keys --with-colons --keyid-format=long "{{ user_email }}" | grep 'sec' | awk -F':' '{print $5}' | grep -v ':'
+  ansible.builtin.shell: gpg --list-secret-keys --with-colons --keyid-format=long "{{ user_email }}" | grep 'sec' | awk -F':' '{print $5}' | grep -v ':'
   register: gpg_key_secret_id
-  failed_when: gpg_key_secret_id.rc != 0 or gpg_key_secret_id.stdout == "" 
+  failed_when: gpg_key_secret_id.rc != 0 or gpg_key_secret_id.stdout == ""
 
 - name: Configure gpg for git configuration
-  shell: |
+  ansible.builtin.shell: |
     git config --global user.signingkey "{{ gpg_key_secret_id.stdout }}"
     git config --global commit.gpgsign true
     git config --global tag.gpgsign true

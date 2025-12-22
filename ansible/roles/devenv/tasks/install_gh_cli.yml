@@ -3,7 +3,7 @@
 
 - name: Install GitHub CLI if not already installed
   become: true
-  shell: |
+  ansible.builtin.shell: |
     mkdir -p -m 755 /etc/apt/keyrings \
     && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
     && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
@@ -15,7 +15,7 @@
     creates: /usr/bin/gh
 
 - name: Copy GH CLI Auth Token
-  copy:
+  ansible.builtin.copy:
     src: files/gh_auth_token.bashrc
     dest: "{{ ansible_user_dir }}/.bashrc.d/9_gh_auth_token.bashrc"
-    mode: 0600
+    mode: "0600"
