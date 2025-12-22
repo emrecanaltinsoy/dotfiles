@@ -1,4 +1,5 @@
 ---
+# Shared verify playbook - works for both Debian and RedHat systems
 - name: Verify
   hosts: all
   gather_facts: true
@@ -89,31 +90,53 @@
         success_msg: "zsh is installed"
 
     # ============================================
-    # Docker Role Verification
+    # Docker/Podman Role Verification
     # ============================================
-    - name: Check if docker group exists
+    - name: Check if docker group exists (Debian)
       ansible.builtin.getent:
         database: group
         key: docker
       register: docker_group
       failed_when: false
+      when: ansible_facts['os_family'] == "Debian"
 
-    - name: Assert docker group exists
+    - name: Assert docker group exists (Debian)
       ansible.builtin.assert:
         that:
           - docker_group is defined
         success_msg: "Docker group exists"
-      when: ansible_facts['virtualization_type'] != "docker"
+      when:
+        - ansible_facts['os_family'] == "Debian"
+        - ansible_facts['virtualization_type'] != "docker"
 
-    - name: Check if docker is installed
+    - name: Check if docker is installed (Debian)
       ansible.builtin.command: which docker
       register: docker_check
       changed_when: false
       failed_when: false
+      when: ansible_facts['os_family'] == "Debian"
 
-    - name: Assert docker is installed
+    - name: Assert docker is installed (Debian)
       ansible.builtin.assert:
         that:
           - docker_check.rc == 0
         success_msg: "Docker is installed"
-      when: ansible_facts['virtualization_type'] != "docker"
+      when:
+        - ansible_facts['os_family'] == "Debian"
+        - ansible_facts['virtualization_type'] != "docker"
+
+    - name: Check if podman is installed (RedHat)
+      ansible.builtin.command: which podman
+      register: podman_check
+      changed_when: false
+      failed_when: false
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Assert podman is installed (RedHat)
+      ansible.builtin.assert:
+        that:
+          - podman_check.rc == 0
+        success_msg: "Podman is installed"
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - ansible_facts['virtualization_type'] != "docker"

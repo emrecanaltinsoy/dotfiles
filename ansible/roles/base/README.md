@@ -1,13 +1,13 @@
 Base
 ====
 
-Installs base system dependencies including apt packages, Rust (via rustup), and uv (Python package manager).
+Installs base system dependencies including system packages, Rust (via rustup), and uv (Python package manager).
 
 Requirements
 ------------
 
 - Ansible 2.9 or higher
-- Ubuntu/Debian-based system
+- Debian-based (Ubuntu, Debian) or RedHat-based (Rocky Linux, CentOS, Fedora) system
 - sudo privileges
 
 Role Variables
@@ -23,13 +23,13 @@ None. This role should be run first after discover.
 Tasks
 -----
 
-### 1. Add git-core PPA
+### 1. Add git-core PPA (Debian only)
 
 Adds the official git-core PPA for the latest Git version.
 
-### 2. Update and Install APT Dependencies
+### 2. Install System Dependencies
 
-Installs essential packages:
+**Debian/Ubuntu (apt):**
 
 - **Build tools**: build-essential
 - **Utilities**: curl, wget, unzip, zip, jq, socat
@@ -38,6 +38,16 @@ Installs essential packages:
 - **Shell**: zsh, fzf
 - **Python**: python3, python3-pip, python3-venv, python3-wheel, python3-dev
 - **Other**: neofetch, software-properties-common
+
+**RedHat/Rocky (dnf):**
+
+- **Build tools**: @Development Tools
+- **Utilities**: wget, unzip, zip, jq, socat
+- **Version control**: git, stow
+- **Security**: gnupg2, keychain, openssh-clients
+- **Shell**: zsh, fzf
+- **Python**: python3, python3-pip, python3-devel
+- **Other**: neofetch
 
 ### 3. Install Rust
 

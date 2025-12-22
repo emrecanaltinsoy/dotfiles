@@ -1,5 +1,5 @@
 ---
-# Converge playbook - mirrors setup.yml but without secrets.yml
+# Shared converge playbook - mirrors setup.yml but without secrets.yml
 - name: Configure Local (Test)
   hosts: all
   gather_facts: true

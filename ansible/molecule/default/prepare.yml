@@ -1,16 +1,18 @@
 ---
-# Prepare the test container with prerequisites
+# Shared prepare playbook - handles both Debian and RedHat systems
 - name: Prepare
   hosts: all
   gather_facts: true
 
   tasks:
-    - name: Update apt cache
+    # Debian/Ubuntu prerequisites
+    - name: Update apt cache (Debian)
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 3600
+      when: ansible_facts['os_family'] == "Debian"
 
-    - name: Install prerequisites for PPA and GPG operations
+    - name: Install prerequisites for PPA and GPG operations (Debian)
       ansible.builtin.apt:
         name:
           - gnupg
@@ -22,3 +24,13 @@
           - wget
           - unzip
         state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    # RedHat/Rocky prerequisites
+    - name: Install required packages for testing (RedHat)
+      ansible.builtin.dnf:
+        name:
+          - python3
+          - sudo
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"

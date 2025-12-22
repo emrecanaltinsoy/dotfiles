@@ -7,7 +7,7 @@ Requirements
 ------------
 
 - Ansible 2.9 or higher
-- Ubuntu/Debian-based system
+- Debian-based (Ubuntu, Debian) or RedHat-based (Rocky Linux, RHEL, Fedora) system
 - sudo privileges
 
 Role Variables
@@ -25,7 +25,13 @@ Tasks
 
 ### 1. Install GitHub CLI
 
-Installs `gh` CLI from the official GitHub repository.
+**Debian-based systems:**
+- Adds the official GitHub CLI apt repository
+- Installs `gh` CLI via apt
+
+**RedHat-based systems:**
+- Adds the official GitHub CLI dnf repository
+- Installs `gh` CLI via dnf
 
 ### 2. Configure Authentication
 

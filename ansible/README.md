@@ -1,12 +1,12 @@
-# Ansible Deployment for Ubuntu
+# Ansible Deployment for Linux
 
-Automated development environment setup for Ubuntu using Ansible. Works on both native Ubuntu installations and Windows Subsystem for Linux (WSL).
+Automated development environment setup for Linux using Ansible. Supports Debian-based (Ubuntu, Debian) and RedHat-based (Rocky Linux, CentOS, Fedora) systems. Works on both native installations and Windows Subsystem for Linux (WSL).
 
 ## What Gets Installed
 
 | Category | Tools |
 |----------|-------|
-| **Container** | Docker |
+| **Container** | Docker (Debian) / Podman (RedHat) |
 | **Version Control** | Git (with SSH/GPG signing), GitHub CLI, Lazygit |
 | **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
 | **Editor** | Neovim |
@@ -28,15 +28,21 @@ Automated development environment setup for Ubuntu using Ansible. Works on both 
 | [cargo](roles/cargo/README.md) | Rust/Cargo CLI tools |
 | [tools](roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
 | [dotfiles](roles/dotfiles/README.md) | Stow dotfiles to home directory |
-| [docker](roles/docker/README.md) | Docker Engine installation |
+| [docker](roles/docker/README.md) | Docker (Debian) or Podman (RedHat) installation |
 | [common](roles/common/README.md) | Shared tasks (zshrc sourcing) |
 
-## Quick Start (Ubuntu)
+## Quick Start (Ubuntu/Debian)
 
 ### Install Ansible dependencies
 
 ```Shell
 sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
+```
+
+### Quick Start (Rocky Linux/RHEL/Fedora)
+
+```Shell
+sudo dnf install -y git python3 python3-pip ansible
 ```
 
 ### Clone the repository
@@ -301,8 +307,14 @@ uv sync  # Install dependencies including molecule
 ### Running Tests
 
 ```bash
-# Run full test suite (create, converge, idempotence, verify, destroy)
+# Run full test suite on Ubuntu 24.04 (default)
 uv run molecule test
+
+# Test on Ubuntu 22.04
+MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible uv run molecule test
+
+# Test on Rocky Linux 9
+MOLECULE_IMAGE=geerlingguy/docker-rockylinux9-ansible uv run molecule test
 
 # Keep instance after test for debugging
 uv run molecule test --destroy=never
@@ -316,7 +328,8 @@ uv run molecule destroy   # Cleanup
 
 ### Test Configuration
 
-- **Platform**: Ubuntu 22.04 (Docker)
+- **Default Platform**: Ubuntu 24.04 (Docker)
+- **Supported Platforms**: Ubuntu 22.04, Ubuntu 24.04, Rocky Linux 9
 - **Test variables**: Defined in `molecule/default/molecule.yml`
 - **Verification**: `molecule/default/verify.yml` validates role outputs
 

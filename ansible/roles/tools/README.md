@@ -7,7 +7,7 @@ Requirements
 ------------
 
 - Ansible 2.9 or higher
-- Ubuntu/Debian-based system
+- Debian-based (Ubuntu, Debian) or RedHat-based (Rocky Linux, RHEL, Fedora) system
 - sudo privileges
 
 Role Variables
@@ -29,19 +29,29 @@ Tasks
 
 ### Installed Tools
 
-| Package | Description |
-|---------|-------------|
-| AWS CLI | Amazon Web Services CLI |
-| lazygit | Terminal UI for git |
-| Neovim | Modern vim fork |
-| NVM | Node Version Manager |
-| OpenCode | AI coding assistant |
-| SOPS | Secrets management |
-| Starship | Cross-shell prompt |
-| Terraform | Infrastructure as code |
-| tmux | Terminal multiplexer |
-| Oh-My-Tmux | Tmux configuration framework |
-| tmuxifier | Tmux session manager |
+| Package | Description | Installation Method |
+|---------|-------------|---------------------|
+| AWS CLI | Amazon Web Services CLI | Official installer (all platforms) |
+| lazygit | Terminal UI for git | GitHub release binary (all platforms) |
+| Neovim | Modern vim fork | GitHub release binary (all platforms) |
+| NVM | Node Version Manager | Official install script (all platforms) |
+| OpenCode | AI coding assistant | Official installer (all platforms) |
+| SOPS | Secrets management | GitHub release binary (all platforms) |
+| Starship | Cross-shell prompt | Official installer (all platforms) |
+| Terraform | Infrastructure as code | apt (Debian) / dnf (RedHat) |
+| tmux | Terminal multiplexer | apt (Debian) / dnf (RedHat) |
+| Oh-My-Tmux | Tmux configuration framework | Git clone (all platforms) |
+| tmuxifier | Tmux session manager | Git clone (all platforms) |
+
+### Platform-Specific Notes
+
+**Terraform:**
+- Debian: Installed from HashiCorp apt repository
+- RedHat: Installed from HashiCorp dnf repository
+
+**tmux:**
+- Debian: Installed via apt
+- RedHat: Installed via dnf
 
 Example Playbook
 ----------------
