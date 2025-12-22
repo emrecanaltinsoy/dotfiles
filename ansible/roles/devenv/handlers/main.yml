@@ -1,2 +1,8 @@
 ---
 # handlers file for roles/devenv
+
+- name: Reload gpg-agent
+  ansible.builtin.shell: gpgconf --kill gpg-agent && gpgconf --launch gpg-agent
+  args:
+    executable: /bin/bash
+  listen: reload gpg-agent

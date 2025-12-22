@@ -1,8 +1,8 @@
 ---
 # Contains metadata about the role, including dependencies on other roles.
 galaxy_info:
-  author: Firstname Lastname
-  description: your role description
+  author: <YOUR_NAME>
+  description: <YOUR_ROLE_DESCRIPTION>
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

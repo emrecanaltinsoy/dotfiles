@@ -1,3 +1,10 @@
 ---
 # handlers file for roles/_template
 # Contains handlers, which are special tasks that are triggered by other tasks.
+#
+# Example handler:
+# - name: Restart service
+#   ansible.builtin.service:
+#     name: myservice
+#     state: restarted
+#   listen: restart myservice
