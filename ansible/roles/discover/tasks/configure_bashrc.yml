@@ -1,13 +1,10 @@
 ---
 # tasks file for bashrc configuration
-- name: Test if .bashrc.d folder exists
-  ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.bashrc.d"
-  register: bashrcd_folder
+# Note: Cleanup of .bashrc.d is no longer needed as we now ensure the directory
+# exists with proper permissions rather than removing and recreating it.
 
-- name: Create bashrc.d folder
+- name: Ensure bashrc.d folder exists with correct permissions
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.bashrc.d"
     state: directory
     mode: "0700"
-  when: not bashrcd_folder.stat.exists

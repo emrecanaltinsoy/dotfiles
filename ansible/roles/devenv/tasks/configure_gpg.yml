@@ -14,10 +14,12 @@
     dest: "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
     mode: "0400"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
+  no_log: true
 
 - name: Generate gnupg key
   ansible.builtin.command: gpg --batch --gen-key "{{ ansible_user_dir }}/.gnupg/gpg-key-gen.conf"
   when: gpg_key_check.rc != 0 or 'fpr' not in gpg_key_check.stdout
+  no_log: true
 
 - name: Delete gpg-key-gen configuration file
   ansible.builtin.file:
@@ -43,10 +45,38 @@
 - name: Retrieve GPG key ID for signing commits
   ansible.builtin.shell: gpg --list-secret-keys --with-colons --keyid-format=long "{{ user_email }}" | grep 'sec' | awk -F':' '{print $5}' | grep -v ':'
   register: gpg_key_secret_id
+  changed_when: false
   failed_when: gpg_key_secret_id.rc != 0 or gpg_key_secret_id.stdout == ""
 
-- name: Configure gpg for git configuration
-  ansible.builtin.shell: |
-    git config --global user.signingkey "{{ gpg_key_secret_id.stdout }}"
-    git config --global commit.gpgsign true
-    git config --global tag.gpgsign true
+- name: Get current git signingkey
+  ansible.builtin.command: git config --global user.signingkey
+  register: git_signingkey
+  changed_when: false
+  failed_when: false
+
+- name: Configure gpg signing key for git
+  ansible.builtin.command: git config --global user.signingkey "{{ gpg_key_secret_id.stdout }}"
+  when: git_signingkey.stdout != gpg_key_secret_id.stdout
+  changed_when: true
+
+- name: Get current git commit.gpgsign
+  ansible.builtin.command: git config --global commit.gpgsign
+  register: git_commit_gpgsign
+  changed_when: false
+  failed_when: false
+
+- name: Configure git commit.gpgsign
+  ansible.builtin.command: git config --global commit.gpgsign true
+  when: git_commit_gpgsign.stdout != "true"
+  changed_when: true
+
+- name: Get current git tag.gpgsign
+  ansible.builtin.command: git config --global tag.gpgsign
+  register: git_tag_gpgsign
+  changed_when: false
+  failed_when: false
+
+- name: Configure git tag.gpgsign
+  ansible.builtin.command: git config --global tag.gpgsign true
+  when: git_tag_gpgsign.stdout != "true"
+  changed_when: true

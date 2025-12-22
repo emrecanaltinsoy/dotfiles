@@ -6,9 +6,6 @@
 - name: Discover Vault configuration
   ansible.builtin.import_tasks:
     file: vault_configuration.yml
-- name: Cleanup previous configuration
-  ansible.builtin.import_tasks:
-    file: cleanup_previous_configuration.yml
 - name: Configure bashrc
   ansible.builtin.import_tasks:
     file: configure_bashrc.yml

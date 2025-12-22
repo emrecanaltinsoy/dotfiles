@@ -18,6 +18,7 @@
   args:
     executable: /bin/bash
   when: aws_check.rc != 0
+  changed_when: true
 
 # Lazygit
 - name: Check if lazygit is installed
@@ -37,6 +38,7 @@
   args:
     executable: /bin/bash
   when: lazygit_check.rc != 0
+  changed_when: true
 
 # Neovim
 - name: Check if neovim is installed
@@ -53,6 +55,7 @@
   args:
     executable: /bin/bash
   when: not nvim_check.stat.exists
+  changed_when: true
 
 # NVM
 - name: Check if nvm is installed
@@ -65,6 +68,7 @@
   args:
     executable: /bin/bash
   when: not nvm_check.stat.exists
+  changed_when: true
 
 # OpenCode
 - name: Check if opencode is installed
@@ -78,6 +82,7 @@
   args:
     executable: /bin/bash
   when: opencode_check.rc != 0
+  changed_when: true
 
 # SOPS
 - name: Check if sops is installed
@@ -94,6 +99,7 @@
   args:
     executable: /bin/bash
   when: sops_check.rc != 0
+  changed_when: true
 
 # Starship
 - name: Check if starship is installed
@@ -109,6 +115,7 @@
   args:
     executable: /bin/bash
   when: starship_check.rc != 0
+  changed_when: true
 
 # Terraform
 - name: Check if HashiCorp GPG key exists
@@ -129,6 +136,7 @@
   when:
     - terraform_check.rc != 0
     - not hashicorp_gpg.stat.exists
+  changed_when: true
 
 - name: Add HashiCorp apt repository
   ansible.builtin.shell: |
@@ -136,6 +144,7 @@
   args:
     executable: /bin/bash
   when: terraform_check.rc != 0
+  changed_when: true
 
 - name: Install terraform
   become: true
@@ -173,6 +182,7 @@
   args:
     executable: /bin/bash
   when: not omt_dir.stat.exists
+  changed_when: true
 
 - name: Check if tmuxifier is installed
   ansible.builtin.stat:

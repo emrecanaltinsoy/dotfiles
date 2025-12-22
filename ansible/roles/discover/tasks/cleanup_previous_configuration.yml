@@ -1,6 +1,0 @@
----
-# tasks file for bashrc configuration
-- name: Remove bashrc.d folder from previous configuration
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.bashrc.d"
-    state: absent

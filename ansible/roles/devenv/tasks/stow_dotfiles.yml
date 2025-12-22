@@ -37,7 +37,7 @@
 - name: Stow dotfile directories
   ansible.builtin.shell: |
     cd "{{ dotfiles_repo }}"
-    stow --adopt {{ item }} -t "$HOME"
+    stow --override ".*" {{ item }} -t "$HOME"
   args:
     executable: /bin/bash
   loop: "{{ dotfile_dirs }}"
@@ -46,14 +46,6 @@
   register: stow_result
   changed_when: stow_result.rc == 0
   failed_when: false
-
-# - name: Reset repository to origin/main after stow adopt
-#   ansible.builtin.shell: |
-#     cd "{{ dotfiles_repo }}"
-#     git reset --hard @{u}
-#   args:
-#     executable: /bin/bash
-#   changed_when: false
 
 - name: Report stow results
   ansible.builtin.debug:
