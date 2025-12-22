@@ -1,11 +1,30 @@
 ---
 # tasks file for roles/discover
+
+- name: Assert running on Debian-based system
+  ansible.builtin.assert:
+    that: ansible_os_family == "Debian"
+    fail_msg: "This playbook only supports Debian-based systems (Ubuntu, Debian, etc.)"
+  tags:
+    - always
+
 - name: Detect WSL environment
   ansible.builtin.import_tasks:
     file: detect_wsl.yml
+  tags:
+    - discover
+    - wsl
+
 - name: Discover Vault configuration
   ansible.builtin.import_tasks:
     file: vault_configuration.yml
+  tags:
+    - discover
+    - vault
+
 - name: Configure bashrc
   ansible.builtin.import_tasks:
     file: configure_bashrc.yml
+  tags:
+    - discover
+    - bashrc

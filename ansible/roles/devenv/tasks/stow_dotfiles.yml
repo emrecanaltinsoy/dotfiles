@@ -34,23 +34,36 @@
     state: present
   when: stow_check.rc != 0
 
-- name: Stow dotfile directories
+- name: Check stow status for dotfile directories
   ansible.builtin.shell: |
     cd "{{ dotfiles_repo }}"
-    stow --override ".*" {{ item }} -t "$HOME"
+    stow --no --verbose {{ item }} -t "$HOME" 2>&1 || true
   args:
     executable: /bin/bash
   loop: "{{ dotfile_dirs }}"
   loop_control:
     label: "{{ item }}"
+  register: stow_check_result
+  changed_when: false
+
+- name: Stow dotfile directories
+  ansible.builtin.shell: |
+    cd "{{ dotfiles_repo }}"
+    stow --override ".*" {{ item.item }} -t "$HOME"
+  args:
+    executable: /bin/bash
+  loop: "{{ stow_check_result.results }}"
+  loop_control:
+    label: "{{ item.item }}"
   register: stow_result
-  changed_when: stow_result.rc == 0
-  failed_when: false
+  changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
+  failed_when: stow_result.rc != 0 and 'No packages' not in stow_result.stderr
 
 - name: Report stow results
   ansible.builtin.debug:
-    msg: "Stowed {{ item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
+    msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
+    verbosity: 1
   loop: "{{ stow_result.results }}"
   loop_control:
-    label: "{{ item.item }}"
+    label: "{{ item.item.item }}"
   when: stow_result.results is defined

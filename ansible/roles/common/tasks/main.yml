@@ -3,3 +3,7 @@
 - name: Source .zshrc
   ansible.builtin.import_tasks:
     file: source_zshrc.yml
+  tags:
+    - common
+    - zsh
+    - shell

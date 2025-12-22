@@ -19,6 +19,10 @@
     executable: /bin/bash
   when: aws_check.rc != 0
   changed_when: true
+  register: aws_result
+  retries: 3
+  delay: 5
+  until: aws_result.rc == 0
 
 # Lazygit
 - name: Check if lazygit is installed
@@ -39,6 +43,10 @@
     executable: /bin/bash
   when: lazygit_check.rc != 0
   changed_when: true
+  register: lazygit_result
+  retries: 3
+  delay: 5
+  until: lazygit_result.rc == 0
 
 # Neovim
 - name: Check if neovim is installed
@@ -56,6 +64,10 @@
     executable: /bin/bash
   when: not nvim_check.stat.exists
   changed_when: true
+  register: nvim_result
+  retries: 3
+  delay: 5
+  until: nvim_result.rc == 0
 
 # NVM
 - name: Check if nvm is installed
@@ -69,6 +81,10 @@
     executable: /bin/bash
   when: not nvm_check.stat.exists
   changed_when: true
+  register: nvm_result
+  retries: 3
+  delay: 5
+  until: nvm_result.rc == 0
 
 # OpenCode
 - name: Check if opencode is installed
@@ -83,6 +99,10 @@
     executable: /bin/bash
   when: opencode_check.rc != 0
   changed_when: true
+  register: opencode_result
+  retries: 3
+  delay: 5
+  until: opencode_result.rc == 0
 
 # SOPS
 - name: Check if sops is installed
@@ -100,6 +120,10 @@
     executable: /bin/bash
   when: sops_check.rc != 0
   changed_when: true
+  register: sops_result
+  retries: 3
+  delay: 5
+  until: sops_result.rc == 0
 
 # Starship
 - name: Check if starship is installed
@@ -116,6 +140,10 @@
     executable: /bin/bash
   when: starship_check.rc != 0
   changed_when: true
+  register: starship_result
+  retries: 3
+  delay: 5
+  until: starship_result.rc == 0
 
 # Terraform
 - name: Check if HashiCorp GPG key exists
@@ -137,6 +165,10 @@
     - terraform_check.rc != 0
     - not hashicorp_gpg.stat.exists
   changed_when: true
+  register: hashicorp_gpg_result
+  retries: 3
+  delay: 5
+  until: hashicorp_gpg_result.rc == 0
 
 - name: Add HashiCorp apt repository
   ansible.builtin.shell: |
@@ -183,6 +215,10 @@
     executable: /bin/bash
   when: not omt_dir.stat.exists
   changed_when: true
+  register: omt_result
+  retries: 3
+  delay: 5
+  until: omt_result.rc == 0
 
 - name: Check if tmuxifier is installed
   ansible.builtin.stat:

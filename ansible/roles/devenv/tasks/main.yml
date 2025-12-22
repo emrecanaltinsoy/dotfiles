@@ -3,27 +3,70 @@
 - name: Install dependencies
   ansible.builtin.import_tasks:
     file: install_dependencies.yml
+  tags:
+    - devenv
+    - dependencies
+    - packages
+
 - name: Configure GPG
   ansible.builtin.import_tasks:
     file: configure_gpg.yml
+  tags:
+    - devenv
+    - gpg
+    - security
+
 - name: Configure SSH
   ansible.builtin.import_tasks:
     file: configure_ssh.yml
+  tags:
+    - devenv
+    - ssh
+    - security
+
 - name: Configure Git
   ansible.builtin.import_tasks:
     file: configure_git.yml
+  tags:
+    - devenv
+    - git
+
 - name: Install ZSH
   ansible.builtin.import_tasks:
     file: configure_zsh.yml
+  tags:
+    - devenv
+    - zsh
+    - shell
+
 - name: Install GH CLI
   ansible.builtin.import_tasks:
     file: install_gh_cli.yml
+  tags:
+    - devenv
+    - gh
+    - github
+
 - name: Install Cargo Packages
   ansible.builtin.import_tasks:
     file: install_cargo_packages.yml
+  tags:
+    - devenv
+    - cargo
+    - rust
+    - packages
+
 - name: Install Additional Packages
   ansible.builtin.import_tasks:
     file: install_packages.yml
+  tags:
+    - devenv
+    - packages
+
 - name: Stow Dotfiles
   ansible.builtin.import_tasks:
     file: stow_dotfiles.yml
+  tags:
+    - devenv
+    - stow
+    - dotfiles

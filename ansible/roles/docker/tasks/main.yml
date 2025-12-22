@@ -3,6 +3,13 @@
 - name: Install Docker
   ansible.builtin.import_tasks:
     file: install_docker.yml
+  tags:
+    - docker
+    - install
+
 - name: Start Docker service
   ansible.builtin.import_tasks:
     file: start_docker_service.yml
+  tags:
+    - docker
+    - service
