@@ -1,0 +1,22 @@
+---
+# Converge playbook for Rocky Linux 9
+- name: Configure Local (Test)
+  hosts: all
+  gather_facts: true
+
+  roles:
+    - discover
+    - base
+    - git
+    - shell
+    - github
+    - cargo
+    - tools
+    - dotfiles
+    - docker
+
+  post_tasks:
+    - name: Display shell change notification
+      ansible.builtin.debug:
+        msg: "{{ shell_changed_message }}"
+      when: shell_changed_message is defined

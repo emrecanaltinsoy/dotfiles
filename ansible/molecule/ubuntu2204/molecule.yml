@@ -7,12 +7,13 @@ driver:
 
 platforms:
   - name: instance
-    image: geerlingguy/docker-ubuntu2404-ansible
+    image: geerlingguy/docker-ubuntu2204-ansible
     pre_build_image: true
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     cgroupns_mode: host
+    # Required for docker-in-docker (docker role)
     docker_host: ""
 
 provisioner:
@@ -34,16 +35,18 @@ provisioner:
             ansible_user: root
     group_vars:
       all:
+        # Test variables (replaces secrets.yml)
         user_email: "test@example.com"
         user_fullname: "Test User"
         user_passphrase: "test-passphrase"
+        # Skip stow tasks (dotfiles not available in container)
         skip_stow: true
 
 verifier:
   name: ansible
 
 scenario:
-  name: default
+  name: ubuntu2204
   test_sequence:
     - dependency
     - syntax

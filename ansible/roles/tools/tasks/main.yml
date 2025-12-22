@@ -161,11 +161,12 @@
   delay: 5
   until: starship_result.rc == 0
 
-# Terraform
+# Terraform - Debian/Ubuntu
 - name: Check if HashiCorp GPG key exists
   ansible.builtin.stat:
     path: /usr/share/keyrings/hashicorp-archive-keyring.gpg
   register: hashicorp_gpg
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Check if terraform is installed
   ansible.builtin.shell: command -v terraform
@@ -173,11 +174,12 @@
   failed_when: false
   changed_when: false
 
-- name: Add HashiCorp GPG key
+- name: Add HashiCorp GPG key (Debian)
   ansible.builtin.shell: wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
   args:
     executable: /bin/bash
   when:
+    - ansible_facts['os_family'] == "Debian"
     - terraform_check.rc != 0
     - not hashicorp_gpg.stat.exists
   changed_when: true
@@ -186,21 +188,46 @@
   delay: 5
   until: hashicorp_gpg_result.rc == 0
 
-- name: Add HashiCorp apt repository
+- name: Add HashiCorp apt repository (Debian)
   ansible.builtin.shell: |
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
   args:
     executable: /bin/bash
-  when: terraform_check.rc != 0
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - terraform_check.rc != 0
   changed_when: true
 
-- name: Install terraform
+- name: Install terraform (Debian)
   become: true
   ansible.builtin.apt:
     name: terraform
     state: present
     update_cache: yes
-  when: terraform_check.rc != 0
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - terraform_check.rc != 0
+
+# Terraform - RedHat/Rocky
+- name: Add HashiCorp repository (RedHat)
+  become: true
+  ansible.builtin.shell: |
+    dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+  args:
+    executable: /bin/bash
+    creates: /etc/yum.repos.d/hashicorp.repo
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - terraform_check.rc != 0
+
+- name: Install terraform (RedHat)
+  become: true
+  ansible.builtin.dnf:
+    name: terraform
+    state: present
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - terraform_check.rc != 0
 
 # Tmux and Oh-My-Tmux
 - name: Check if tmux is installed
@@ -209,12 +236,23 @@
   failed_when: false
   changed_when: false
 
-- name: Install tmux
+- name: Install tmux (Debian)
   become: true
   ansible.builtin.apt:
     name: tmux
     state: present
-  when: tmux_check.rc != 0
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - tmux_check.rc != 0
+
+- name: Install tmux (RedHat)
+  become: true
+  ansible.builtin.dnf:
+    name: tmux
+    state: present
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - tmux_check.rc != 0
 
 - name: Check if oh-my-tmux is installed
   ansible.builtin.stat:

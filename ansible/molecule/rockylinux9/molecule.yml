@@ -7,7 +7,7 @@ driver:
 
 platforms:
   - name: instance
-    image: geerlingguy/docker-ubuntu2404-ansible
+    image: geerlingguy/docker-rockylinux9-ansible
     pre_build_image: true
     privileged: true
     volumes:
@@ -43,7 +43,7 @@ verifier:
   name: ansible
 
 scenario:
-  name: default
+  name: rockylinux9
   test_sequence:
     - dependency
     - syntax
