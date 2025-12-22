@@ -211,6 +211,7 @@
     - name: Add HashiCorp repository
       become: true
       ansible.builtin.shell: |
+        dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo || \
         dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
       args:
         executable: /bin/bash
@@ -218,9 +219,10 @@
 
     - name: Install terraform
       become: true
-      ansible.builtin.dnf:
-        name: terraform
-        state: present
+      ansible.builtin.shell: dnf install -y terraform
+      args:
+        executable: /bin/bash
+      changed_when: true
 
 # Tmux and Oh-My-Tmux
 - name: Check if tmux is installed
@@ -240,12 +242,13 @@
 
 - name: Install tmux (RedHat)
   become: true
-  ansible.builtin.dnf:
-    name: tmux
-    state: present
+  ansible.builtin.shell: dnf install -y tmux
+  args:
+    executable: /bin/bash
   when:
     - ansible_facts['os_family'] == "RedHat"
     - tmux_check.rc != 0
+  changed_when: true
 
 - name: Check if oh-my-tmux is installed
   ansible.builtin.stat:

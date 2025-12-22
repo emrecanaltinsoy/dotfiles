@@ -12,9 +12,7 @@ Requirements
 Role Variables
 --------------
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `skip_stow` | false | Set to true to skip stow tasks (useful for testing) |
+None.
 
 Dependencies
 ------------
@@ -46,16 +44,6 @@ Example Playbook
 
 ```yaml
 - hosts: localhost
-  roles:
-    - dotfiles
-```
-
-Skip stow in tests:
-
-```yaml
-- hosts: localhost
-  vars:
-    skip_stow: true
   roles:
     - dotfiles
 ```

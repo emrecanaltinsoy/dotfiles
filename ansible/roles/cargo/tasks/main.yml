@@ -7,34 +7,30 @@
       - name: alacritty
         bin: alacritty
         skip_wsl: true
-      - name: bat
-        bin: bat
       - name: exa
         bin: exa
-      - name: fd-find
-        bin: fd
       - name: git-delta
         bin: delta
-      - name: procs
-        bin: procs
+        skip_redhat: true # Available in dnf, install via cargo only on Debian
       - name: rm-improved
         bin: rip
-      - name: ripgrep
-        bin: rg
-      - name: tokei
-        bin: tokei
       - name: topgrade
         bin: topgrade
       - name: xcp
         bin: xcp
-      - name: xh
-        bin: xh
+      # - name: procs
+      #   bin: procs
+      # - name: tokei
+      #   bin: tokei
+      # - name: xh
+      #   bin: xh
       # - name: yazi-fm
       #   bin: yazi
       # - name: zellij
       #   bin: zellij
       - name: zoxide
         bin: zoxide
+        skip_debian: true # Available in apt, install via cargo only on RedHat
 
 - name: Check if cargo is available
   ansible.builtin.shell: |
@@ -61,7 +57,10 @@
       register: package_checks
       failed_when: false
       changed_when: false
-      when: not (item.skip_wsl | default(false) and IS_WSL)
+      when: >
+        not (item.skip_wsl | default(false) and IS_WSL) and
+        not (item.skip_redhat | default(false) and ansible_facts['os_family'] == "RedHat") and
+        not (item.skip_debian | default(false) and ansible_facts['os_family'] == "Debian")
 
     - name: Build list of missing cargo packages
       ansible.builtin.set_fact:
@@ -84,6 +83,15 @@
         executable: /bin/bash
       when: missing_cargo_packages | length > 0
       register: cargo_install_result
+      ignore_errors: true
+
+    - name: Set cargo installation failure message
+      ansible.builtin.set_fact:
+        cargo_install_failed: true
+        cargo_install_error: "{{ cargo_install_result.stderr | default('Unknown error') }}"
+      when:
+        - missing_cargo_packages | length > 0
+        - cargo_install_result is failed
 
     - name: Display installation result
       ansible.builtin.debug:

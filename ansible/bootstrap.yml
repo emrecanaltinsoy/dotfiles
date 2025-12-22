@@ -2,11 +2,21 @@
 # Bootstrap playbook for remote servers without Python
 # Run this before setup.yml on fresh servers
 # Safe to run even if Python is already installed
+#
+# Note: gather_facts is disabled because Python is required for fact gathering.
+# We try both package managers since we can't detect OS family without Python.
 
-- name: Bootstrap Python on remote servers
-  hosts: servers
+- name: Bootstrap Python on workstations
+  hosts: workstations
   gather_facts: false
   become: true
   tasks:
-    - name: Install Python 3
-      raw: apt-get update && apt-get install -y python3
+    - name: Install Python 3 (try apt first, then dnf)
+      raw: |
+        if command -v apt-get >/dev/null 2>&1; then
+          apt-get update && apt-get install -y python3
+        elif command -v dnf >/dev/null 2>&1; then
+          dnf install -y python3 python3-libdnf5
+        else
+          echo "No supported package manager found" && exit 1
+        fi

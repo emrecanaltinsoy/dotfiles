@@ -1,5 +1,2 @@
 ---
 # defaults file for roles/dotfiles
-
-# Set to true to skip stow tasks (useful for molecule testing)
-skip_stow: false

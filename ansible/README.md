@@ -14,7 +14,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, exa, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, neofetch, Stow |
+| **Other** | OpenCode, fastfetch/neofetch, Stow |
 
 ## Roles
 
@@ -44,6 +44,9 @@ sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
 ```Shell
 sudo dnf install -y git python3 python3-pip ansible
 ```
+
+> [!NOTE]
+> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility. Fedora installs `fastfetch` instead of `neofetch`.
 
 ### Clone the repository
 
@@ -175,22 +178,25 @@ Now follow the [Quick Start](#quick-start-ubuntu) instructions above.
 
 ## Running on Remote Servers
 
-You can deploy this configuration to remote Ubuntu servers by modifying the inventory file.
+You can deploy this configuration to remote servers by modifying the inventory file.
 
 ### Inventory File (hosts)
 
-The `hosts` file defines which machines Ansible will target:
+The `hosts` file defines which machines Ansible will target. The playbooks target the `workstations` group by default:
 
 ```ini
 [local]
 localhost ansible_host=127.0.0.1 ansible_connection=local
 
-[servers]
-server1 ansible_host=192.168.1.100 ansible_user=ubuntu
-server2 ansible_host=192.168.1.101 ansible_user=ubuntu ansible_port=2222
+[redhat]
+fedora-wsl ansible_host=192.168.1.100 ansible_user=ubuntu
 
-[servers:vars]
+[redhat:vars]
 ansible_ssh_private_key_file=~/.ssh/id_ed25519
+
+[workstations:children]
+local
+redhat
 ```
 
 ### Common Inventory Variables
@@ -230,23 +236,29 @@ ssh ubuntu@192.168.1.100
 Ansible requires Python on the remote host. If Python 3 is not installed, run the bootstrap playbook first:
 
 ```Shell
-ansible-playbook bootstrap.yml -i hosts -l servers --ask-become-pass
+ansible-playbook bootstrap.yml -i hosts --ask-become-pass
 ```
 
-This uses the `raw` module which doesn't require Python on the remote host.
+This uses the `raw` module which doesn't require Python on the remote host. The playbook auto-detects the package manager (apt-get or dnf).
 
 ### Deploy to Remote Servers
 
-Run on all servers in a group:
+Run on all workstations:
 
 ```Shell
-ansible-playbook setup.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
-Run on a single server:
+Run on a specific group:
 
 ```Shell
-ansible-playbook setup.yml -i hosts -l server1 --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
+```
+
+Run on a single host:
+
+```Shell
+ansible-playbook setup.yml -i hosts -l fedora-wsl --ask-become-pass --ask-vault-pass
 ```
 
 > [!NOTE]
@@ -329,7 +341,7 @@ uv run molecule destroy   # Cleanup
 ### Test Configuration
 
 - **Default Platform**: Ubuntu 24.04 (Docker)
-- **Supported Platforms**: Ubuntu 22.04, Ubuntu 24.04, Rocky Linux 9
+- **Supported Platforms**: Ubuntu 22.04, Ubuntu 24.04, Rocky Linux 9, Fedora 43+
 - **Test variables**: Defined in `molecule/default/molecule.yml`
 - **Verification**: `molecule/default/verify.yml` validates role outputs
 

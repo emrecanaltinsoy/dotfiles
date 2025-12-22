@@ -1,14 +1,7 @@
 ---
 # Stow dotfiles to home directory
-# Set skip_stow: true to skip this task (useful for molecule testing)
-
-- name: Skip stow in test environment
-  ansible.builtin.debug:
-    msg: "Skipping stow tasks (skip_stow=true)"
-  when: skip_stow | default(false) | bool
 
 - name: Stow dotfiles
-  when: not (skip_stow | default(false) | bool)
   block:
     - name: Define dotfile directories to stow
       ansible.builtin.set_fact:
@@ -25,10 +18,37 @@
           - topgrade
           - zellij
           - zsh
+        dotfiles_repo_url: "https://github.com/emrecanaltinsoy/stow-dotfiles.git"
+        dotfiles_repo_dest: "{{ ansible_facts['user_dir'] }}/stow-dotfiles"
 
-    - name: Get repository root directory
+    - name: Check if dotfiles repo exists locally (playbook location)
+      ansible.builtin.stat:
+        path: "{{ playbook_dir | dirname }}"
+      register: local_repo_check
+
+    - name: Check if dotfiles repo exists in home directory
+      ansible.builtin.stat:
+        path: "{{ dotfiles_repo_dest }}"
+      register: home_repo_check
+
+    - name: Set dotfiles repository path
       ansible.builtin.set_fact:
-        dotfiles_repo: "{{ playbook_dir | dirname }}"
+        dotfiles_repo: "{{ playbook_dir | dirname if local_repo_check.stat.exists else dotfiles_repo_dest }}"
+
+    - name: Clone dotfiles repository if not present
+      ansible.builtin.git:
+        repo: "{{ dotfiles_repo_url }}"
+        dest: "{{ dotfiles_repo_dest }}"
+        version: main
+      when:
+        - not local_repo_check.stat.exists
+        - not home_repo_check.stat.exists
+
+    - name: Update dotfiles repository path after clone
+      ansible.builtin.set_fact:
+        dotfiles_repo: "{{ dotfiles_repo_dest }}"
+      when:
+        - not local_repo_check.stat.exists
 
     - name: Check if stow is installed
       ansible.builtin.shell: command -v stow
@@ -36,12 +56,23 @@
       failed_when: false
       changed_when: false
 
-    - name: Install stow if not present
+    - name: Install stow if not present (Debian)
       become: true
       ansible.builtin.apt:
         name: stow
         state: present
-      when: stow_check.rc != 0
+      when:
+        - stow_check.rc != 0
+        - ansible_facts['os_family'] == "Debian"
+
+    - name: Install stow if not present (RedHat)
+      become: true
+      ansible.builtin.shell: dnf install -y stow
+      args:
+        executable: /bin/bash
+      when:
+        - stow_check.rc != 0
+        - ansible_facts['os_family'] == "RedHat"
 
     - name: Check stow status for dotfile directories
       ansible.builtin.shell: |
@@ -55,18 +86,27 @@
       register: stow_check_result
       changed_when: false
 
-    - name: Stow dotfile directories
+    - name: Stow dotfile directories (adopt existing files)
       ansible.builtin.shell: |
         cd "{{ dotfiles_repo }}"
-        stow --override ".*" {{ item.item }} -t "$HOME"
+        stow --adopt --override ".*" {{ item.item }} -t "$HOME"
       args:
         executable: /bin/bash
       loop: "{{ stow_check_result.results | default([]) }}"
       loop_control:
         label: "{{ item.item | default('skipped') }}"
       register: stow_result
-      changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
-      failed_when: stow_result.rc != 0 and 'No packages' not in stow_result.stderr
+      changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout or 'cannot stow' in item.stdout"
+      failed_when: false
+      when: stow_check_result.results is defined
+
+    - name: Restore adopted files to repo version
+      ansible.builtin.shell: |
+        cd "{{ dotfiles_repo }}"
+        git checkout -- .
+      args:
+        executable: /bin/bash
+      changed_when: false
       when: stow_check_result.results is defined
 
     - name: Report stow results

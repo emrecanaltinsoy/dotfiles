@@ -14,7 +14,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, exa, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, neofetch, Stow |
+| **Other** | OpenCode, fastfetch/neofetch, Stow |
 
 ## Quick Start
 
@@ -125,11 +125,18 @@ Deploy to remote servers by configuring the inventory file:
 
 ```ini
 # ansible/hosts
-[servers]
-server1 ansible_host=192.168.1.100 ansible_user=ubuntu
+[local]
+localhost ansible_host=127.0.0.1 ansible_connection=local
 
-[servers:vars]
+[redhat]
+fedora-wsl ansible_host=192.168.1.100 ansible_user=ubuntu
+
+[redhat:vars]
 ansible_ssh_private_key_file=~/.ssh/id_ed25519
+
+[workstations:children]
+local
+redhat
 ```
 
 ```bash
@@ -137,10 +144,13 @@ ansible_ssh_private_key_file=~/.ssh/id_ed25519
 ssh-copy-id -i ~/.ssh/id_ed25519.pub ubuntu@192.168.1.100
 
 # Bootstrap if Python is not installed
-ansible-playbook bootstrap.yml -i hosts -l servers --ask-become-pass
+ansible-playbook bootstrap.yml -i hosts --ask-become-pass
 
-# Deploy
-ansible-playbook setup.yml -i hosts -l servers --ask-become-pass --ask-vault-pass
+# Deploy to all workstations
+ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+
+# Deploy to specific group
+ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
 ```
 
 ## WSL Setup

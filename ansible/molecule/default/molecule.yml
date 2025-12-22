@@ -42,7 +42,6 @@ provisioner:
         user_email: "test@example.com"
         user_fullname: "Test User"
         user_passphrase: "test-passphrase"
-        skip_stow: true
 
 verifier:
   name: ansible
