@@ -20,9 +20,9 @@
         state: directory
         mode: "0755"
 
-    - name: Copy GH CLI Auth Token
-      ansible.builtin.copy:
-        src: roles/github/files/gh_auth_token.bashrc
+    - name: Template GH CLI Auth Token
+      ansible.builtin.template:
+        src: roles/github/templates/gh_auth_token.bashrc.j2
         dest: "{{ ansible_facts['user_dir'] }}/.bashrc.d/9_gh_auth_token.bashrc"
         mode: "0600"
 

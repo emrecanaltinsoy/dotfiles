@@ -13,7 +13,11 @@ Requirements
 Role Variables
 --------------
 
-No variables required.
+This role uses the `ssh_key_name` variable from the `git` role to determine which SSH key to export to GitHub.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ssh_key_name` | `id_ed25519` | SSH key filename (set in git role) |
 
 Dependencies
 ------------
@@ -45,7 +49,7 @@ Tasks
 
 ### Configure Authentication
 
-Authentication token export script is copied via setup.yml post_tasks for:
+Authentication token export script is templated via setup.yml post_tasks for:
 - `GH_AUTH_TOKEN`
 - `GH_ENTERPRISE_TOKEN`
 - `GALAXY_GIT_TOKEN`
@@ -55,7 +59,12 @@ Automatically uploads SSH and GPG keys to GitHub on first authentication.
 Files
 -----
 
-- `files/gh_auth_token.bashrc`: GitHub CLI authentication and key export script
+(None - script moved to templates)
+
+Templates
+---------
+
+- `templates/gh_auth_token.bashrc.j2`: GitHub CLI authentication and key export script
 
 Example Playbook
 ----------------

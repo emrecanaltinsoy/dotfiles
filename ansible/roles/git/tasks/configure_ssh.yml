@@ -1,13 +1,13 @@
 ---
 # Configure SSH
 
-- name: Generate ssh key id_ed25519
-  ansible.builtin.command: ssh-keygen -t ed25519 -C "{{ user_email }}" -f "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519" -N ""
+- name: Generate ssh key {{ ssh_key_name }}
+  ansible.builtin.command: ssh-keygen -t ed25519 -C "{{ user_email }}" -f "{{ ansible_facts['user_dir'] }}/.ssh/{{ ssh_key_name }}" -N ""
   args:
-    creates: "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519"
+    creates: "{{ ansible_facts['user_dir'] }}/.ssh/{{ ssh_key_name }}"
 
-- name: Copy SSH configuration for Keychain Manager
-  ansible.builtin.copy:
-    src: files/ssh_keychain.bashrc
+- name: Template SSH configuration for Keychain Manager
+  ansible.builtin.template:
+    src: ssh_keychain.bashrc.j2
     dest: "{{ ansible_facts['user_dir'] }}/.bashrc.d/1_ssh_keychain.bashrc"
     mode: "0600"

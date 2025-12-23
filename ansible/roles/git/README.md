@@ -21,6 +21,12 @@ The following variables must be provided:
 | `user_email` | Email for Git configuration, GPG key, and SSH key |
 | `user_passphrase` | Passphrase for GPG key generation |
 
+Optional variables with defaults:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ssh_key_name` | `id_ed25519` | SSH key filename (without path) |
+
 Dependencies
 ------------
 
@@ -38,7 +44,7 @@ Tasks
 
 ### 2. Configure SSH
 
-- Generates ED25519 SSH key if not exists
+- Generates ED25519 SSH key if not exists (configurable via `ssh_key_name`)
 - Sets up keychain for SSH agent management
 
 ### 3. Configure Git
@@ -51,13 +57,14 @@ Sets global Git configuration:
 Files
 -----
 
-- `files/ssh_keychain.bashrc`: SSH keychain initialization script
+(None - all scripts moved to templates)
 
 Templates
 ---------
 
 - `templates/gpg-agent.conf.j2`: GPG agent configuration
 - `templates/gpg-key-gen.conf.j2`: GPG key generation batch file
+- `templates/ssh_keychain.bashrc.j2`: SSH keychain initialization script
 
 Example Playbook
 ----------------

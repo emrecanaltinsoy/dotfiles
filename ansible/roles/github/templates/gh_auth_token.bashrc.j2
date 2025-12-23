@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Export GH auth tokens if authenticated
+
+command -v gh >/dev/null 2>&1 || return 0
+
+_gh_init() {
+  local token
+  token=$(gh auth token -h github.com 2>/dev/null) || return 0
+
+  export GH_AUTH_TOKEN="${token}"
+  export GH_ENTERPRISE_TOKEN="${token}"
+  export GALAXY_GIT_TOKEN="${token}"
+  export GH_IS_CONNECTED=true
+
+  # One-time key setup (still uses a marker file, but just for keys)
+  local marker="${HOME}/.cache/gh_connection/keys_configured"
+  [[ -f "${marker}" ]] && return 0
+
+  mkdir -p "${HOME}/.cache/gh_connection"
+
+  # Export SSH key if not already on GitHub
+  local pub_key="${HOME}/.ssh/{{ ssh_key_name }}.pub"
+  if [[ -f "${pub_key}" ]]; then
+    local fingerprint
+    fingerprint=$(awk '{print $1,$2}' "${pub_key}")
+    gh ssh-key list 2>/dev/null | grep -q "${fingerprint}" || \
+      gh ssh-key add "${pub_key}" --title "$(uname -n) ssh key"
+  fi
+
+  # Export GPG key if not already on GitHub
+  local gpg_pub="${HOME}/.gnupg/default_gh_gpg.pub"
+  if [[ -f "${gpg_pub}" ]]; then
+    local key_id
+    key_id=$(gpg --with-colons --import-options show-only --import "${gpg_pub}" 2>/dev/null | awk -F: '/^pub/{print $5}')
+    [[ -n "${key_id}" ]] && ! gh gpg-key list 2>/dev/null | grep -q "${key_id}" && \
+      gh gpg-key add "${gpg_pub}"
+  fi
+
+  touch "${marker}"
+}
+
+_gh_init

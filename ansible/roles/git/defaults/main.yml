@@ -1,2 +1,5 @@
 ---
 # defaults file for roles/git
+
+# SSH key name (without path, e.g., "id_ed25519", "github_key", "work_key")
+ssh_key_name: id_ed25519
