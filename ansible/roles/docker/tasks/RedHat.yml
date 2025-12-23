@@ -1,0 +1,25 @@
+---
+# RedHat/Rocky/Fedora - Install and configure Podman
+
+- name: Check if Podman is installed
+  ansible.builtin.shell: command -v podman
+  register: podman_check
+  failed_when: false
+  changed_when: false
+
+- name: Install Podman packages
+  become: true
+  ansible.builtin.shell: dnf install -y podman podman-docker buildah skopeo
+  args:
+    executable: /bin/bash
+  when: podman_check.rc != 0
+
+- name: Enable podman socket for user
+  become: true
+  ansible.builtin.systemd:
+    name: podman.socket
+    enabled: yes
+    state: started
+    scope: system
+  when: ansible_facts['virtualization_type'] != "docker"
+  failed_when: false

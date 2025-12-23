@@ -1,45 +1,7 @@
 ---
-# Configure GH CLI
+# Install GitHub CLI
 
-# Debian/Ubuntu installation
-- name: Debian - Install GitHub CLI
-  become: true
-  ansible.builtin.shell: |
-    mkdir -p -m 755 /etc/apt/keyrings \
-    && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-    && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && apt-get update \
-    && apt-get install gh -y
-  args:
-    executable: /bin/bash
-    creates: /usr/bin/gh
-  when: ansible_facts['os_family'] == "Debian"
-
-# RedHat/Rocky installation
-- name: RedHat - Install GitHub CLI
-  when: ansible_facts['os_family'] == "RedHat"
-  block:
-    - name: Add GitHub CLI repository
-      become: true
-      ansible.builtin.shell: |
-        dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo || \
-        dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-      args:
-        executable: /bin/bash
-        creates: /etc/yum.repos.d/gh-cli.repo
-
-    - name: Check if GitHub CLI is installed
-      ansible.builtin.shell: command -v gh
-      register: gh_check
-      failed_when: false
-      changed_when: false
-
-    - name: Install GitHub CLI
-      become: true
-      ansible.builtin.shell: dnf install -y gh
-      args:
-        executable: /bin/bash
-      when: gh_check.rc != 0
+- name: Include OS-specific tasks
+  ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
 
 # GH CLI Auth Token is copied in post_tasks of setup.yml

@@ -1,0 +1,31 @@
+---
+# RedHat/Rocky/Fedora specific tools
+
+# Terraform
+- name: Install Terraform
+  when: terraform_check.rc != 0
+  block:
+    - name: Add HashiCorp repository
+      become: true
+      ansible.builtin.shell: |
+        dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo || \
+        dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+      args:
+        executable: /bin/bash
+        creates: /etc/yum.repos.d/hashicorp.repo
+
+    - name: Install terraform
+      become: true
+      ansible.builtin.shell: dnf install -y terraform
+      args:
+        executable: /bin/bash
+      changed_when: true
+
+# Tmux
+- name: Install tmux
+  become: true
+  ansible.builtin.shell: dnf install -y tmux
+  args:
+    executable: /bin/bash
+  when: tmux_check.rc != 0
+  changed_when: true

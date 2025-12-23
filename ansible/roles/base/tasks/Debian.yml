@@ -1,0 +1,57 @@
+---
+# Debian/Ubuntu specific tasks
+
+- name: Check if git-core PPA exists
+  ansible.builtin.shell: find /etc/apt/sources.list.d -name 'git-core-ubuntu-ppa-*' | grep -q .
+  register: git_ppa_check
+  failed_when: false
+  changed_when: false
+
+- name: Add git-core PPA
+  ansible.builtin.shell: |
+    sudo -E add-apt-repository -y ppa:git-core/ppa
+  become: true
+  args:
+    executable: /bin/bash
+  when: git_ppa_check.rc != 0
+
+- name: Update apt dependencies
+  become: true
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+  failed_when: false
+
+- name: Install apt dependencies
+  become: true
+  ansible.builtin.apt:
+    name:
+      - bat
+      - build-essential
+      - curl
+      - fd-find
+      - fzf
+      - git
+      - gnupg
+      - gpg
+      - gpg-agent
+      - jq
+      - keychain
+      - neofetch
+      - openssh-client
+      - python3
+      - python3-pip
+      - python3-venv
+      - python3-wheel
+      - python3-dev
+      - ripgrep
+      - socat
+      - software-properties-common
+      - stow
+      - unzip
+      - wget
+      - zip
+      - zoxide
+      - zsh
+    state: present

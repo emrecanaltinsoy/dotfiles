@@ -1,0 +1,44 @@
+---
+# Debian/Ubuntu specific tools
+
+# Terraform
+- name: Install Terraform
+  when: terraform_check.rc != 0
+  block:
+    - name: Check if HashiCorp GPG key exists
+      ansible.builtin.stat:
+        path: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      register: hashicorp_gpg
+
+    - name: Add HashiCorp GPG key
+      ansible.builtin.shell: wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      args:
+        executable: /bin/bash
+      when: not hashicorp_gpg.stat.exists
+      changed_when: true
+      register: hashicorp_gpg_result
+      retries: 3
+      delay: 5
+      until: hashicorp_gpg_result.rc == 0
+
+    - name: Add HashiCorp apt repository
+      ansible.builtin.shell: |
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+      args:
+        executable: /bin/bash
+      changed_when: true
+
+    - name: Install terraform
+      become: true
+      ansible.builtin.apt:
+        name: terraform
+        state: present
+        update_cache: yes
+
+# Tmux
+- name: Install tmux
+  become: true
+  ansible.builtin.apt:
+    name: tmux
+    state: present
+  when: tmux_check.rc != 0
