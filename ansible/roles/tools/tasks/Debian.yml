@@ -1,6 +1,14 @@
 ---
 # Debian/Ubuntu specific tools
 
+# Alacritty (skip on WSL)
+- name: Install alacritty
+  become: true
+  ansible.builtin.apt:
+    name: alacritty
+    state: present
+  when: not IS_WSL
+
 # Terraform
 - name: Install Terraform
   when: terraform_check.rc != 0

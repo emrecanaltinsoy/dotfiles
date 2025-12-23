@@ -4,9 +4,6 @@
 - name: Define cargo packages to install
   ansible.builtin.set_fact:
     cargo_packages:
-      - name: alacritty
-        bin: alacritty
-        skip_wsl: true
       - name: exa
         bin: exa
       - name: git-delta

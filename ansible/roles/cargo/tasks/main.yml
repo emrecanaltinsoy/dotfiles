@@ -39,7 +39,6 @@
           register: package_checks
           failed_when: false
           changed_when: false
-          when: not (item.skip_wsl | default(false) and IS_WSL)
 
         - name: Build list of missing cargo packages
           ansible.builtin.set_fact:
