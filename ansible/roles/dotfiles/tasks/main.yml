@@ -18,8 +18,8 @@
           - topgrade
           - zellij
           - zsh
-        dotfiles_repo_url: "https://github.com/emrecanaltinsoy/stow-dotfiles.git"
-        dotfiles_repo_dest: "{{ ansible_facts['user_dir'] }}/stow-dotfiles"
+        dotfiles_repo_url: "https://github.com/emrecanaltinsoy/dotfiles.git"
+        dotfiles_repo_dest: "{{ ansible_facts['user_dir'] }}/dotfiles"
 
     - name: Check if dotfiles repo exists locally (playbook location)
       ansible.builtin.stat:

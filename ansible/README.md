@@ -51,7 +51,7 @@ sudo dnf install -y git python3 python3-pip ansible
 ### Clone the repository
 
 ```Shell
-cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd ${HOME}/stow-dotfiles/ansible/
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd ${HOME}/dotfiles/ansible/
 ```
 
 ### Configure Secrets
@@ -59,7 +59,7 @@ cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd $
 Create an encrypted vault file containing your secrets:
 
 ```Shell
-cd ${HOME}/stow-dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> ansible-vault create ${HOME}/stow-dotfiles/ansible/secrets.yml
+cd ${HOME}/dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> ansible-vault create ${HOME}/dotfiles/ansible/secrets.yml
 ```
 
 Insert and update variables for your secrets.yml file:
@@ -76,7 +76,7 @@ user_passphrase: "passphrase_to_generate_new_gpg_key"
 ### Deploy environment
 
 ```Shell
-cd ${HOME}/stow-dotfiles/ansible/ && ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+cd ${HOME}/dotfiles/ansible/ && ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
 > [!NOTE]  

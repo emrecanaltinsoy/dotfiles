@@ -28,7 +28,7 @@ sudo apt-get update && sudo apt-get install -y git  # Debian/Ubuntu
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone the repository
-cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfiles/ansible/
 
 # Install dependencies
 uv sync
@@ -49,7 +49,7 @@ uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
 
 # Clone the repository
-cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfiles/ansible/
 
 # Create encrypted secrets file
 EDITOR=nano ansible-vault create secrets.yml
@@ -65,7 +65,7 @@ ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 sudo dnf install -y git python3 python3-pip ansible
 
 # Clone and run setup (same as above)
-cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfiles/ansible/
 EDITOR=nano ansible-vault create secrets.yml
 ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
@@ -106,7 +106,7 @@ source ${HOME}/.zshrc
 ## Repository Structure
 
 ```
-stow-dotfiles/
+dotfiles/
 ├── ansible/            # Ansible playbooks and roles
 │   ├── roles/          # Modular roles for each component
 │   ├── molecule/       # Molecule test configuration
