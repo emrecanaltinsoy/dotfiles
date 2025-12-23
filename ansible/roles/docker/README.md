@@ -21,30 +21,32 @@ Dependencies
 
 None.
 
+File Structure
+--------------
+
+```
+tasks/
+├── main.yml      # OS detection and include
+├── Debian.yml    # Docker installation and service setup
+└── RedHat.yml    # Podman installation and socket setup
+```
+
 Tasks
 -----
 
-### 1. Install Container Runtime
+### Debian-based systems (Docker)
 
-**Debian-based systems (Docker):**
 - Downloads and runs the official Docker installation script from `https://get.docker.com`
 - Creates the `docker` group if it doesn't exist
 - Adds the current user to the `docker` group (allows running Docker without sudo)
+- Enables and starts the Docker service
 
-**RedHat-based systems (Podman):**
-- Installs `podman` and `podman-docker` packages via dnf
+### RedHat-based systems (Podman)
+
+- Installs `podman`, `podman-docker`, `buildah`, and `skopeo` packages via dnf
 - `podman-docker` provides Docker CLI compatibility (docker commands work with Podman)
-- Podman runs rootless by default, no group configuration needed
-
-### 2. Start Container Service
-
-**Debian-based systems:**
-- Enables the Docker service to start on boot
-- Starts the Docker daemon
-
-**RedHat-based systems:**
 - Enables the Podman socket for Docker API compatibility
-- Starts the Podman socket service
+- Podman runs rootless by default, no group configuration needed
 
 Post-Installation
 -----------------

@@ -24,6 +24,16 @@ Dependencies
 
 - base
 
+File Structure
+--------------
+
+```
+tasks/
+├── main.yml      # Main entry point, includes OS-specific tasks
+├── Debian.yml    # Debian/Ubuntu: Terraform (apt), tmux (apt)
+└── RedHat.yml    # RedHat/Rocky/Fedora: Terraform (dnf), tmux (dnf)
+```
+
 Tasks
 -----
 

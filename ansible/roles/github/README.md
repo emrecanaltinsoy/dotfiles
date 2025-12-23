@@ -20,22 +20,32 @@ Dependencies
 
 - git
 
+File Structure
+--------------
+
+```
+tasks/
+├── main.yml      # OS detection and include
+├── Debian.yml    # GitHub CLI installation via apt
+└── RedHat.yml    # GitHub CLI installation via dnf
+```
+
 Tasks
 -----
 
-### 1. Install GitHub CLI
+### Install GitHub CLI
 
 **Debian-based systems:**
-- Adds the official GitHub CLI apt repository
+- Adds the official GitHub CLI apt repository with GPG key
 - Installs `gh` CLI via apt
 
 **RedHat-based systems:**
 - Adds the official GitHub CLI dnf repository
 - Installs `gh` CLI via dnf
 
-### 2. Configure Authentication
+### Configure Authentication
 
-Configures authentication token export script for:
+Authentication token export script is copied via setup.yml post_tasks for:
 - `GH_AUTH_TOKEN`
 - `GH_ENTERPRISE_TOKEN`
 - `GALAXY_GIT_TOKEN`
