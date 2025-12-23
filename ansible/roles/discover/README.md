@@ -62,8 +62,9 @@ Example Playbook
     - secrets.yml
   roles:
     - discover  # Run first to detect environment
-    - devenv
-    - common
+    - base
+    - git
+    - shell
 ```
 
 Example `secrets.yml`:

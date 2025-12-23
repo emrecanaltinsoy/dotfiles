@@ -7,7 +7,7 @@ Requirements
 ------------
 
 - Ansible 2.9 or higher
-- Ubuntu/Debian-based system
+- Debian-based (Ubuntu, Debian) or RedHat-based (Rocky Linux, RHEL, Fedora) system
 
 Role Variables
 --------------

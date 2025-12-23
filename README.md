@@ -115,8 +115,10 @@ uv sync  # Install dependencies
 uv run molecule test
 
 # Test on other distributions
-MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible uv run molecule test
-MOLECULE_IMAGE=geerlingguy/docker-rockylinux9-ansible uv run molecule test
+MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible uv run molecule test  # Ubuntu 22.04
+MOLECULE_IMAGE=geerlingguy/docker-rockylinux9-ansible uv run molecule test # Rocky Linux 9
+MOLECULE_IMAGE=geerlingguy/docker-fedora41-ansible uv run molecule test    # Fedora 41
+MOLECULE_IMAGE=geerlingguy/docker-fedora43-ansible uv run molecule test    # Fedora 43
 ```
 
 ## Remote Server Deployment

@@ -6,7 +6,7 @@
     - name: Define dotfile directories to stow
       ansible.builtin.set_fact:
         dotfile_dirs:
-          - alacrity
+          - alacritty
           - bash
           - git
           - lazygit
