@@ -328,6 +328,12 @@ MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible uv run molecule test
 # Test on Rocky Linux 9
 MOLECULE_IMAGE=geerlingguy/docker-rockylinux9-ansible uv run molecule test
 
+# Test on Fedora 41
+MOLECULE_IMAGE=geerlingguy/docker-fedora41-ansible uv run molecule test
+
+# Test on Fedora 43
+MOLECULE_IMAGE=geerlingguy/docker-fedora43-ansible uv run molecule test
+
 # Keep instance after test for debugging
 uv run molecule test --destroy=never
 
@@ -338,10 +344,20 @@ uv run molecule verify    # Run verification tests
 uv run molecule destroy   # Cleanup
 ```
 
+### Supported Test Platforms
+
+| Platform | Image |
+|----------|-------|
+| Ubuntu 24.04 | `geerlingguy/docker-ubuntu2404-ansible` (default) |
+| Ubuntu 22.04 | `geerlingguy/docker-ubuntu2204-ansible` |
+| Rocky Linux 9 | `geerlingguy/docker-rockylinux9-ansible` |
+| Fedora 41 | `geerlingguy/docker-fedora41-ansible` |
+| Fedora 43 | `geerlingguy/docker-fedora43-ansible` |
+
 ### Test Configuration
 
 - **Default Platform**: Ubuntu 24.04 (Docker)
-- **Supported Platforms**: Ubuntu 22.04, Ubuntu 24.04, Rocky Linux 9, Fedora 43+
+- **Environment Variables**: `MOLECULE_IMAGE` to specify Docker image
 - **Test variables**: Defined in `molecule/default/molecule.yml`
 - **Verification**: `molecule/default/verify.yml` validates role outputs
 
