@@ -1,0 +1,15 @@
+---
+# Arch Linux - Install GitHub CLI
+
+- name: Check if GitHub CLI is installed
+  ansible.builtin.shell: command -v gh
+  register: gh_check
+  failed_when: false
+  changed_when: false
+
+- name: Install GitHub CLI
+  become: true
+  community.general.pacman:
+    name: github-cli
+    state: present
+  when: gh_check.rc != 0

@@ -1,101 +1,80 @@
 ---
 # Install cargo packages
 
-- name: Define cargo packages to install
-  ansible.builtin.set_fact:
-    cargo_packages:
-      - name: alacritty
-        bin: alacritty
-        skip_wsl: true
-      - name: exa
-        bin: exa
-      - name: git-delta
-        bin: delta
-        skip_redhat: true # Available in dnf, install via cargo only on Debian
-      - name: rm-improved
-        bin: rip
-      - name: topgrade
-        bin: topgrade
-      - name: xcp
-        bin: xcp
-      # - name: procs
-      #   bin: procs
-      # - name: tokei
-      #   bin: tokei
-      # - name: xh
-      #   bin: xh
-      # - name: yazi-fm
-      #   bin: yazi
-      # - name: zellij
-      #   bin: zellij
-      - name: zoxide
-        bin: zoxide
-        skip_debian: true # Available in apt, install via cargo only on RedHat
-
-- name: Check if cargo is available
-  ansible.builtin.shell: |
-    source "$HOME/.cargo/env" 2>/dev/null || true
-    command -v cargo
-  args:
-    executable: /bin/bash
-  register: cargo_check
-  failed_when: false
-  changed_when: false
+# Skip entirely on Arch Linux - all packages are installed via pacman/AUR in tools role
+- name: Skip cargo role on Arch Linux
+  ansible.builtin.debug:
+    msg: "Skipping cargo role on Arch Linux - packages installed via pacman/AUR in tools role"
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: Install cargo packages
-  when: cargo_check.rc == 0
+  when: ansible_facts['os_family'] != "Archlinux"
   block:
-    - name: Check which cargo packages are already installed
+    # Load OS-specific package list
+    - name: Include OS-specific package definitions
+      ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
+
+    - name: Check if cargo is available
       ansible.builtin.shell: |
         source "$HOME/.cargo/env" 2>/dev/null || true
-        command -v {{ item.bin }}
+        command -v cargo
       args:
         executable: /bin/bash
-      loop: "{{ cargo_packages }}"
-      loop_control:
-        label: "{{ item.name }}"
-      register: package_checks
+      register: cargo_check
       failed_when: false
       changed_when: false
-      when: >
-        not (item.skip_wsl | default(false) and IS_WSL) and
-        not (item.skip_redhat | default(false) and ansible_facts['os_family'] == "RedHat") and
-        not (item.skip_debian | default(false) and ansible_facts['os_family'] == "Debian")
 
-    - name: Build list of missing cargo packages
-      ansible.builtin.set_fact:
-        missing_cargo_packages: "{{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'ne', 0) | map(attribute='item.name') | list }}"
+    - name: Install cargo packages
+      when: cargo_check.rc == 0
+      block:
+        - name: Check which cargo packages are already installed
+          ansible.builtin.shell: |
+            source "$HOME/.cargo/env" 2>/dev/null || true
+            command -v {{ item.bin }}
+          args:
+            executable: /bin/bash
+          loop: "{{ cargo_packages }}"
+          loop_control:
+            label: "{{ item.name }}"
+          register: package_checks
+          failed_when: false
+          changed_when: false
+          when: not (item.skip_wsl | default(false) and IS_WSL)
 
-    - name: Display cargo package status
-      ansible.builtin.debug:
-        msg: "Installed: {{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'eq', 0) | map(attribute='item.name') | list | join(', ') | default('none', true) }}"
+        - name: Build list of missing cargo packages
+          ansible.builtin.set_fact:
+            missing_cargo_packages: "{{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'ne', 0) | map(attribute='item.name') | list }}"
 
-    - name: Display missing cargo packages
-      ansible.builtin.debug:
-        msg: "Will be installed: {{ missing_cargo_packages | join(', ') }}"
-      when: missing_cargo_packages | length > 0
+        - name: Display cargo package status
+          ansible.builtin.debug:
+            msg: "Installed: {{ package_checks.results | selectattr('rc', 'defined') | selectattr('rc', 'eq', 0) | map(attribute='item.name') | list | join(', ') | default('none', true) }}"
 
-    - name: Install all missing cargo packages
-      ansible.builtin.shell: |
-        source "$HOME/.cargo/env" 2>/dev/null || true
-        cargo install {{ missing_cargo_packages | join(' ') }} --locked
-      args:
-        executable: /bin/bash
-      when: missing_cargo_packages | length > 0
-      register: cargo_install_result
-      ignore_errors: true
+        - name: Display missing cargo packages
+          ansible.builtin.debug:
+            msg: "Will be installed: {{ missing_cargo_packages | join(', ') }}"
+          when: missing_cargo_packages | length > 0
 
-    - name: Set cargo installation failure message
-      ansible.builtin.set_fact:
-        cargo_install_failed: true
-        cargo_install_error: "{{ cargo_install_result.stderr | default('Unknown error') }}"
-      when:
-        - missing_cargo_packages | length > 0
-        - cargo_install_result is failed
+        - name: Install all missing cargo packages
+          ansible.builtin.shell: |
+            source "$HOME/.cargo/env" 2>/dev/null || true
+            cargo install {{ missing_cargo_packages | join(' ') }} --locked
+          args:
+            executable: /bin/bash
+          when: missing_cargo_packages | length > 0
+          register: cargo_install_result
+          ignore_errors: true
 
-    - name: Display installation result
-      ansible.builtin.debug:
-        msg: "Successfully installed: {{ missing_cargo_packages | join(', ') }}"
-      when:
-        - missing_cargo_packages | length > 0
-        - cargo_install_result is succeeded
+        - name: Set cargo installation failure message
+          ansible.builtin.set_fact:
+            cargo_install_failed: true
+            cargo_install_error: "{{ cargo_install_result.stderr | default('Unknown error') }}"
+          when:
+            - missing_cargo_packages | length > 0
+            - cargo_install_result is failed
+
+        - name: Display installation result
+          ansible.builtin.debug:
+            msg: "Successfully installed: {{ missing_cargo_packages | join(', ') }}"
+          when:
+            - missing_cargo_packages | length > 0
+            - cargo_install_result is succeeded

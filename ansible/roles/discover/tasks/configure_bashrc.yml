@@ -7,4 +7,4 @@
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.bashrc.d"
     state: directory
-    mode: "0700"
+    mode: "0755"

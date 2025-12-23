@@ -1,0 +1,30 @@
+---
+# Debian/Ubuntu cargo packages
+
+- name: Define cargo packages to install
+  ansible.builtin.set_fact:
+    cargo_packages:
+      - name: alacritty
+        bin: alacritty
+        skip_wsl: true
+      - name: exa
+        bin: exa
+      - name: git-delta
+        bin: delta
+      - name: rm-improved
+        bin: rip
+      - name: topgrade
+        bin: topgrade
+      - name: xcp
+        bin: xcp
+      # - name: procs
+      #   bin: procs
+      # - name: tokei
+      #   bin: tokei
+      # - name: xh
+      #   bin: xh
+      # - name: yazi-fm
+      #   bin: yazi
+      # - name: zellij
+      #   bin: zellij
+      # zoxide available in apt, skip here

@@ -1,5 +1,5 @@
 ---
-# Shared prepare playbook - handles both Debian and RedHat systems
+# Shared prepare playbook - handles Debian, RedHat, and Arch Linux systems
 - name: Prepare
   hosts: all
   gather_facts: true
@@ -36,3 +36,22 @@
         executable: /bin/bash
       when: ansible_facts['os_family'] == "RedHat"
       changed_when: false
+
+    # Arch Linux prerequisites
+    - name: Update pacman cache (Archlinux)
+      community.general.pacman:
+        update_cache: true
+      when: ansible_facts['os_family'] == "Archlinux"
+
+    - name: Install prerequisites (Archlinux)
+      community.general.pacman:
+        name:
+          - base-devel
+          - python
+          - sudo
+          - curl
+          - wget
+          - unzip
+          - gnupg
+        state: present
+      when: ansible_facts['os_family'] == "Archlinux"

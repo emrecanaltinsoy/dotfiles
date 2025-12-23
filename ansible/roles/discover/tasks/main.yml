@@ -3,8 +3,8 @@
 
 - name: Assert running on supported system
   ansible.builtin.assert:
-    that: ansible_facts['os_family'] in ["Debian", "RedHat"]
-    fail_msg: "This playbook only supports Debian-based (Ubuntu, Debian) and RedHat-based (Rocky, CentOS, Fedora) systems"
+    that: ansible_facts['os_family'] in ["Debian", "RedHat", "Archlinux"]
+    fail_msg: "This playbook only supports Debian-based (Ubuntu, Debian), RedHat-based (Rocky, CentOS, Fedora), and Arch-based systems"
   tags:
     - always
 

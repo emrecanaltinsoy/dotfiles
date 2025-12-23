@@ -1,0 +1,48 @@
+---
+# Arch Linux specific tasks
+
+- name: Update pacman database
+  become: true
+  community.general.pacman:
+    update_cache: yes
+  failed_when: false
+
+- name: Upgrade system packages
+  become: true
+  community.general.pacman:
+    upgrade: yes
+  failed_when: false
+
+- name: Install base-devel group
+  become: true
+  community.general.pacman:
+    name: base-devel
+    state: present
+  failed_when: false
+
+- name: Install pacman dependencies
+  become: true
+  community.general.pacman:
+    name:
+      - bat
+      - curl
+      - fd
+      - fzf
+      - git
+      - git-delta
+      - gnupg
+      - jq
+      - keychain
+      - fastfetch
+      - openssh
+      - python
+      - python-pip
+      - ripgrep
+      - socat
+      - stow
+      - unzip
+      - wget
+      - zip
+      - zoxide
+      - zsh
+    state: present

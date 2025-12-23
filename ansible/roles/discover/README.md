@@ -43,6 +43,7 @@ Checks `/proc/version` for Microsoft/WSL indicators and sets the `IS_WSL` fact. 
 ### 2. Vault Configuration Validation
 
 Validates that required secrets are defined:
+
 - `user_email`
 - `user_fullname`
 - `user_passphrase`
@@ -51,7 +52,7 @@ Fails with descriptive error messages if any required variable is missing.
 
 ### 3. Configure Bashrc
 
-Creates the `~/.bashrc.d` directory structure with proper permissions (0700) for modular bash configuration.
+Creates the `~/.bashrc.d` directory structure with proper permissions (0755) for modular bash configuration.
 
 Example Playbook
 ----------------

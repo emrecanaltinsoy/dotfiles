@@ -1,0 +1,94 @@
+---
+# Arch Linux specific tools
+
+# Terraform
+- name: Install terraform
+  become: true
+  community.general.pacman:
+    name: terraform
+    state: present
+  when: terraform_check.rc != 0
+
+# Tmux
+- name: Install tmux
+  become: true
+  community.general.pacman:
+    name: tmux
+    state: present
+  when: tmux_check.rc != 0
+
+# Packages that would otherwise be installed via cargo
+# These are available in official Arch repositories
+- name: Install cargo-alternative packages from pacman
+  become: true
+  community.general.pacman:
+    name:
+      - alacritty
+      - eza           # maintained fork of exa
+      - git-delta
+      - zoxide
+    state: present
+
+# AUR packages (requires yay or paru)
+- name: Check if yay is installed
+  ansible.builtin.shell: command -v yay
+  register: yay_check
+  failed_when: false
+  changed_when: false
+
+- name: Check if paru is installed
+  ansible.builtin.shell: command -v paru
+  register: paru_check
+  failed_when: false
+  changed_when: false
+
+- name: Set AUR helper
+  ansible.builtin.set_fact:
+    aur_helper: "{{ 'yay' if yay_check.rc == 0 else ('paru' if paru_check.rc == 0 else '') }}"
+
+- name: Install AUR packages
+  when: aur_helper != ''
+  block:
+    - name: Check if rm-improved is installed
+      ansible.builtin.shell: command -v rip
+      register: rip_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install rm-improved from AUR
+      ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm rm-improved"
+      args:
+        executable: /bin/bash
+      when: rip_check.rc != 0
+      changed_when: true
+
+    - name: Check if xcp is installed
+      ansible.builtin.shell: command -v xcp
+      register: xcp_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install xcp from AUR
+      ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm xcp"
+      args:
+        executable: /bin/bash
+      when: xcp_check.rc != 0
+      changed_when: true
+
+    - name: Check if topgrade is installed
+      ansible.builtin.shell: command -v topgrade
+      register: topgrade_aur_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install topgrade from AUR
+      ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm topgrade"
+      args:
+        executable: /bin/bash
+      when: topgrade_aur_check.rc != 0
+      changed_when: true
+
+- name: Warn if no AUR helper found
+  ansible.builtin.debug:
+    msg: "No AUR helper (yay/paru) found. Skipping AUR packages: rm-improved, xcp, topgrade. Install them via cargo or install an AUR helper first."
+  when: aur_helper == ''
