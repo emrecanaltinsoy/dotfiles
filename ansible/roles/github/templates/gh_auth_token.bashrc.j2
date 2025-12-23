@@ -1,11 +1,24 @@
 #!/usr/bin/env bash
-# Export GH auth tokens if authenticated
+# Export GH auth tokens if authenticated, prompt login if not
 
 command -v gh >/dev/null 2>&1 || return 0
 
 _gh_init() {
   local token
-  token=$(gh auth token -h github.com 2>/dev/null) || return 0
+  token=$(gh auth token -h github.com 2>/dev/null)
+
+  # If not authenticated, prompt for login
+  if [[ -z "${token}" ]]; then
+    echo "GitHub CLI not authenticated. Starting login..."
+    gh auth login --hostname github.com \
+      -s "admin:public_key" \
+      -s "admin:ssh_signing_key" \
+      -s "write:gpg_key" \
+      -p ssh --skip-ssh-key -w || return 0
+
+    # Retry getting token after login
+    token=$(gh auth token -h github.com 2>/dev/null) || return 0
+  fi
 
   export GH_AUTH_TOKEN="${token}"
   export GH_ENTERPRISE_TOKEN="${token}"
@@ -23,7 +36,7 @@ _gh_init() {
   if [[ -f "${pub_key}" ]]; then
     local fingerprint
     fingerprint=$(awk '{print $1,$2}' "${pub_key}")
-    gh ssh-key list 2>/dev/null | grep -q "${fingerprint}" || \
+    gh ssh-key list 2>/dev/null | grep -q "${fingerprint}" ||
       gh ssh-key add "${pub_key}" --title "$(uname -n) ssh key"
   fi
 
@@ -32,7 +45,7 @@ _gh_init() {
   if [[ -f "${gpg_pub}" ]]; then
     local key_id
     key_id=$(gpg --with-colons --import-options show-only --import "${gpg_pub}" 2>/dev/null | awk -F: '/^pub/{print $5}')
-    [[ -n "${key_id}" ]] && ! gh gpg-key list 2>/dev/null | grep -q "${key_id}" && \
+    [[ -n "${key_id}" ]] && ! gh gpg-key list 2>/dev/null | grep -q "${key_id}" &&
       gh gpg-key add "${gpg_pub}"
   fi
 
