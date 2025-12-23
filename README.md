@@ -18,7 +18,31 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 
 ## Quick Start
 
-### Ubuntu/Debian
+### Option 1: Using uv (Recommended)
+
+```bash
+# Install git and uv
+sudo apt-get update && sudo apt-get install -y git  # Debian/Ubuntu
+# or: sudo dnf install -y git                       # Fedora/RHEL
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone the repository
+cd ${HOME} && git clone https://github.com/emrecanaltinsoy/stow-dotfiles && cd stow-dotfiles/ansible/
+
+# Install dependencies
+uv sync
+
+# Create encrypted secrets file
+EDITOR=nano uv run ansible-vault create secrets.yml
+
+# Run the setup playbook
+uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+```
+
+### Option 2: Using System Ansible
+
+#### Ubuntu/Debian
 
 ```bash
 # Install Ansible
@@ -34,7 +58,7 @@ EDITOR=nano ansible-vault create secrets.yml
 ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
-### Rocky Linux/RHEL/Fedora
+#### Rocky Linux/RHEL/Fedora
 
 ```bash
 # Install Ansible

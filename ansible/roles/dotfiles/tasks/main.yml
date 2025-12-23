@@ -89,16 +89,18 @@
     - name: Stow dotfile directories (adopt existing files)
       ansible.builtin.shell: |
         cd "{{ dotfiles_repo }}"
-        stow --adopt --override ".*" {{ item.item }} -t "$HOME"
+        stow --adopt --override ".*" {{ item.item }} -t "$HOME" 2>&1
       args:
         executable: /bin/bash
       loop: "{{ stow_check_result.results | default([]) }}"
       loop_control:
         label: "{{ item.item | default('skipped') }}"
       register: stow_result
-      changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout or 'cannot stow' in item.stdout"
+      changed_when: "'LINK:' in item.stdout or 'UNLINK:' in item.stdout"
       failed_when: false
-      when: stow_check_result.results is defined
+      when:
+        - stow_check_result.results is defined
+        - "'LINK:' in item.stdout or 'UNLINK:' in item.stdout or 'cannot stow' in item.stdout"
 
     - name: Restore adopted files to repo version
       ansible.builtin.shell: |
@@ -111,9 +113,11 @@
 
     - name: Report stow results
       ansible.builtin.debug:
-        msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc == 0 else 'skipped (directory may not exist)' }}"
+        msg: "Stowed {{ item.item.item }} - {{ 'success' if item.rc | default(0) == 0 else 'skipped' }}"
         verbosity: 1
       loop: "{{ stow_result.results | default([]) }}"
       loop_control:
         label: "{{ item.item.item | default('skipped') }}"
-      when: stow_result.results is defined
+      when:
+        - stow_result.results is defined
+        - item.rc is defined

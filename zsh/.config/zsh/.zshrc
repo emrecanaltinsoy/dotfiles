@@ -131,5 +131,7 @@ if [[ -d "$HOME/.bashrc.d" ]]; then
 fi
 # END ANSIBLE MANAGED BLOCK
 
-. "$HOME/.local/bin/env"
+if [[ -f "$HOME/.local/bin/env" ]]; then
+  . "$HOME/.local/bin/env"
+fi
 
