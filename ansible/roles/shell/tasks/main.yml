@@ -23,6 +23,10 @@
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
     dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   when: not zsh_syntax_highlighting_dir.stat.exists
+  register: zsh_syntax_result
+  retries: 3
+  delay: 5
+  until: zsh_syntax_result is success
 
 - name: Check if zsh-autosuggestions plugin is installed
   ansible.builtin.stat:
@@ -34,6 +38,10 @@
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
   when: not zsh_autosuggestions_dir.stat.exists
+  register: zsh_autosuggestions_result
+  retries: 3
+  delay: 5
+  until: zsh_autosuggestions_result is success
 
 - name: Check if k plugin is installed
   ansible.builtin.stat:
@@ -45,6 +53,10 @@
     repo: https://github.com/supercrabtree/k
     dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/k"
   when: not k_dir.stat.exists
+  register: k_result
+  retries: 3
+  delay: 5
+  until: k_result is success
 
 - name: Check if zsh-fzf-history-search plugin is installed
   ansible.builtin.stat:
@@ -56,6 +68,10 @@
     repo: https://github.com/joshskidmore/zsh-fzf-history-search
     dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
   when: not zsh_fzf_history_search_dir.stat.exists
+  register: zsh_fzf_result
+  retries: 3
+  delay: 5
+  until: zsh_fzf_result is success
 
 - name: Get current user shell
   ansible.builtin.shell: "getent passwd {{ ansible_facts['user_id'] }} | cut -d: -f7"

@@ -1,5 +1,28 @@
 ---
 # Shared prepare playbook - handles Debian, RedHat, and Arch Linux systems
+
+# Bootstrap Python on Arch Linux (required before gather_facts)
+- name: Bootstrap Python for Arch Linux
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check if python3 exists
+      ansible.builtin.raw: test -e /usr/bin/python3
+      register: python_check
+      changed_when: false
+      failed_when: false
+
+    - name: Check if this is Arch Linux
+      ansible.builtin.raw: test -e /etc/arch-release
+      register: arch_check
+      changed_when: false
+      failed_when: false
+
+    - name: Install python3 on Arch Linux (bootstrap)
+      ansible.builtin.raw: pacman -Sy --noconfirm python
+      when: python_check.rc != 0 and arch_check.rc == 0
+      changed_when: true
+
 - name: Prepare
   hosts: all
   gather_facts: true
@@ -47,7 +70,6 @@
       community.general.pacman:
         name:
           - base-devel
-          - python
           - sudo
           - curl
           - wget
