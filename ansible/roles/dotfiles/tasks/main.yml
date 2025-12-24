@@ -43,6 +43,10 @@
       when:
         - not local_repo_check.stat.exists
         - not home_repo_check.stat.exists
+      register: dotfiles_clone_result
+      retries: 3
+      delay: 5
+      until: dotfiles_clone_result is success
 
     - name: Update dotfiles repository path after clone
       ansible.builtin.set_fact:

@@ -208,3 +208,7 @@
     repo: https://github.com/jimeh/tmuxifier.git
     dest: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
   when: not tmuxifier_dir.stat.exists
+  register: tmuxifier_result
+  retries: 3
+  delay: 5
+  until: tmuxifier_result is success
