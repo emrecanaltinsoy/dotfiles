@@ -182,7 +182,7 @@ You can deploy this configuration to remote servers by modifying the inventory f
 
 ### Inventory File (hosts)
 
-The `hosts` file defines which machines Ansible will target. The playbooks target the `workstations` group by default:
+The `hosts` file defines which machines Ansible will target. The playbooks target the all hosts by default:
 
 ```ini
 [local]
@@ -243,7 +243,7 @@ This uses the `raw` module which doesn't require Python on the remote host. The 
 
 ### Deploy to Remote Servers
 
-Run on all workstations:
+Run on all hosts:
 
 ```Shell
 ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass

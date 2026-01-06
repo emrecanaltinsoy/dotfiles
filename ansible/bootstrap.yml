@@ -6,8 +6,8 @@
 # Note: gather_facts is disabled because Python is required for fact gathering.
 # We try both package managers since we can't detect OS family without Python.
 
-- name: Bootstrap Python on workstations
-  hosts: workstations
+- name: Bootstrap Python on all hosts
+  hosts: all
   gather_facts: false
   become: true
   tasks:

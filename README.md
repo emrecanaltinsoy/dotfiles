@@ -172,7 +172,7 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub ubuntu@192.168.1.100
 # Bootstrap if Python is not installed
 ansible-playbook bootstrap.yml -i hosts --ask-become-pass
 
-# Deploy to all workstations
+# Deploy to all hosts
 ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 
 # Deploy to specific group

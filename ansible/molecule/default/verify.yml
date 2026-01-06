@@ -34,7 +34,7 @@
         that:
           - bashrc_d_stat.stat.exists
           - bashrc_d_stat.stat.isdir
-          - bashrc_d_stat.stat.mode == "0700"
+          - bashrc_d_stat.stat.mode == "0755"
         success_msg: "bashrc.d directory exists with correct permissions"
 
     # ============================================

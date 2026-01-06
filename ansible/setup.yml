@@ -1,6 +1,6 @@
 ---
-- name: Configure Workstation
-  hosts: workstations
+- name: Configure
+  hosts: all
   vars_files:
     - secrets.yml
   roles:
