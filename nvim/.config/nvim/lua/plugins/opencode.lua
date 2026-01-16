@@ -30,7 +30,7 @@ return {
         require("opencode").command("session.interrupt")
       end, { desc = "Interrupt session" })
 
-      vim.keymap.set({ "n", "t" }, "<leader>ot", function()
+      vim.keymap.set({ "n", "t" }, "<leader>oT", function()
         require("opencode").toggle()
       end, { desc = "Toggle opencode" })
     end,
