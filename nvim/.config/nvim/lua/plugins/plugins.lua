@@ -125,6 +125,11 @@ return {
     },
   },
   {
-    "wellle/context.vim",
+    "nvim-treesitter/nvim-treesitter-context",
+    opts = {
+      setup = {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+      },
+    },
   },
 }
