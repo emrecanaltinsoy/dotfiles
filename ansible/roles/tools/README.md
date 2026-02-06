@@ -29,9 +29,10 @@ File Structure
 
 ```
 tasks/
-├── main.yml      # Main entry point, includes OS-specific tasks
-├── Debian.yml    # Debian/Ubuntu: Terraform (apt), tmux (apt)
-└── RedHat.yml    # RedHat/Rocky/Fedora: Terraform (dnf), tmux (dnf)
+├── main.yml       # Main entry point, includes OS-specific tasks
+├── Archlinux.yml  # Arch Linux: pacman packages and AUR helpers
+├── Debian.yml     # Debian/Ubuntu: Terraform (apt), tmux (apt)
+└── RedHat.yml     # RedHat/Rocky/Fedora: Terraform (dnf), tmux (dnf)
 ```
 
 Tasks
