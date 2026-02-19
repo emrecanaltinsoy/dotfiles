@@ -45,6 +45,20 @@ alias vh="nvim ."
 alias lg="lazygit"
 
 ## Git
+git-track-all() {
+  local remote="${1:-origin}"
+  git branch -r \
+    | grep "^\s*${remote}/" \
+    | grep -v '\->' \
+    | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" \
+    | while read remote_branch; do
+      git branch --track "${remote_branch#${remote}/}" "$remote_branch"
+    done
+}
+git-push-all(){
+  local remote="${1:-origin}"
+  git push --all "$remote"
+}
 git config --global alias.upstream '!git push -u origin HEAD'
 alias gs="git status"
 alias gp="git upstream"
