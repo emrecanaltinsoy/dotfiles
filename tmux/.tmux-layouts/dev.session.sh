@@ -2,8 +2,9 @@ session_root "$(pwd)"
 
 SESSION_NAME="${SESSION_NAME:-$(basename "${BASH_SOURCE[0]}" .session.sh)}"
 
-if tmux list-sessions | grep -q "^${SESSION_NAME}$"; then
+if tmux list-sessions -F "#{session_name}" | grep -q "^${SESSION_NAME}$"; then
   echo "Session '$SESSION_NAME' already exists."
+  load_window dev
 else
   if initialize_session "$SESSION_NAME"; then
     echo "Session '$SESSION_NAME' created."
