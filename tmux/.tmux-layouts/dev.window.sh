@@ -1,6 +1,6 @@
 window_root "$(pwd)"
 
-CURRENT_DIR=$(pwd | xargs basename | tr -cd 'a-zA-Z0-9')
+CURRENT_DIR=$(pwd | xargs basename | sed 's/^\.//; s/\./-/g')
 
 # Check if window with CURRENT_DIR name already exists
 if tmux list-windows -F "#{window_name}" | grep -q "^${CURRENT_DIR}$"; then
