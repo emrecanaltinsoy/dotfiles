@@ -6,7 +6,7 @@ CURRENT_DIR=$(pwd | xargs basename | tr -cd 'a-zA-Z0-9')
 if tmux list-windows -F "#{window_name}" | grep -q "^${CURRENT_DIR}$"; then
   echo "Window '$CURRENT_DIR' already exists."
   select_window "$CURRENT_DIR"
-else 
+else
   new_window "$CURRENT_DIR"
   echo "Window '$CURRENT_DIR' created."
   split_v 20
