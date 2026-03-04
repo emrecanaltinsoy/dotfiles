@@ -2,7 +2,7 @@ cd "$HOME/Projects/dcr-ai-flagship" || exit
 
 session_root "$(pwd)"
 
-if initialize_session "dev-local"; then
+if initialize_session "dcr-ai-flagship"; then
   load_window "dev"
   select_pane 2
   split_h 25

@@ -80,6 +80,18 @@ alias glo="git log --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Crese
 alias create_aws_cred="/home/emrecan/Projects/aws-authentication/create_aws_cred"
 alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local_lambda/deploy.sh"
 
+## TMUX
+# Tmux Switch Client with FZF
+tsc() {
+  tmux display-popup -E '
+    SELECTED_SESSION=$(tmux list-sessions -F "#{session_name}" | fzf)
+    tmux display-message "Selected session: $SELECTED_SESSION"
+    if [ -n "$SELECTED_SESSION" ]; then
+      tmux switch-client -t $SELECTED_SESSION
+    fi
+  '
+}
+
 ## NPM Local Dev
 alias nrw="cd $HOME/Projects/dcr-ai-flagship/scripting && ./frontendRunWeb.sh"
 alias nrb="cd $HOME/Projects/dcr-ai-flagship/scripting && nvm use v16; ./frontendRunBuild.sh"
