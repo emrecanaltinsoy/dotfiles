@@ -83,13 +83,20 @@ alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local
 ## TMUX
 # Tmux Switch Client with FZF
 tsc() {
-  tmux display-popup -E '
+  if [ "$TERM_PROGRAM" = tmux ]; then
+    tmux display-popup -E '
+      SELECTED_SESSION=$(tmux list-sessions -F "#{session_name}" | fzf)
+      if [ -n "$SELECTED_SESSION" ]; then
+        tmux display-message "Selected session: $SELECTED_SESSION"
+        tmux switch-client -t $SELECTED_SESSION
+      fi
+    '
+  else
     SELECTED_SESSION=$(tmux list-sessions -F "#{session_name}" | fzf)
-    tmux display-message "Selected session: $SELECTED_SESSION"
     if [ -n "$SELECTED_SESSION" ]; then
-      tmux switch-client -t $SELECTED_SESSION
+      tmux attach -t $SELECTED_SESSION
     fi
-  '
+  fi
 }
 
 ## NPM Local Dev
