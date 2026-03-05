@@ -116,6 +116,9 @@ complete -o nospace -C /usr/bin/terraform terraform
 
 source $HOME/.config/zsh/starship_comp
 
+# Sessionizer completion
+[[ -f "$HOME/.local/share/sessionizer/completions/sessionizer.zsh" ]] && source "$HOME/.local/share/sessionizer/completions/sessionizer.zsh"
+
 # autoload -U compinit
 compinit
 
