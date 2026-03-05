@@ -20,10 +20,20 @@ install:
 	install -Dm644 .local/share/sessionizer/completions/sessionizer.bash "$(SHAREDIR)/sessionizer.bash"
 	install -Dm644 .local/share/sessionizer/completions/sessionizer.zsh "$(SHAREDIR)/sessionizer.zsh"
 	@if [ ! -f "$(CONFDIR)/projects.conf" ]; then \
-		install -Dm644 .config/sessionizer/projects.conf "$(CONFDIR)/projects.conf"; \
-		echo "Installed default config to $(CONFDIR)/projects.conf"; \
+		install -Dm644 projects.conf.example "$(CONFDIR)/projects.conf"; \
+		echo "Installed example config to $(CONFDIR)/projects.conf"; \
 	else \
-		echo "Config already exists at $(CONFDIR)/projects.conf — skipping"; \
+		printf "Config already exists at $(CONFDIR)/projects.conf. Overwrite? [y/N] "; \
+		read ans; \
+		case "$$ans" in \
+			[yY]*) \
+				install -Dm644 projects.conf.example "$(CONFDIR)/projects.conf"; \
+				echo "Overwritten config at $(CONFDIR)/projects.conf"; \
+				;; \
+			*) \
+				echo "Kept existing config"; \
+				;; \
+		esac; \
 	fi
 	@echo ""
 	@echo "Installed sessionizer to $(BINDIR)/sessionizer"
