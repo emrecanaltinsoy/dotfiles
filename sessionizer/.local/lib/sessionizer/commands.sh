@@ -48,7 +48,18 @@ cmd_projects() {
 		echo -e "  ${CYAN}${project}${RESET}  [${status}]"
 		echo -e "    path:    ${path}"
 		[[ "$session_name" != "$project" ]] && echo -e "    session: ${session_name}"
-		[[ -n "$on_create" ]] && echo -e "    run:     ${on_create}"
+		if [[ -n "$on_create" ]]; then
+			local first=true
+			while IFS= read -r cmd; do
+				[[ -z "$cmd" ]] && continue
+				if $first; then
+					echo -e "    run:     ${cmd}"
+					first=false
+				else
+					echo -e "             ${cmd}"
+				fi
+			done <<<"$on_create"
+		fi
 		echo ""
 	done
 }
@@ -91,9 +102,13 @@ cmd_create() {
 	# Create the session
 	tmux new-session -d -s "$session_name" -c "$path"
 
-	# Run on_create command if specified (before attach, since attach blocks)
+	# Run on_create commands if specified (before attach, since attach blocks)
+	# on_create may contain multiple newline-separated commands
 	if [[ -n "$on_create" ]]; then
-		tmux send-keys -t "=$session_name:" "$on_create" Enter
+		while IFS= read -r cmd; do
+			[[ -z "$cmd" ]] && continue
+			tmux send-keys -t "=$session_name:" "$cmd" Enter
+		done <<<"$on_create"
 	fi
 
 	# Attach or switch
@@ -141,6 +156,16 @@ CONFIG FILE:
         path = ~/projects/foo     # Required: project directory
         session_name = foo        # Optional: tmux session name (default: section name)
         on_create = nvm use       # Optional: command to run after session creation
+
+    Multi-line on_create (indented continuation lines):
+
+        [my-project]
+        path = ~/projects/foo
+        on_create = tmux split-window -v -l 20
+            tmux select-pane -t 1
+            nvim .
+
+    Each continuation line is sent as a separate tmux send-keys command.
 
 CONTEXT:
     Works both inside and outside tmux:

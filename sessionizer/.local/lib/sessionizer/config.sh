@@ -48,21 +48,56 @@ parse_config() {
 	fi
 
 	local current_section=""
+	local last_key=""
 	local line_num=0
 
-	while IFS= read -r line || [[ -n "$line" ]]; do
+	while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
 		((line_num++))
 
-		# Strip leading/trailing whitespace
-		line="${line#"${line%%[![:space:]]*}"}"
+		# Detect continuation lines: starts with whitespace, not blank, not a comment
+		# Continuation lines are appended (newline-separated) to the last key's value
+		if [[ -n "$last_key" && -n "$current_section" && "$raw_line" =~ ^[[:space:]]+[^[:space:]] ]]; then
+			local cont_value="${raw_line#"${raw_line%%[![:space:]]*}"}"
+			cont_value="${cont_value%"${cont_value##*[![:space:]]}"}"
+
+			# Skip blank continuation or comment-only continuation
+			if [[ -z "$cont_value" || "$cont_value" == \#* ]]; then
+				continue
+			fi
+
+			# Strip trailing comments
+			if [[ "$cont_value" != \"*\" && "$cont_value" != \'*\' ]]; then
+				cont_value="${cont_value%%#*}"
+				cont_value="${cont_value%"${cont_value##*[![:space:]]}"}"
+			fi
+
+			if [[ "$current_section" == "DEFAULT" ]]; then
+				DEFAULTS[$last_key]+=$'\n'"$cont_value"
+			else
+				case "$last_key" in
+				path) PROJECT_PATH[$current_section]+=$'\n'"$cont_value" ;;
+				session_name) PROJECT_SESSION_NAME[$current_section]+=$'\n'"$cont_value" ;;
+				on_create) PROJECT_ON_CREATE[$current_section]+=$'\n'"$cont_value" ;;
+				esac
+			fi
+			continue
+		fi
+
+		# Strip leading/trailing whitespace for non-continuation lines
+		local line="${raw_line#"${raw_line%%[![:space:]]*}"}"
 		line="${line%"${line##*[![:space:]]}"}"
 
 		# Skip empty lines and comments
-		[[ -z "$line" || "$line" == \#* ]] && continue
+		if [[ -z "$line" || "$line" == \#* ]]; then
+			# Reset continuation on blank/comment lines
+			last_key=""
+			continue
+		fi
 
 		# Section header
 		if [[ "$line" =~ ^\[([a-zA-Z0-9_.-]+)\]$ ]]; then
 			current_section="${BASH_REMATCH[1]}"
+			last_key=""
 			if [[ "$current_section" != "DEFAULT" ]]; then
 				PROJECT_ORDER+=("$current_section")
 			fi
@@ -80,6 +115,8 @@ parse_config() {
 				value="${value%"${value##*[![:space:]]}"}"
 			fi
 
+			last_key="$key"
+
 			if [[ "$current_section" == "DEFAULT" ]]; then
 				DEFAULTS[$key]="$value"
 			elif [[ -n "$current_section" ]]; then
@@ -88,6 +125,7 @@ parse_config() {
 				session_name) PROJECT_SESSION_NAME[$current_section]="$value" ;;
 				on_create) PROJECT_ON_CREATE[$current_section]="$value" ;;
 				*)
+					last_key=""
 					echo -e "${YELLOW}Warning:${RESET} Unknown key '${key}' at line ${line_num}" >&2
 					;;
 				esac
@@ -95,6 +133,7 @@ parse_config() {
 			continue
 		fi
 
+		last_key=""
 		echo -e "${YELLOW}Warning:${RESET} Could not parse line ${line_num}: ${line}" >&2
 	done <"$CONFIG_FILE"
 }
