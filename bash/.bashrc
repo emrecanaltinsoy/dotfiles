@@ -159,8 +159,8 @@ eval "$(tmuxifier init -)"
 
 complete -C /usr/bin/terraform terraform
 
-# Sessionizer completion
-[[ -f "$HOME/.local/share/sessionizer/completions/sessionizer.bash" ]] && source "$HOME/.local/share/sessionizer/completions/sessionizer.bash"
+# txs completion
+[[ -f "$HOME/.local/share/txs/completions/txs.bash" ]] && source "$HOME/.local/share/txs/completions/txs.bash"
 # BEGIN ANSIBLE MANAGED BLOCK
 # Include .bashrc.d folder for specific ansible dev feature
 if [[ -d "$HOME/.bashrc.d" ]]; then

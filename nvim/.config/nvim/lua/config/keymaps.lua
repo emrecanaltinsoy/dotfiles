@@ -8,4 +8,4 @@ vim.keymap.set({ "i", "x", "n", "s" }, "<C-M-s>", "<cmd>noautocmd w<cr>", { desc
 
 vim.keymap.set({ "n" }, "<leader>ts", "<cmd>silent !tmux display-popup -E tms<cr>", { desc = "Show TMS sessions" })
 
-vim.keymap.set({ "n" }, "<leader>tt", "<cmd>silent !sessionizer<cr>", { desc = "Start sessionizer" })
+vim.keymap.set({ "n" }, "<leader>tt", "<cmd>silent !txs<cr>", { desc = "Start txs" })
