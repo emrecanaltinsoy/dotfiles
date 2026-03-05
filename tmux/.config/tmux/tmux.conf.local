@@ -327,6 +327,7 @@ bind C-a send-prefix
 # move status line to top
 set -g status-position top
 
+bind-key -r a run-shell "sessionizer"
 
 # -- tpm -----------------------------------------------------------------------
 
