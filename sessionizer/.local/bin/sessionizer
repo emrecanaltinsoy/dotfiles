@@ -40,13 +40,11 @@ fi
 # Associative arrays to hold parsed config
 declare -A PROJECT_PATH
 declare -A PROJECT_SESSION_NAME
-declare -A PROJECT_LAYOUT
 declare -A PROJECT_ON_CREATE
 declare -a PROJECT_ORDER=()
 
 # Defaults
 declare -A DEFAULTS=(
-  [layout]="none"
   [on_create]=""
   [session_name]=""
 )
@@ -97,7 +95,6 @@ parse_config() {
         case "$key" in
         path) PROJECT_PATH[$current_section]="$value" ;;
         session_name) PROJECT_SESSION_NAME[$current_section]="$value" ;;
-        layout) PROJECT_LAYOUT[$current_section]="$value" ;;
         on_create) PROJECT_ON_CREATE[$current_section]="$value" ;;
         *)
           echo -e "${YELLOW}Warning:${RESET} Unknown key '${key}' at line ${line_num}" >&2
@@ -126,9 +123,6 @@ get_project_prop() {
     [[ -z "$name" ]] && name="$project"
     # Replace dots with dashes (tmux doesn't like dots in session names)
     echo "${name//./-}"
-    ;;
-  layout)
-    echo "${PROJECT_LAYOUT[$project]:-${DEFAULTS[layout]:-none}}"
     ;;
   on_create)
     echo "${PROJECT_ON_CREATE[$project]:-${DEFAULTS[on_create]:-}}"
@@ -203,10 +197,9 @@ cmd_projects() {
   echo -e "${BOLD}Configured projects:${RESET}"
   echo ""
   for project in "${PROJECT_ORDER[@]}"; do
-    local path session_name layout on_create status
+    local path session_name on_create status
     path=$(get_project_prop "$project" "path")
     session_name=$(get_project_prop "$project" "session_name")
-    layout=$(get_project_prop "$project" "layout")
     on_create=$(get_project_prop "$project" "on_create")
 
     # Check if session is active
@@ -219,7 +212,6 @@ cmd_projects() {
     echo -e "  ${CYAN}${project}${RESET}  [${status}]"
     echo -e "    path:    ${path}"
     [[ "$session_name" != "$project" ]] && echo -e "    session: ${session_name}"
-    [[ "$layout" != "none" ]] && echo -e "    layout:  ${layout}"
     [[ -n "$on_create" ]] && echo -e "    run:     ${on_create}"
     echo ""
   done
@@ -240,10 +232,9 @@ cmd_create() {
     return 1
   fi
 
-  local path session_name layout on_create
+  local path session_name on_create
   path=$(expand_path "$(get_project_prop "$project" "path")")
   session_name=$(get_project_prop "$project" "session_name")
-  layout=$(get_project_prop "$project" "layout")
   on_create=$(get_project_prop "$project" "on_create")
 
   # Validate path
@@ -262,26 +253,15 @@ cmd_create() {
   echo -e "Creating session ${GREEN}${session_name}${RESET} at ${path}..."
 
   # Create the session
-  if [[ "$layout" != "none" ]] && command -v tmuxifier &>/dev/null; then
-    # Use tmuxifier to create the session with a layout
-    # tmuxifier needs to be run from the project directory
-    (cd "$path" && SESSION_NAME="$session_name" tmuxifier load-session "$layout")
-  else
-    if [[ "$layout" != "none" ]]; then
-      echo -e "${YELLOW}Warning:${RESET} tmuxifier not found, creating plain session." >&2
-    fi
+  tmux new-session -d -s "$session_name" -c "$path"
 
-    # Create a plain session
-    tmux new-session -d -s "$session_name" -c "$path"
-
-    # Run on_create command if specified
-    if [[ -n "$on_create" ]]; then
-      tmux send-keys -t "=$session_name" "$on_create" Enter
-    fi
-
-    # Attach or switch
-    tmux_attach_or_switch "$session_name"
+  # Run on_create command if specified (before attach, since attach blocks)
+  if [[ -n "$on_create" ]]; then
+    tmux send-keys -t "=$session_name:" "$on_create" Enter
   fi
+
+  # Attach or switch
+  tmux_attach_or_switch "$session_name"
 }
 
 cmd_kill() {
@@ -430,12 +410,11 @@ CONFIG FILE:
     INI-style format where each [section] defines a project:
 
         [DEFAULT]
-        layout = dev              # Default layout for all projects
+        on_create = echo "ready"  # Default command for all projects
 
         [my-project]
         path = ~/projects/foo     # Required: project directory
         session_name = foo        # Optional: tmux session name (default: section name)
-        layout = dev              # Optional: tmuxifier layout (default: from DEFAULT or none)
         on_create = nvm use       # Optional: command to run after session creation
 
 CONTEXT:
@@ -445,7 +424,7 @@ CONTEXT:
 
 DEPENDENCIES:
     Required: tmux, bash
-    Optional: fzf (interactive mode), tmuxifier (layout support)
+    Optional: fzf (interactive mode)
 EOF
 }
 
