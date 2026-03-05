@@ -1,0 +1,501 @@
+#!/usr/bin/env bash
+#
+# sessionizer - Manage tmux sessions from predefined project directories
+#
+# Usage:
+#   sessionizer              # Interactive fzf picker
+#   sessionizer list         # List active tmux sessions
+#   sessionizer projects     # List configured projects
+#   sessionizer create NAME  # Create/attach session for a project
+#   sessionizer kill NAME    # Kill a tmux session
+#   sessionizer help         # Show help
+#
+
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sessionizer"
+CONFIG_FILE="${CONFIG_DIR}/projects.conf"
+
+# Colors (only when outputting to a terminal)
+if [[ -t 1 ]]; then
+  BOLD='\033[1m'
+  DIM='\033[2m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[0;33m'
+  CYAN='\033[0;36m'
+  RED='\033[0;31m'
+  RESET='\033[0m'
+else
+  BOLD='' DIM='' GREEN='' YELLOW='' CYAN='' RED='' RESET=''
+fi
+
+# ---------------------------------------------------------------------------
+# INI Config Parser
+# ---------------------------------------------------------------------------
+
+# Associative arrays to hold parsed config
+declare -A PROJECT_PATH
+declare -A PROJECT_SESSION_NAME
+declare -A PROJECT_LAYOUT
+declare -A PROJECT_ON_CREATE
+declare -a PROJECT_ORDER=()
+
+# Defaults
+declare -A DEFAULTS=(
+  [layout]="none"
+  [on_create]=""
+  [session_name]=""
+)
+
+parse_config() {
+  if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo -e "${RED}Error:${RESET} Config file not found: ${CONFIG_FILE}"
+    echo "Create it with example projects, or run: sessionizer help"
+    return 1
+  fi
+
+  local current_section=""
+  local line_num=0
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    ((line_num++))
+
+    # Strip leading/trailing whitespace
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+
+    # Skip empty lines and comments
+    [[ -z "$line" || "$line" == \#* ]] && continue
+
+    # Section header
+    if [[ "$line" =~ ^\[([a-zA-Z0-9_.-]+)\]$ ]]; then
+      current_section="${BASH_REMATCH[1]}"
+      if [[ "$current_section" != "DEFAULT" ]]; then
+        PROJECT_ORDER+=("$current_section")
+      fi
+      continue
+    fi
+
+    # Key = Value
+    if [[ "$line" =~ ^([a-zA-Z_]+)[[:space:]]*=[[:space:]]*(.*)$ ]]; then
+      local key="${BASH_REMATCH[1]}"
+      local value="${BASH_REMATCH[2]}"
+
+      # Strip trailing comments (but not inside quoted values)
+      if [[ "$value" != \"*\" && "$value" != \'*\' ]]; then
+        value="${value%%#*}"
+        value="${value%"${value##*[![:space:]]}"}"
+      fi
+
+      if [[ "$current_section" == "DEFAULT" ]]; then
+        DEFAULTS[$key]="$value"
+      elif [[ -n "$current_section" ]]; then
+        case "$key" in
+        path) PROJECT_PATH[$current_section]="$value" ;;
+        session_name) PROJECT_SESSION_NAME[$current_section]="$value" ;;
+        layout) PROJECT_LAYOUT[$current_section]="$value" ;;
+        on_create) PROJECT_ON_CREATE[$current_section]="$value" ;;
+        *)
+          echo -e "${YELLOW}Warning:${RESET} Unknown key '${key}' at line ${line_num}" >&2
+          ;;
+        esac
+      fi
+      continue
+    fi
+
+    echo -e "${YELLOW}Warning:${RESET} Could not parse line ${line_num}: ${line}" >&2
+  done <"$CONFIG_FILE"
+}
+
+# Get a project property with DEFAULT fallback
+get_project_prop() {
+  local project="$1"
+  local prop="$2"
+
+  case "$prop" in
+  path)
+    echo "${PROJECT_PATH[$project]:-}"
+    ;;
+  session_name)
+    local name="${PROJECT_SESSION_NAME[$project]:-${DEFAULTS[session_name]:-}}"
+    # Default to section name if empty
+    [[ -z "$name" ]] && name="$project"
+    # Replace dots with dashes (tmux doesn't like dots in session names)
+    echo "${name//./-}"
+    ;;
+  layout)
+    echo "${PROJECT_LAYOUT[$project]:-${DEFAULTS[layout]:-none}}"
+    ;;
+  on_create)
+    echo "${PROJECT_ON_CREATE[$project]:-${DEFAULTS[on_create]:-}}"
+    ;;
+  esac
+}
+
+# Expand ~ in paths
+expand_path() {
+  local path="$1"
+  echo "${path/#\~/$HOME}"
+}
+
+# ---------------------------------------------------------------------------
+# Tmux Helpers
+# ---------------------------------------------------------------------------
+
+is_inside_tmux() {
+  [[ -n "${TMUX:-}" ]]
+}
+
+tmux_session_exists() {
+  tmux has-session -t "=$1" 2>/dev/null
+}
+
+tmux_attach_or_switch() {
+  local session_name="$1"
+  if is_inside_tmux; then
+    tmux switch-client -t "=$session_name"
+  else
+    tmux attach-session -t "=$session_name"
+  fi
+}
+
+get_active_sessions() {
+  tmux list-sessions -F "#{session_name}" 2>/dev/null || true
+}
+
+# ---------------------------------------------------------------------------
+# Core Commands
+# ---------------------------------------------------------------------------
+
+cmd_list() {
+  local sessions
+  sessions=$(get_active_sessions)
+
+  if [[ -z "$sessions" ]]; then
+    echo -e "${DIM}No active tmux sessions.${RESET}"
+    return 0
+  fi
+
+  echo -e "${BOLD}Active tmux sessions:${RESET}"
+  echo ""
+  while IFS= read -r session; do
+    local windows
+    windows=$(tmux list-windows -t "=$session" -F "#{window_name}" 2>/dev/null | tr '\n' ', ' | sed 's/,$//')
+    echo -e "  ${GREEN}${session}${RESET}  ${DIM}[${windows}]${RESET}"
+  done <<<"$sessions"
+}
+
+cmd_projects() {
+  parse_config || return 1
+
+  if [[ ${#PROJECT_ORDER[@]} -eq 0 ]]; then
+    echo -e "${DIM}No projects configured in ${CONFIG_FILE}${RESET}"
+    return 0
+  fi
+
+  local active_sessions
+  active_sessions=$(get_active_sessions)
+
+  echo -e "${BOLD}Configured projects:${RESET}"
+  echo ""
+  for project in "${PROJECT_ORDER[@]}"; do
+    local path session_name layout on_create status
+    path=$(get_project_prop "$project" "path")
+    session_name=$(get_project_prop "$project" "session_name")
+    layout=$(get_project_prop "$project" "layout")
+    on_create=$(get_project_prop "$project" "on_create")
+
+    # Check if session is active
+    if echo "$active_sessions" | grep -qx "$session_name"; then
+      status="${GREEN}active${RESET}"
+    else
+      status="${DIM}inactive${RESET}"
+    fi
+
+    echo -e "  ${CYAN}${project}${RESET}  [${status}]"
+    echo -e "    path:    ${path}"
+    [[ "$session_name" != "$project" ]] && echo -e "    session: ${session_name}"
+    [[ "$layout" != "none" ]] && echo -e "    layout:  ${layout}"
+    [[ -n "$on_create" ]] && echo -e "    run:     ${on_create}"
+    echo ""
+  done
+}
+
+cmd_create() {
+  local project="$1"
+
+  parse_config || return 1
+
+  # Check if project exists in config
+  if [[ -z "${PROJECT_PATH[$project]:-}" ]]; then
+    echo -e "${RED}Error:${RESET} Project '${project}' not found in config."
+    echo "Available projects:"
+    for p in "${PROJECT_ORDER[@]}"; do
+      echo "  - $p"
+    done
+    return 1
+  fi
+
+  local path session_name layout on_create
+  path=$(expand_path "$(get_project_prop "$project" "path")")
+  session_name=$(get_project_prop "$project" "session_name")
+  layout=$(get_project_prop "$project" "layout")
+  on_create=$(get_project_prop "$project" "on_create")
+
+  # Validate path
+  if [[ ! -d "$path" ]]; then
+    echo -e "${RED}Error:${RESET} Directory does not exist: ${path}"
+    return 1
+  fi
+
+  # If session already exists, just attach/switch
+  if tmux_session_exists "$session_name"; then
+    echo -e "${DIM}Session '${session_name}' already exists. Switching...${RESET}"
+    tmux_attach_or_switch "$session_name"
+    return 0
+  fi
+
+  echo -e "Creating session ${GREEN}${session_name}${RESET} at ${path}..."
+
+  # Create the session
+  if [[ "$layout" != "none" ]] && command -v tmuxifier &>/dev/null; then
+    # Use tmuxifier to create the session with a layout
+    # tmuxifier needs to be run from the project directory
+    (cd "$path" && SESSION_NAME="$session_name" tmuxifier load-session "$layout")
+  else
+    if [[ "$layout" != "none" ]]; then
+      echo -e "${YELLOW}Warning:${RESET} tmuxifier not found, creating plain session." >&2
+    fi
+
+    # Create a plain session
+    tmux new-session -d -s "$session_name" -c "$path"
+
+    # Run on_create command if specified
+    if [[ -n "$on_create" ]]; then
+      tmux send-keys -t "=$session_name" "$on_create" Enter
+    fi
+
+    # Attach or switch
+    tmux_attach_or_switch "$session_name"
+  fi
+}
+
+cmd_kill() {
+  local target="$1"
+
+  if ! tmux_session_exists "$target"; then
+    echo -e "${RED}Error:${RESET} Session '${target}' does not exist."
+    return 1
+  fi
+
+  tmux kill-session -t "=$target"
+  echo -e "Killed session ${GREEN}${target}${RESET}."
+}
+
+cmd_interactive() {
+  if ! command -v fzf &>/dev/null; then
+    echo -e "${RED}Error:${RESET} fzf is required for interactive mode."
+    echo "Install fzf or use subcommands directly (e.g., sessionizer list)"
+    return 1
+  fi
+
+  # When inside tmux and NOT already in a popup, re-launch inside display-popup
+  if is_inside_tmux && [[ -z "${SESSIONIZER_POPUP:-}" ]]; then
+    local self
+    self=$(readlink -f "$0")
+    tmux display-popup -E -w 80% -h 70% "SESSIONIZER_POPUP=1 bash \"${self}\" --popup"
+    return 0
+  fi
+
+  parse_config || return 1
+
+  local active_sessions
+  active_sessions=$(get_active_sessions)
+
+  # Build reverse map: session_name -> project name
+  local -A session_to_project=()
+  for project in "${PROJECT_ORDER[@]}"; do
+    local sname
+    sname=$(get_project_prop "$project" "session_name")
+    session_to_project[$sname]="$project"
+  done
+
+  # Build fzf input: combine active sessions and configured projects
+  local entries=()
+  local -A seen_projects=()
+
+  # Active sessions first
+  if [[ -n "$active_sessions" ]]; then
+    while IFS= read -r session; do
+      local windows
+      windows=$(tmux list-windows -t "=$session" -F "#{window_name}" 2>/dev/null | tr '\n' ', ' | sed 's/,$//')
+
+      if [[ -n "${session_to_project[$session]:-}" ]]; then
+        # Known project - show project name with session info
+        local proj="${session_to_project[$session]}"
+        entries+=("* ${proj}  [${windows}]")
+        seen_projects[$proj]=1
+      else
+        # Unmanaged session - show raw session name
+        entries+=("* ${session}  [${windows}]")
+      fi
+    done <<<"$active_sessions"
+  fi
+
+  # Configured projects that aren't already active
+  for project in "${PROJECT_ORDER[@]}"; do
+    if [[ -z "${seen_projects[$project]:-}" ]]; then
+      local path
+      path=$(get_project_prop "$project" "path")
+      entries+=("+ ${project}  (${path})")
+    fi
+  done
+
+  if [[ ${#entries[@]} -eq 0 ]]; then
+    echo -e "${DIM}No sessions or projects available.${RESET}"
+    return 0
+  fi
+
+  # fzf options: full height inside popup, partial height in terminal
+  local fzf_height_opt=()
+  if [[ -z "${SESSIONIZER_POPUP:-}" ]]; then
+    fzf_height_opt=(--height=50%)
+  fi
+
+  # Run fzf
+  local header="* = active  + = project | ESC to cancel"
+  local selected
+  selected=$(
+    printf '%s\n' "${entries[@]}" | fzf \
+      --header="$header" \
+      --prompt="session> " \
+      "${fzf_height_opt[@]}" \
+      --layout=reverse \
+      --border \
+      --ansi
+  ) || return 0 # User cancelled
+
+  # Parse selection
+  local marker name
+  marker="${selected:0:1}"
+  # Extract the name (second field, before any whitespace)
+  name=$(echo "$selected" | awk '{print $2}')
+
+  case "$marker" in
+  '*')
+    # Active session - could be a session name or a project name
+    # Try direct session name first
+    if tmux_session_exists "$name"; then
+      tmux_attach_or_switch "$name"
+    else
+      # Might be a project name whose session has a different name
+      if [[ -n "${PROJECT_PATH[$name]:-}" ]]; then
+        local session_name
+        session_name=$(get_project_prop "$name" "session_name")
+        tmux_attach_or_switch "$session_name"
+      fi
+    fi
+    ;;
+  '+')
+    # Configured project - create and attach
+    cmd_create "$name"
+    ;;
+  esac
+}
+
+cmd_help() {
+  cat <<'EOF'
+sessionizer - Manage tmux sessions from predefined project directories
+
+USAGE:
+    sessionizer                  Interactive fzf picker
+    sessionizer list             List active tmux sessions
+    sessionizer projects         List configured projects
+    sessionizer create <name>    Create/attach session for a project
+    sessionizer kill <name>      Kill a tmux session
+    sessionizer help             Show this help message
+
+INTERACTIVE MODE:
+    When run with no arguments, an fzf picker shows:
+      * = active sessions (select to switch)
+      + = configured projects (select to create & attach)
+
+CONFIG FILE:
+    ~/.config/sessionizer/projects.conf
+
+    INI-style format where each [section] defines a project:
+
+        [DEFAULT]
+        layout = dev              # Default layout for all projects
+
+        [my-project]
+        path = ~/projects/foo     # Required: project directory
+        session_name = foo        # Optional: tmux session name (default: section name)
+        layout = dev              # Optional: tmuxifier layout (default: from DEFAULT or none)
+        on_create = nvm use       # Optional: command to run after session creation
+
+CONTEXT:
+    Works both inside and outside tmux:
+      - Outside: creates/attaches sessions directly
+      - Inside:  switches client to the target session
+
+DEPENDENCIES:
+    Required: tmux, bash
+    Optional: fzf (interactive mode), tmuxifier (layout support)
+EOF
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+main() {
+  local cmd="${1:-}"
+
+  case "$cmd" in
+  list)
+    cmd_list
+    ;;
+  projects)
+    cmd_projects
+    ;;
+  create)
+    if [[ -z "${2:-}" ]]; then
+      echo -e "${RED}Error:${RESET} Missing project name."
+      echo "Usage: sessionizer create <project-name>"
+      return 1
+    fi
+    cmd_create "$2"
+    ;;
+  kill)
+    if [[ -z "${2:-}" ]]; then
+      echo -e "${RED}Error:${RESET} Missing session name."
+      echo "Usage: sessionizer kill <session-name>"
+      return 1
+    fi
+    cmd_kill "$2"
+    ;;
+  help | --help | -h)
+    cmd_help
+    ;;
+  --popup)
+    # Internal: called from within tmux display-popup
+    cmd_interactive
+    ;;
+  "")
+    cmd_interactive
+    ;;
+  *)
+    echo -e "${RED}Error:${RESET} Unknown command '${cmd}'."
+    echo ""
+    cmd_help
+    return 1
+    ;;
+  esac
+}
+
+main "$@"
