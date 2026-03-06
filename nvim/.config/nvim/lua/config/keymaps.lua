@@ -8,4 +8,9 @@ vim.keymap.set({ "i", "x", "n", "s" }, "<C-M-s>", "<cmd>noautocmd w<cr>", { desc
 
 vim.keymap.set({ "n" }, "<leader>ts", "<cmd>silent !tmux display-popup -E tms<cr>", { desc = "Show TMS sessions" })
 
-vim.keymap.set({ "n" }, "<leader>tt", "<cmd>silent !txs<cr>", { desc = "Start txs" })
+vim.keymap.set(
+  { "n" },
+  "<leader>tt",
+  "<cmd>lua Snacks.terminal('TXS_POPUP=1 txs', { win = {position = 'float'}})<cr>",
+  { desc = "Start txs" }
+)
