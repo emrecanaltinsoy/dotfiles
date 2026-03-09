@@ -6,6 +6,5 @@ vim.keymap.set("t", "jk", "<C-\\><C-N>", { desc = "Terminal Normal Mode" })
 
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-M-s>", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
 
-vim.keymap.set({ "n" }, "<leader>ts", "<cmd>silent !tmux display-popup -E tms<cr>", { desc = "Show TMS sessions" })
-
-vim.keymap.set({ "n" }, "<leader>tt", "<cmd>silent !txs<cr>", { desc = "Start txs" })
+vim.keymap.set({ "n" }, "<leader>ts", "<cmd>silent !txs<cr>", { desc = "TXS sessions" })
+vim.keymap.set({ "n" }, "<leader>tw", "<cmd>silent !txs worktrees<cr>", { desc = "TXS worktrees" })
