@@ -327,8 +327,7 @@ bind C-a send-prefix
 # move status line to top
 set -g status-position top
 
-bind-key -r C-s run-shell "txs"
-bind-key -r C-w run-shell "txs worktrees"
+bind-key -r C-s display-popup -E -w 80% -h 70% "txs"
 
 # -- tpm -----------------------------------------------------------------------
 
