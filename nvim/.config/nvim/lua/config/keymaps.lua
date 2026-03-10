@@ -11,3 +11,9 @@ vim.keymap.set("n", "<leader>tt", function()
     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs"')
   end
 end, { desc = "Start txs" })
+
+vim.keymap.set("n", "<leader>tk", function()
+  if vim.env.TMUX then
+    vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs kill"')
+  end
+end, { desc = "Start txs kill" })
