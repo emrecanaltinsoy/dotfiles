@@ -4,6 +4,8 @@ export GPG_TTY=$(tty)
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.bin:$HOME/go/bin:/usr/local/go/bin::$PATH
 export PATH=$PATH:/sbin:$HOME/.config/bin:$HOME/.amplify/bin:/opt/nvim-linux64/bin:$HOME/nvim-linux64/bin:$HOME/nvim-linux-x86_64/bin:$HOME/.local/bin:$HOME/.pulumi/bin
+export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/varlock/bin:$PATH"
+
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 export NVM_DIR="$HOME/.nvm"

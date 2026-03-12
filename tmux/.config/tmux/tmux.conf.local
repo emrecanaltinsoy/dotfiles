@@ -327,8 +327,10 @@ bind C-a send-prefix
 # move status line to top
 set -g status-position top
 
-bind-key -r C-s display-popup -E -w 80% -h 70% "txs"
-bind-key -r C-k display-popup -E -w 80% -h 70% "txs kill"
+bind-key -r C-s display-popup -T "Switch to session" -E -w 80% -h 70% "txs"
+bind-key -r C-k display-popup -T "Kill session" -E -w 80% -h 70% "txs kill"
+bind-key -r C-w display-popup -T "Add Worktree" -E -w 80% -h 70% "txs wt add"
+bind-key -r C-r display-popup -T "Remove Worktree" -E -w 80% -h 70% "txs wt remove"
 
 # -- tpm -----------------------------------------------------------------------
 

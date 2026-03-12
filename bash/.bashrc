@@ -7,6 +7,7 @@ export GPG_TTY=$(tty)
 export PATH="$HOME/bin:$HOME/.bin:$HOME/.config/bin:$HOME/.local/bin:/sbin:$PATH"
 export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH" # Golang
 export PATH=$PATH:$HOME/.amplify/bin:/opt/nvim-linux64/bin:$HOME/nvim-linux64/bin:$HOME/.pulumi/bin
+export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/varlock/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
