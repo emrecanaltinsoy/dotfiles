@@ -77,8 +77,15 @@ alias gfp="git fetch -p"
 alias gpull="git pull"
 alias glo="git log --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
-alias create_aws_cred="/home/emrecan/Projects/aws-authentication/create_aws_cred"
-alias deploy_local_lambda="$HOME/Projects/dcr-ai-flagship/scripting/deploy_local_lambda/deploy.sh"
+## PYTHON
+# JupyterLab
+jlab() {
+  if uv tool list | grep -q jupyterlab; then
+    uv run --with jupyter jupyter lab --no-browser
+  else
+    echo "jupyterlab is not installed. Install it with: uv tool install jupyterlab"
+  fi
+}
 
 ## TMUX
 # Tmux Switch Client with FZF
@@ -98,10 +105,6 @@ tsc() {
     fi
   fi
 }
-
-## NPM Local Dev
-alias nrw="cd $HOME/Projects/dcr-ai-flagship/scripting && ./frontendRunWeb.sh"
-alias nrb="cd $HOME/Projects/dcr-ai-flagship/scripting && nvm use v16; ./frontendRunBuild.sh"
 
 ## Command Replacement
 if [ -x "$(command -v exa)" ]; then
