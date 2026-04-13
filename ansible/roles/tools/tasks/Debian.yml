@@ -43,6 +43,11 @@
         state: present
         update_cache: yes
 
+  rescue:
+    - name: Skipping Terraform installation due to failure
+      ansible.builtin.debug:
+        msg: "Terraform installation failed, skipping."
+
 # Tmux
 - name: Install tmux
   become: true
