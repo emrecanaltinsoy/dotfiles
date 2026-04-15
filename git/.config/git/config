@@ -1,7 +1,7 @@
 [user]
-	signingkey = 260365214503B692
+	; signingkey = 260365214503B692
 	name = Emrecan Altinsoy
-	email = emrecan.altinsoy@se.com
+	email = emrecan.altinsoy@gmail.com
 [core]
   pager = delta
 	editor = nvim
@@ -22,9 +22,9 @@
 [commit]
 	template = ~/.config/git/commit_template
 	verbose = true
-	gpgSign = true
+	gpgSign = false
 [tag]
-	gpgsign = true
+	gpgsign = false
 [interactive]
 	diffFilter = delta --color-only
 [delta]
