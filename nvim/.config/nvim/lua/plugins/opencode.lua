@@ -3,60 +3,65 @@ return {
     "NickvanDyke/opencode.nvim",
     dependencies = { "folke/snacks.nvim" },
     config = function()
-      local opencode_cmd = "opencode"
-      ---@type snacks.terminal.Opts
-      local snacks_terminal_opts = {
-        win = {
-          position = "right",
-          enter = false,
-          on_win = function(win)
-            -- Set up keymaps and cleanup for an arbitrary terminal
-            require("opencode.terminal").setup(win.win)
-          end,
-        },
-      }
-      ---@type opencode.Opts
-      vim.g.opencode_opts = {
+      local opencode_cmd = "opencode --port 33337"
+      local in_tmux = vim.env.TMUX ~= nil
+
+      local server
+      if in_tmux then
+        local pane_id = nil
         server = {
           start = function()
-            require("snacks.terminal").open(opencode_cmd, snacks_terminal_opts)
+            local result = vim.fn.system("tmux split-window -dh -P -F '#{pane_id}' " .. opencode_cmd)
+            pane_id = vim.trim(result)
           end,
           stop = function()
-            require("snacks.terminal").get(opencode_cmd, snacks_terminal_opts):close()
+            if pane_id then
+              vim.fn.system("tmux kill-pane -t " .. pane_id)
+              pane_id = nil
+            end
           end,
           toggle = function()
-            require("snacks.terminal").toggle(opencode_cmd, snacks_terminal_opts)
+            local panes = vim.fn.system("tmux list-panes -a -F '#{pane_id}'")
+            if pane_id and panes:find(pane_id, 1, true) then
+              vim.fn.system("tmux kill-pane -t " .. pane_id)
+              pane_id = nil
+            else
+              local result = vim.fn.system("tmux split-window -dh -P -F '#{pane_id}' " .. opencode_cmd)
+              pane_id = vim.trim(result)
+            end
           end,
-        },
-        port = 33337,
-        -- provider = {
-        --   enabled = "tmux",
-        --   tmux = {
-        --     options = "-h",
-        --     focus = false,
-        --   },
-        -- },
+        }
+      else
+        ---@type snacks.terminal.Opts
+        local snacks_opts = {
+          win = {
+            position = "right",
+            enter = false,
+            on_win = function(win)
+              require("opencode.terminal").setup(win.win)
+            end,
+          },
+        }
+        server = {
+          start = function()
+            require("snacks.terminal").open(opencode_cmd, snacks_opts)
+          end,
+          stop = function()
+            require("snacks.terminal").get(opencode_cmd, snacks_opts):close()
+          end,
+          toggle = function()
+            require("snacks.terminal").toggle(opencode_cmd, snacks_opts)
+          end,
+        }
+      end
+
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        server = server,
       }
+
       -- Required for `opts.events.reload`.
       vim.o.autoread = true
-
-      -- Override the stop method to kill the pane instead of just the process
-      -- vim.api.nvim_create_autocmd("User", {
-      --   pattern = "LazyDone",
-      --   callback = function()
-      --     local provider = require("opencode.config").provider
-      --     if provider and provider.name == "tmux" then
-      --       provider.stop = function(self)
-      --         local pid = self:get_pid()
-      --         if self.pane_id and pid then
-      --           require("opencode.provider.util").kill(pid)
-      --           vim.fn.system("tmux kill-pane -t " .. self.pane_id)
-      --           self.pane_id = nil
-      --         end
-      --       end
-      --     end
-      --   end,
-      -- })
 
       vim.keymap.set({ "n", "x" }, "<leader>oa", function()
         require("opencode").ask("@this: ", { submit = true })
