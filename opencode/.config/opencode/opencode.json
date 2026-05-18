@@ -4,15 +4,13 @@
   "agent": {
     "code-reviewer": {
       "description": "Reviews code for best practices and potential issues",
-      // "mode": "subagent",
       "model": "github-copilot/claude-opus-4.5",
       "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
       "tools": {
-        // Disable file modification tools for review-only agent
         "write": false,
-        "edit": false,
-      },
-    },
+        "edit": false
+      }
+    }
   },
   "mcp": {
     "context7": {
@@ -27,6 +25,232 @@
         "region": "eu-west-1",
         "profile": "default"
       }
+    },
+    "cursor-acp": {
+      "name": "Cursor",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:32124/v1"
+      },
+      "models": {
+        "cursor-acp/auto": {
+          "name": "Auto"
+        },
+        "cursor-acp/claude-opus-4-7": {
+          "name": "Claude 4.7 Opus"
+        },
+        "cursor-acp/claude-4.6-opus": {
+          "name": "Claude 4.6 Opus"
+        },
+        "cursor-acp/claude-4.6-sonnet": {
+          "name": "Claude 4.6 Sonnet"
+        },
+        "cursor-acp/claude-4.5-opus": {
+          "name": "Claude 4.5 Opus"
+        },
+        "cursor-acp/claude-4.5-sonnet": {
+          "name": "Claude 4.5 Sonnet"
+        },
+        "cursor-acp/claude-4.5-haiku": {
+          "name": "Claude 4.5 Haiku"
+        },
+        "cursor-acp/claude-4-sonnet": {
+          "name": "Claude 4 Sonnet"
+        },
+        "cursor-acp/gpt-5.5": {
+          "name": "GPT-5.5"
+        },
+        "cursor-acp/gpt-5.4": {
+          "name": "GPT-5.4"
+        },
+        "cursor-acp/gpt-5.4-mini": {
+          "name": "GPT-5.4 Mini"
+        },
+        "cursor-acp/gpt-5.4-nano": {
+          "name": "GPT-5.4 Nano"
+        },
+        "cursor-acp/gpt-5.3-codex": {
+          "name": "GPT-5.3 Codex"
+        },
+        "cursor-acp/gpt-5.2": {
+          "name": "GPT-5.2"
+        },
+        "cursor-acp/gpt-5.2-codex": {
+          "name": "GPT-5.2 Codex"
+        },
+        "cursor-acp/gpt-5.1-codex": {
+          "name": "GPT-5.1 Codex"
+        },
+        "cursor-acp/gpt-5.1-codex-max": {
+          "name": "GPT-5.1 Codex Max"
+        },
+        "cursor-acp/gpt-5.1-codex-mini": {
+          "name": "GPT-5.1 Codex Mini"
+        },
+        "cursor-acp/gpt-5-mini": {
+          "name": "GPT-5 Mini"
+        },
+        "cursor-acp/gemini-3.1-pro": {
+          "name": "Gemini 3.1 Pro"
+        },
+        "cursor-acp/gemini-3-pro": {
+          "name": "Gemini 3 Pro"
+        },
+        "cursor-acp/gemini-3-flash": {
+          "name": "Gemini 3 Flash"
+        },
+        "cursor-acp/composer-2": {
+          "name": "Composer 2"
+        },
+        "cursor-acp/composer-2-fast": {
+          "name": "Composer 2 Fast"
+        },
+        "cursor-acp/composer-1.5": {
+          "name": "Composer 1.5"
+        },
+        "cursor-acp/grok-4-20": {
+          "name": "Grok 4.20"
+        },
+        "cursor-acp/kimi-k2.5": {
+          "name": "Kimi K2.5"
+        },
+        "auto": {
+          "name": "Auto",
+          "cost": {
+            "input": 1.25,
+            "output": 6,
+            "cache_read": 0.25,
+            "cache_write": 1.25
+          }
+        },
+        "composer-1.5": {
+          "name": "Composer 1.5",
+          "cost": {
+            "input": 3.5,
+            "output": 17.5,
+            "cache_read": 0.35,
+            "cache_write": 3.5
+          }
+        },
+        "composer-1": {
+          "name": "Composer 1"
+        },
+        "opus-4.6-thinking": {
+          "name": "Claude 4.6 Opus (Thinking)"
+        },
+        "opus-4.6": {
+          "name": "Claude 4.6 Opus"
+        },
+        "sonnet-4.6": {
+          "name": "Claude 4.6 Sonnet"
+        },
+        "sonnet-4.6-thinking": {
+          "name": "Claude 4.6 Sonnet (Thinking)"
+        },
+        "opus-4.5": {
+          "name": "Claude 4.5 Opus"
+        },
+        "opus-4.5-thinking": {
+          "name": "Claude 4.5 Opus (Thinking)"
+        },
+        "sonnet-4.5": {
+          "name": "Claude 4.5 Sonnet"
+        },
+        "sonnet-4.5-thinking": {
+          "name": "Claude 4.5 Sonnet (Thinking)"
+        },
+        "gpt-5.4-high": {
+          "name": "GPT-5.4 High",
+          "cost": {
+            "input": 2.5,
+            "output": 15,
+            "cache_read": 0.25,
+            "cache_write": 2.5,
+            "context_over_200k": {
+              "input": 5,
+              "output": 22.5,
+              "cache_read": 0.5,
+              "cache_write": 5
+            }
+          }
+        },
+        "gpt-5.4-medium": {
+          "name": "GPT-5.4",
+          "cost": {
+            "input": 2.5,
+            "output": 15,
+            "cache_read": 0.25,
+            "cache_write": 2.5,
+            "context_over_200k": {
+              "input": 5,
+              "output": 22.5,
+              "cache_read": 0.5,
+              "cache_write": 5
+            }
+          }
+        },
+        "gpt-5.3-codex": {
+          "name": "GPT-5.3 Codex",
+          "cost": {
+            "input": 1.75,
+            "output": 14,
+            "cache_read": 0.175,
+            "cache_write": 1.75
+          }
+        },
+        "gpt-5.2": {
+          "name": "GPT-5.2",
+          "cost": {
+            "input": 1.75,
+            "output": 14,
+            "cache_read": 0.175,
+            "cache_write": 1.75
+          }
+        },
+        "gemini-3.1-pro": {
+          "name": "Gemini 3.1 Pro",
+          "cost": {
+            "input": 2,
+            "output": 12,
+            "cache_read": 0.2,
+            "cache_write": 2,
+            "context_over_200k": {
+              "input": 4,
+              "output": 18,
+              "cache_read": 0.4,
+              "cache_write": 4
+            }
+          }
+        },
+        "gemini-3-pro": {
+          "name": "Gemini 3 Pro"
+        },
+        "gemini-3-flash": {
+          "name": "Gemini 3 Flash",
+          "cost": {
+            "input": 0.5,
+            "output": 3,
+            "cache_read": 0.05,
+            "cache_write": 0.5
+          }
+        },
+        "grok": {
+          "name": "Grok"
+        },
+        "kimi-k2.5": {
+          "name": "Kimi K2.5",
+          "cost": {
+            "input": 0.6,
+            "output": 3,
+            "cache_read": 0.1,
+            "cache_write": 0.6
+          }
+        }
+      }
     }
-  }
+  },
+  "plugin": [
+    "@rama_nigg/open-cursor@latest",
+    "cursor-acp"
+  ]
 }
