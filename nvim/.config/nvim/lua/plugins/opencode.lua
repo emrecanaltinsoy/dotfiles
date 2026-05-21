@@ -3,7 +3,7 @@ return {
     "NickvanDyke/opencode.nvim",
     dependencies = { "folke/snacks.nvim" },
     config = function()
-      local opencode_cmd = "opencode --port 33337"
+      local opencode_cmd = "opencode"
       local in_tmux = vim.env.TMUX ~= nil
 
       local server

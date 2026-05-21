@@ -1,7 +1,7 @@
 ---
 description: check and update README files based on last 5 commits
-code: agent: build
-model: opencode/kimi-k2.5-free
+agent: build
+model: github-copilot/gpt-4o
 ---
 
 # README Update Command

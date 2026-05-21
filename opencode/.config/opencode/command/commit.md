@@ -1,7 +1,7 @@
 ---
 description: create a git commit based on current changes
 agent: build
-model: opencode/kimi-k2.5-free
+model: github-copilot/gpt-4o
 ---
 
 Create a conventional commit for the current staged changes, if there is no staged files, ask users whether they want to stage all changes and create a commit.
