@@ -1,7 +1,7 @@
 ---
 description: check and update README files based on last 5 commits
 agent: build
-model: github-copilot/gpt-4o
+model: github-copilot/gpt-4.1
 ---
 
 # README Update Command
