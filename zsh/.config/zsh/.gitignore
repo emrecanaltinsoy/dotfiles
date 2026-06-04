@@ -2,5 +2,6 @@
 !.gitignore
 !.zshrc
 !install_packages.sh
-!starship_comp
+!starship_comp.zsh
 !shared-aliases
+!chpwd_hooks.zsh
