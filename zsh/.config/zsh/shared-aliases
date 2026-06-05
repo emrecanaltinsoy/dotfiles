@@ -1,50 +1,60 @@
-## Package manager aliases
+##################################################
+# PACKAGE MANAGER ALIASES
+##################################################
 if [[ -f /etc/arch-release ]]; then
-  # Check if yay is available, use it instead of pacman
+  # Arch Linux: Prefer yay, else fallback to pacman
   if command -v yay &>/dev/null; then
     alias update="yay -Sy"
     alias upgrade="yay -Syu"
     alias install="yay -S"
     alias uninstall="yay -R"
-    alias autoremove="yay -Rns \$(yay -Qtdq)"
+    alias autoremove="yay -Rns $(yay -Qtdq)"
   else
     alias update="sudo pacman -Syy"
     alias upgrade="sudo pacman -Syu"
     alias install="sudo pacman -S"
     alias uninstall="sudo pacman -R"
-    alias autoremove="sudo pacman -Rns \$(pacman -Qtdq)"
+    alias autoremove="sudo pacman -Rns $(pacman -Qtdq)"
   fi
 elif [[ -f /etc/redhat-release ]]; then
+  # RedHat/CentOS
   alias update="sudo yum check-update"
   alias upgrade="sudo yum update"
   alias install="sudo yum install -y"
   alias uninstall="sudo yum remove"
   alias autoremove="sudo yum autoremove"
 elif [[ -f /etc/alpine-release ]]; then
+  # Alpine
   alias update="sudo apk update"
   alias upgrade="sudo apk upgrade"
   alias install="sudo apk add"
   alias uninstall="sudo apk del"
   alias autoremove="sudo apk cache clean"
 else
-  # Generic fallback apt
+  # Default: apt
   alias update="sudo apt update"
   alias upgrade="sudo apt upgrade"
   alias install="sudo apt install -y"
   alias uninstall="sudo apt remove"
   alias autoremove="sudo apt autoremove"
-  alias remove-residuals="sudo apt purge \$(dpkg -l | grep '^rc' | awk '{aggr=aggr \" \" \$2} END {print aggr}')"
+  alias remove-residuals="sudo apt purge \$(dpkg -l | grep '^rc' | awk '{aggr=aggr \" \" $2} END {print aggr}')"
 fi
 
-## NVIM
+##################################################
+# EDITOR ALIASES
+##################################################
 alias nv="nvim"
 alias v="nvim"
 alias vh="nvim ."
 
-## CLI Tools
+##################################################
+# CLI TOOLS
+##################################################
 alias lg="lazygit"
 
-## Git
+##################################################
+# GIT FUNCTIONS
+##################################################
 git-track-all() {
   local remote="${1:-origin}"
   git branch -r \
@@ -55,10 +65,16 @@ git-track-all() {
       git branch --track "${remote_branch#${remote}/}" "$remote_branch"
     done
 }
-git-push-all(){
+
+git-push-all() {
   local remote="${1:-origin}"
   git push --all "$remote"
 }
+
+##################################################
+# GIT ALIASES
+##################################################
+# Note: The line below sets a global git alias; executes only once per new system.
 git config --global alias.upstream '!git push -u origin HEAD'
 alias gs="git status"
 alias gp="git upstream"
@@ -77,8 +93,9 @@ alias gfp="git fetch -p"
 alias gpull="git pull"
 alias glo="git log --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
-## PYTHON
-# JupyterLab
+##################################################
+# PYTHON/JUPYTERLAB
+##################################################
 jlab() {
   if uv tool list | grep -q jupyterlab; then
     uv run --with jupyter jupyter lab --no-browser
@@ -87,8 +104,9 @@ jlab() {
   fi
 }
 
-## TMUX
-# Tmux Switch Client with FZF
+##################################################
+# TMUX UTILITIES
+##################################################
 tsc() {
   if [ "$TERM_PROGRAM" = tmux ]; then
     tmux display-popup -E '
@@ -106,7 +124,9 @@ tsc() {
   fi
 }
 
-## Command Replacement
+##################################################
+# COMMAND REPLACEMENTS & ENHANCED TOOLS
+##################################################
 if [ -x "$(command -v exa)" ]; then
   # alias ls="exa"
   alias ls='exa --git --icons --color=always --group-directories-first'
@@ -133,6 +153,9 @@ if [ -x "$(command -v pnpm)" ] && [ ! -x "$(command -v npm)" ]; then
   alias npm='pnpm'
 fi
 
+##################################################
+# MISC
+##################################################
 alias watch="watch -n .5"
 alias watch-gpu="watch -n .5 nvidia-smi"
 alias change-terminal="sudo update-alternatives --config x-terminal-emulator"
