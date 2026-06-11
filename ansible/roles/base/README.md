@@ -46,7 +46,7 @@ Adds the official git-core PPA for the latest Git version.
 - **Utilities**: curl, wget, unzip, zip, jq, socat
 - **Version control**: git, stow
 - **Security**: gnupg, gpg, gpg-agent, keychain, openssh-client
-- **Shell**: zsh, fzf
+- **Shell**: zsh
 - **Python**: python3, python3-pip, python3-venv, python3-wheel, python3-dev
 - **Other**: neofetch, software-properties-common
 
@@ -57,15 +57,19 @@ Adds the official git-core PPA for the latest Git version.
 - **Utilities**: gawk, wget, unzip, zip, jq, socat
 - **Version control**: git, stow
 - **Security**: gnupg2, keychain, openssh-clients
-- **Shell**: zsh, fzf
+- **Shell**: zsh
 - **Python**: python3, python3-pip, python3-devel
 - **Other**: fastfetch (Fedora) / neofetch (Rocky/RHEL)
 
-### 3. Install Rust
+### 3. Install fzf
+
+Downloads the fzf binary (v0.73.1) from the GitHub release, extracts it, and installs it to `/usr/bin/fzf`. This runs on all distros from `main.yml`, replacing the previous per-distro package manager installs.
+
+### 4. Install Rust
 
 Installs Rust via rustup for cargo package installation.
 
-### 4. Install uv
+### 5. Install uv
 
 Installs uv, a fast Python package manager.
 

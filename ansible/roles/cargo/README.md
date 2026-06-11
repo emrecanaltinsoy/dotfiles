@@ -35,6 +35,7 @@ Installs the following Rust-based CLI tools via `cargo install`:
 | rm-improved | rip | Safe rm alternative |
 | topgrade | topgrade | System upgrade tool |
 | xcp | xcp | Extended cp command |
+| yazi-fm | yazi | Terminal file manager |
 | zoxide | zoxide | Smarter cd command |
 
 **RedHat/Rocky/Fedora:**
@@ -45,6 +46,7 @@ Installs the following Rust-based CLI tools via `cargo install`:
 | rm-improved | rip | Safe rm alternative |
 | topgrade | topgrade | System upgrade tool |
 | xcp | xcp | Extended cp command |
+| yazi-fm | yazi | Terminal file manager |
 | zoxide | zoxide | Smarter cd command |
 
 **Note:** git-delta is installed via dnf on RedHat systems, not via cargo.

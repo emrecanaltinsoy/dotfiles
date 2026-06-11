@@ -53,6 +53,7 @@ Tasks
 | tmux | Terminal multiplexer | apt (Debian) / dnf (RedHat) |
 | Oh-My-Tmux | Tmux configuration framework | Git clone (all platforms) |
 | tmuxifier | Tmux session manager | Git clone (all platforms) |
+| yazi | Terminal file manager | AUR (Arch) / cargo (Debian, RedHat) |
 
 ### Platform-Specific Notes
 
@@ -63,6 +64,10 @@ Tasks
 **tmux:**
 - Debian: Installed via apt
 - RedHat: Installed via dnf
+
+**yazi:**
+- Arch: Installed via AUR helper (yay/paru)
+- Debian/RedHat: Installed via `cargo install yazi-fm` (in the `cargo` role)
 
 Example Playbook
 ----------------

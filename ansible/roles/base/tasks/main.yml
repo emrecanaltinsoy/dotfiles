@@ -24,6 +24,24 @@
   when: rustup_check.rc != 0
   changed_when: true
 
+- name: Check if fzf is installed
+  ansible.builtin.command: which fzf
+  register: fzf_check
+  failed_when: false
+  changed_when: false
+
+- name: Install fzf from GitHub release
+  become: true
+  ansible.builtin.shell: |
+    wget -q https://github.com/junegunn/fzf/releases/download/v0.73.1/fzf-0.73.1-linux_amd64.tar.gz -O /tmp/fzf.tar.gz
+    tar -xzf /tmp/fzf.tar.gz -C /tmp
+    mv /tmp/fzf /usr/bin/fzf
+    rm /tmp/fzf.tar.gz
+  args:
+    executable: /bin/bash
+  when: fzf_check.rc != 0
+  changed_when: true
+
 - name: Check if uv is installed
   ansible.builtin.shell: |
     source "$HOME/.local/bin/env" 2>/dev/null || true

@@ -31,7 +31,6 @@
       - build-essential
       - curl
       - fd-find
-      - fzf
       - git
       - gnupg
       - gpg

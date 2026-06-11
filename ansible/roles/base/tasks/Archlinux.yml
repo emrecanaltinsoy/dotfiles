@@ -27,7 +27,6 @@
       - bat
       - curl
       - fd
-      - fzf
       - git
       - git-delta
       - gnupg

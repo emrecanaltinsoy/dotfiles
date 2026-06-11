@@ -24,7 +24,7 @@
   community.general.pacman:
     name:
       - alacritty
-      - eza           # maintained fork of exa
+      - eza # maintained fork of exa
       - git-delta
       - zoxide
     state: present
@@ -88,7 +88,20 @@
       when: topgrade_aur_check.rc != 0
       changed_when: true
 
+    - name: Check if yazi is installed
+      ansible.builtin.shell: command -v yazi
+      register: yazi_aur_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install yazi from AUR
+      ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm yazi"
+      args:
+        executable: /bin/bash
+      when: yazi_aur_check.rc != 0
+      changed_when: true
+
 - name: Warn if no AUR helper found
   ansible.builtin.debug:
-    msg: "No AUR helper (yay/paru) found. Skipping AUR packages: rm-improved, xcp, topgrade. Install them via cargo or install an AUR helper first."
+    msg: "No AUR helper (yay/paru) found. Skipping AUR packages: rm-improved, xcp, topgrade, yazi. Install them via cargo or install an AUR helper first."
   when: aur_helper == ''
