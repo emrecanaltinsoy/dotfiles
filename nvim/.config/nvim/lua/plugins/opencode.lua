@@ -3,57 +3,21 @@ return {
     "NickvanDyke/opencode.nvim",
     dependencies = { "folke/snacks.nvim" },
     config = function()
-      local opencode_cmd = "opencode"
-      local in_tmux = vim.env.TMUX ~= nil
+      local opencode_cmd = "opencode --port"
 
       local server
-      if in_tmux then
-        local pane_id = nil
-        server = {
-          start = function()
-            local result = vim.fn.system("tmux split-window -dh -P -F '#{pane_id}' " .. opencode_cmd)
-            pane_id = vim.trim(result)
-          end,
-          stop = function()
-            if pane_id then
-              vim.fn.system("tmux kill-pane -t " .. pane_id)
-              pane_id = nil
-            end
-          end,
-          toggle = function()
-            local panes = vim.fn.system("tmux list-panes -a -F '#{pane_id}'")
-            if pane_id and panes:find(pane_id, 1, true) then
-              vim.fn.system("tmux kill-pane -t " .. pane_id)
-              pane_id = nil
-            else
-              local result = vim.fn.system("tmux split-window -dh -P -F '#{pane_id}' " .. opencode_cmd)
-              pane_id = vim.trim(result)
-            end
-          end,
-        }
-      else
-        ---@type snacks.terminal.Opts
-        local snacks_opts = {
-          win = {
-            position = "right",
-            enter = false,
-            on_win = function(win)
-              require("opencode.terminal").setup(win.win)
-            end,
-          },
-        }
-        server = {
-          start = function()
-            require("snacks.terminal").open(opencode_cmd, snacks_opts)
-          end,
-          stop = function()
-            require("snacks.terminal").get(opencode_cmd, snacks_opts):close()
-          end,
-          toggle = function()
-            require("snacks.terminal").toggle(opencode_cmd, snacks_opts)
-          end,
-        }
-      end
+      ---@type snacks.terminal.Opts
+      local snacks_opts = {
+        win = {
+          position = "right",
+          enter = false,
+        },
+      }
+      server = {
+        start = function()
+          require("snacks.terminal").open(opencode_cmd, snacks_opts)
+        end,
+      }
 
       ---@type opencode.Opts
       vim.g.opencode_opts = {
@@ -64,7 +28,7 @@ return {
       vim.o.autoread = true
 
       vim.keymap.set({ "n", "x" }, "<leader>oa", function()
-        require("opencode").ask("@this: ", { submit = true })
+        require("opencode").ask("@this: ")
       end, { desc = "Ask opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ox", function()
@@ -84,7 +48,7 @@ return {
       end, { desc = "Interrupt session" })
 
       vim.keymap.set({ "n", "t" }, "<leader>oT", function()
-        require("opencode").toggle()
+        require("snacks.terminal").toggle(opencode_cmd, snacks_opts)
       end, { desc = "Toggle opencode" })
     end,
 
