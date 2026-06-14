@@ -2,166 +2,188 @@
 # Install additional packages (non-cargo)
 
 # AWS CLI
-- name: Check if AWS CLI is installed
-  ansible.builtin.shell: command -v aws
-  register: aws_check
-  failed_when: false
-  changed_when: false
+- name: AWS CLI
+  when: "'aws_cli' not in (skip_packages | default([]))"
+  block:
+    - name: Check if AWS CLI is installed
+      ansible.builtin.shell: command -v aws
+      register: aws_check
+      failed_when: false
+      changed_when: false
 
-- name: Install AWS CLI
-  ansible.builtin.shell: |
-    cd "$HOME"
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip -o awscliv2.zip
-    sudo ./aws/install
-    rm -rf awscliv2.zip aws
-  args:
-    executable: /bin/bash
-  when: aws_check.rc != 0
-  changed_when: true
-  register: aws_result
-  retries: 3
-  delay: 5
-  until: aws_result.rc == 0
+    - name: Install AWS CLI
+      ansible.builtin.shell: |
+        cd "$HOME"
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip -o awscliv2.zip
+        sudo ./aws/install
+        rm -rf awscliv2.zip aws
+      args:
+        executable: /bin/bash
+      when: aws_check.rc != 0
+      changed_when: true
+      register: aws_result
+      retries: 3
+      delay: 5
+      until: aws_result.rc == 0
 
 # Lazygit
-- name: Check if lazygit is installed
-  ansible.builtin.shell: |
-    export PATH="$HOME/.bin:$PATH"
-    command -v lazygit
-  args:
-    executable: /bin/bash
-  register: lazygit_check
-  failed_when: false
-  changed_when: false
+- name: Lazygit
+  when: "'lazygit' not in (skip_packages | default([]))"
+  block:
+    - name: Check if lazygit is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.bin:$PATH"
+        command -v lazygit
+      args:
+        executable: /bin/bash
+      register: lazygit_check
+      failed_when: false
+      changed_when: false
 
-- name: Install lazygit
-  ansible.builtin.shell: |
-    cd "$HOME"
-    wget https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz -O lazygit.tar.gz
-    tar xzf lazygit.tar.gz
-    mkdir -p "$HOME/.bin"
-    mv lazygit "$HOME/.bin/lazygit"
-    rm -f lazygit.tar.gz LICENSE README.md
-  args:
-    executable: /bin/bash
-  when: lazygit_check.rc != 0
-  changed_when: true
-  register: lazygit_result
-  retries: 3
-  delay: 5
-  until: lazygit_result.rc == 0
+    - name: Install lazygit
+      ansible.builtin.shell: |
+        cd "$HOME"
+        wget https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz -O lazygit.tar.gz
+        tar xzf lazygit.tar.gz
+        mkdir -p "$HOME/.bin"
+        mv lazygit "$HOME/.bin/lazygit"
+        rm -f lazygit.tar.gz LICENSE README.md
+      args:
+        executable: /bin/bash
+      when: lazygit_check.rc != 0
+      changed_when: true
+      register: lazygit_result
+      retries: 3
+      delay: 5
+      until: lazygit_result.rc == 0
 
 # Neovim
-- name: Check if neovim is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['user_dir'] }}/nvim-linux-x86_64"
-  register: nvim_check
+- name: Neovim
+  when: "'neovim' not in (skip_packages | default([]))"
+  block:
+    - name: Check if neovim is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/nvim-linux-x86_64"
+      register: nvim_check
 
-- name: Install neovim
-  ansible.builtin.shell: |
-    cd "$HOME"
-    wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz -O nvim-linux-x86_64.tar.gz
-    tar xzf nvim-linux-x86_64.tar.gz
-    rm nvim-linux-x86_64.tar.gz
-  args:
-    executable: /bin/bash
-  when: not nvim_check.stat.exists
-  changed_when: true
-  register: nvim_result
-  retries: 3
-  delay: 5
-  until: nvim_result.rc == 0
+    - name: Install neovim
+      ansible.builtin.shell: |
+        cd "$HOME"
+        wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz -O nvim-linux-x86_64.tar.gz
+        tar xzf nvim-linux-x86_64.tar.gz
+        rm nvim-linux-x86_64.tar.gz
+      args:
+        executable: /bin/bash
+      when: not nvim_check.stat.exists
+      changed_when: true
+      register: nvim_result
+      retries: 3
+      delay: 5
+      until: nvim_result.rc == 0
 
 # NVM
-- name: Check if nvm is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['user_dir'] }}/.nvm/nvm.sh"
-  register: nvm_check
+- name: NVM
+  when: "'nvm' not in (skip_packages | default([]))"
+  block:
+    - name: Check if nvm is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/.nvm/nvm.sh"
+      register: nvm_check
 
-- name: Install nvm
-  ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
-  args:
-    executable: /bin/bash
-  when: not nvm_check.stat.exists
-  changed_when: true
-  register: nvm_result
-  retries: 3
-  delay: 5
-  until: nvm_result.rc == 0
+    - name: Install nvm
+      ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
+      args:
+        executable: /bin/bash
+      when: not nvm_check.stat.exists
+      changed_when: true
+      register: nvm_result
+      retries: 3
+      delay: 5
+      until: nvm_result.rc == 0
 
 # OpenCode
-- name: Check if opencode is installed
-  ansible.builtin.shell: |
-    export PATH="$HOME/.opencode/bin:$PATH"
-    command -v opencode
-  args:
-    executable: /bin/bash
-  register: opencode_check
-  failed_when: false
-  changed_when: false
+- name: OpenCode
+  when: "'opencode' not in (skip_packages | default([]))"
+  block:
+    - name: Check if opencode is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.opencode/bin:$PATH"
+        command -v opencode
+      args:
+        executable: /bin/bash
+      register: opencode_check
+      failed_when: false
+      changed_when: false
 
-- name: Install opencode
-  ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
-  args:
-    executable: /bin/bash
-  when: opencode_check.rc != 0
-  changed_when: true
-  register: opencode_result
-  retries: 3
-  delay: 5
-  until: opencode_result.rc == 0
+    - name: Install opencode
+      ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
+      args:
+        executable: /bin/bash
+      when: opencode_check.rc != 0
+      changed_when: true
+      register: opencode_result
+      retries: 3
+      delay: 5
+      until: opencode_result.rc == 0
 
 # SOPS
-- name: Check if sops is installed
-  ansible.builtin.shell: |
-    export PATH="$HOME/.bin:$PATH"
-    command -v sops
-  args:
-    executable: /bin/bash
-  register: sops_check
-  failed_when: false
-  changed_when: false
+- name: SOPS
+  when: "'sops' not in (skip_packages | default([]))"
+  block:
+    - name: Check if sops is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.bin:$PATH"
+        command -v sops
+      args:
+        executable: /bin/bash
+      register: sops_check
+      failed_when: false
+      changed_when: false
 
-- name: Install sops
-  ansible.builtin.shell: |
-    mkdir -p "$HOME/.bin"
-    wget https://github.com/getsops/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux.amd64 -O "$HOME/.bin/sops"
-    chmod +x "$HOME/.bin/sops"
-  args:
-    executable: /bin/bash
-  when: sops_check.rc != 0
-  changed_when: true
-  register: sops_result
-  retries: 3
-  delay: 5
-  until: sops_result.rc == 0
+    - name: Install sops
+      ansible.builtin.shell: |
+        mkdir -p "$HOME/.bin"
+        wget https://github.com/getsops/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux.amd64 -O "$HOME/.bin/sops"
+        chmod +x "$HOME/.bin/sops"
+      args:
+        executable: /bin/bash
+      when: sops_check.rc != 0
+      changed_when: true
+      register: sops_result
+      retries: 3
+      delay: 5
+      until: sops_result.rc == 0
 
 # Starship
-- name: Check if starship is installed
-  ansible.builtin.shell: |
-    export PATH="$HOME/.bin:$PATH"
-    command -v starship
-  args:
-    executable: /bin/bash
-  register: starship_check
-  failed_when: false
-  changed_when: false
+- name: Starship
+  when: "'starship' not in (skip_packages | default([]))"
+  block:
+    - name: Check if starship is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.bin:$PATH"
+        command -v starship
+      args:
+        executable: /bin/bash
+      register: starship_check
+      failed_when: false
+      changed_when: false
 
-- name: Install starship
-  ansible.builtin.shell: |
-    mkdir -p "$HOME/.bin"
-    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.bin"
-  args:
-    executable: /bin/bash
-  when: starship_check.rc != 0
-  changed_when: true
-  register: starship_result
-  retries: 3
-  delay: 5
-  until: starship_result.rc == 0
+    - name: Install starship
+      ansible.builtin.shell: |
+        mkdir -p "$HOME/.bin"
+        curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.bin"
+      args:
+        executable: /bin/bash
+      when: starship_check.rc != 0
+      changed_when: true
+      register: starship_result
+      retries: 3
+      delay: 5
+      until: starship_result.rc == 0
 
-# Terraform and Tmux - OS specific
+# Terraform and Tmux - checks always run so OS-specific files can consume results;
+# skip conditions are applied to the install tasks in the OS-specific files.
 - name: Check if terraform is installed
   ansible.builtin.shell: command -v terraform
   register: terraform_check
@@ -178,37 +200,44 @@
   ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
 
 # Oh-My-Tmux (cross-platform)
-- name: Check if oh-my-tmux is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['user_dir'] }}/oh-my-tmux"
-  register: omt_dir
+- name: Oh-My-Tmux
+  when: "'oh_my_tmux' not in (skip_packages | default([]))"
+  block:
+    - name: Check if oh-my-tmux is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/oh-my-tmux"
+      register: omt_dir
 
-- name: Install oh-my-tmux
-  ansible.builtin.shell: |
-    cd "$HOME"
-    git clone --single-branch https://github.com/gpakosz/.tmux.git oh-my-tmux
-    mkdir -p "$HOME/.config/tmux"
-    ln -s -f "$HOME/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
-  args:
-    executable: /bin/bash
-  when: not omt_dir.stat.exists
-  changed_when: true
-  register: omt_result
-  retries: 3
-  delay: 5
-  until: omt_result.rc == 0
+    - name: Install oh-my-tmux
+      ansible.builtin.shell: |
+        cd "$HOME"
+        git clone --single-branch https://github.com/gpakosz/.tmux.git oh-my-tmux
+        mkdir -p "$HOME/.config/tmux"
+        ln -s -f "$HOME/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
+      args:
+        executable: /bin/bash
+      when: not omt_dir.stat.exists
+      changed_when: true
+      register: omt_result
+      retries: 3
+      delay: 5
+      until: omt_result.rc == 0
 
-- name: Check if tmuxifier is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
-  register: tmuxifier_dir
+# Tmuxifier
+- name: Tmuxifier
+  when: "'tmuxifier' not in (skip_packages | default([]))"
+  block:
+    - name: Check if tmuxifier is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
+      register: tmuxifier_dir
 
-- name: Install tmuxifier
-  ansible.builtin.git:
-    repo: https://github.com/jimeh/tmuxifier.git
-    dest: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
-  when: not tmuxifier_dir.stat.exists
-  register: tmuxifier_result
-  retries: 3
-  delay: 5
-  until: tmuxifier_result is success
+    - name: Install tmuxifier
+      ansible.builtin.git:
+        repo: https://github.com/jimeh/tmuxifier.git
+        dest: "{{ ansible_facts['user_dir'] }}/.tmuxifier"
+      when: not tmuxifier_dir.stat.exists
+      register: tmuxifier_result
+      retries: 3
+      delay: 5
+      until: tmuxifier_result is success

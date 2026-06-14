@@ -1,2 +1,3 @@
 secrets.yml
+skip_packages.yml
 *.retry

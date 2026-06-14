@@ -7,7 +7,9 @@
   community.general.pacman:
     name: terraform
     state: present
-  when: terraform_check.rc != 0
+  when:
+    - terraform_check.rc != 0
+    - "'terraform' not in (skip_packages | default([]))"
 
 # Tmux
 - name: Install tmux
@@ -15,19 +17,32 @@
   community.general.pacman:
     name: tmux
     state: present
-  when: tmux_check.rc != 0
+  when:
+    - tmux_check.rc != 0
+    - "'tmux' not in (skip_packages | default([]))"
 
 # Packages that would otherwise be installed via cargo
 # These are available in official Arch repositories
+- name: Build filtered list of pacman cargo-alternative packages
+  ansible.builtin.set_fact:
+    _pacman_cargo_packages: >-
+      {{
+        (['alacritty'] if 'alacritty' not in (skip_packages | default([])) else []) +
+        (['eza'] if 'exa' not in (skip_packages | default([])) else []) +
+        (['git-delta'] if 'git_delta' not in (skip_packages | default([])) else []) +
+        (['zoxide'] if 'zoxide' not in (skip_packages | default([])) else []) +
+        (['procs'] if 'procs' not in (skip_packages | default([])) else []) +
+        (['tokei'] if 'tokei' not in (skip_packages | default([])) else []) +
+        (['xh'] if 'xh' not in (skip_packages | default([])) else []) +
+        (['zellij'] if 'zellij' not in (skip_packages | default([])) else [])
+      }}
+
 - name: Install cargo-alternative packages from pacman
   become: true
   community.general.pacman:
-    name:
-      - alacritty
-      - eza # maintained fork of exa
-      - git-delta
-      - zoxide
+    name: "{{ _pacman_cargo_packages }}"
     state: present
+  when: _pacman_cargo_packages | length > 0
 
 # AUR packages (requires yay or paru)
 - name: Check if yay is installed
@@ -59,7 +74,9 @@
       ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm rm-improved"
       args:
         executable: /bin/bash
-      when: rip_check.rc != 0
+      when:
+        - rip_check.rc != 0
+        - "'rm_improved' not in (skip_packages | default([]))"
       changed_when: true
 
     - name: Check if xcp is installed
@@ -72,7 +89,9 @@
       ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm xcp"
       args:
         executable: /bin/bash
-      when: xcp_check.rc != 0
+      when:
+        - xcp_check.rc != 0
+        - "'xcp' not in (skip_packages | default([]))"
       changed_when: true
 
     - name: Check if topgrade is installed
@@ -85,7 +104,9 @@
       ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm topgrade"
       args:
         executable: /bin/bash
-      when: topgrade_aur_check.rc != 0
+      when:
+        - topgrade_aur_check.rc != 0
+        - "'topgrade' not in (skip_packages | default([]))"
       changed_when: true
 
     - name: Check if yazi is installed
@@ -98,7 +119,9 @@
       ansible.builtin.shell: "{{ aur_helper }} -S --noconfirm yazi"
       args:
         executable: /bin/bash
-      when: yazi_aur_check.rc != 0
+      when:
+        - yazi_aur_check.rc != 0
+        - "'yazi' not in (skip_packages | default([]))"
       changed_when: true
 
 - name: Warn if no AUR helper found

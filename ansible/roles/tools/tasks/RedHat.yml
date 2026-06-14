@@ -7,11 +7,15 @@
   ansible.builtin.dnf:
     name: alacritty
     state: present
-  when: not IS_WSL
+  when:
+    - not IS_WSL
+    - "'alacritty' not in (skip_packages | default([]))"
 
 # Terraform
 - name: Install Terraform
-  when: terraform_check.rc != 0
+  when:
+    - terraform_check.rc != 0
+    - "'terraform' not in (skip_packages | default([]))"
   block:
     - name: Add HashiCorp repository
       become: true
@@ -35,5 +39,7 @@
   ansible.builtin.shell: dnf install -y tmux
   args:
     executable: /bin/bash
-  when: tmux_check.rc != 0
+  when:
+    - tmux_check.rc != 0
+    - "'tmux' not in (skip_packages | default([]))"
   changed_when: true

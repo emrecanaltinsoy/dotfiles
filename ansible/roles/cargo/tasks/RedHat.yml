@@ -6,22 +6,32 @@
     cargo_packages:
       - name: exa
         bin: exa
+        skip_id: exa
       # git-delta available in dnf, skip here
       - name: rm-improved
         bin: rip
+        skip_id: rm_improved
       - name: topgrade
         bin: topgrade
+        skip_id: topgrade
       - name: xcp
         bin: xcp
+        skip_id: xcp
       - name: yazi-fm
         bin: yazi
-      # - name: procs
-      #   bin: procs
-      # - name: tokei
-      #   bin: tokei
-      # - name: xh
-      #   bin: xh
-      # - name: zellij
-      #   bin: zellij
+        skip_id: yazi
+      - name: procs
+        bin: procs
+        skip_id: procs
+      - name: tokei
+        bin: tokei
+        skip_id: tokei
+      - name: xh
+        bin: xh
+        skip_id: xh
+      - name: zellij
+        bin: zellij
+        skip_id: zellij
       - name: zoxide
         bin: zoxide
+        skip_id: zoxide

@@ -14,6 +14,10 @@
     - name: Include OS-specific package definitions
       ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
 
+    - name: Apply skip list to cargo packages
+      ansible.builtin.set_fact:
+        cargo_packages: "{{ cargo_packages | rejectattr('skip_id', 'in', skip_packages | default([])) | list }}"
+
     - name: Check if cargo is available
       ansible.builtin.shell: |
         source "$HOME/.cargo/env" 2>/dev/null || true

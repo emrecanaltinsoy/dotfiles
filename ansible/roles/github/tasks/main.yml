@@ -3,5 +3,6 @@
 
 - name: Include OS-specific tasks
   ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
+  when: "'github_cli' not in (skip_packages | default([]))"
 
 # GH CLI Auth Token is copied in post_tasks of setup.yml

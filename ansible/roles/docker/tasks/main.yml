@@ -4,6 +4,7 @@
 
 - name: Include OS-specific tasks
   ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] }}.yml"
+  when: "'docker' not in (skip_packages | default([]))"
   tags:
     - docker
     - install

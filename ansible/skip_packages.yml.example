@@ -1,0 +1,44 @@
+---
+# Skip list for selective package/tool installation.
+#
+# Usage:
+#   cp skip_packages.yml.example skip_packages.yml
+#   # Then uncomment any packages you want to skip.
+#
+# skip_packages.yml is gitignored and will not be committed.
+# All packages are installed by default (empty list = skip nothing).
+
+skip_packages: []
+
+  # --- github role ---
+  # - github_cli
+
+  # --- docker role ---
+  # - docker
+
+  # --- cargo role (Debian/RedHat only; Arch uses pacman/AUR) ---
+  # - exa
+  # - git_delta
+  # - procs
+  # - rm_improved
+  # - tokei
+  # - topgrade
+  # - xcp
+  # - xh
+  # - yazi
+  # - zellij
+  # - zoxide          # RedHat only (installed via apt/pacman on other distros)
+
+  # --- tools role ---
+  # - alacritty
+  # - aws_cli
+  # - lazygit
+  # - neovim
+  # - nvm
+  # - oh_my_tmux
+  # - opencode
+  # - sops
+  # - starship
+  # - terraform
+  # - tmux
+  # - tmuxifier

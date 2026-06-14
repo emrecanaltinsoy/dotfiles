@@ -3,6 +3,16 @@
   hosts: all
   vars_files:
     - secrets.yml
+  pre_tasks:
+    - name: Check if skip_packages.yml exists
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/skip_packages.yml"
+      register: skip_packages_file
+
+    - name: Load skip_packages.yml
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/skip_packages.yml"
+      when: skip_packages_file.stat.exists
   roles:
     - discover
     - base
