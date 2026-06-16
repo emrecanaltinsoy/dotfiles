@@ -5,10 +5,28 @@ return {
   event = "VeryLazy",
   keys = {
     {
-      "<leader>ch",
+      "<leader>he",
+      mode = { "n", "v" },
+      "<cmd>CloakEnable<cr>",
+      desc = "Enable cloak",
+    },
+    {
+      "<leader>hd",
+      mode = { "n", "v" },
+      "<cmd>CloakDisable<cr>",
+      desc = "Disable cloak",
+    },
+    {
+      "<leader>ht",
       mode = { "n", "v" },
       "<cmd>CloakToggle<cr>",
-      desc = "Open yazi at the current file",
+      desc = "Toggle cloak",
+    },
+    {
+      "<leader>hl",
+      mode = { "n", "v" },
+      "<cmd>CloakPreviewLine<cr>",
+      desc = "Preview cloak line",
     },
   },
   opts = {
@@ -25,7 +43,7 @@ return {
       -- Set to true to cloak Telescope preview buffers. (Required feature not in 0.1.x)
       cloak_telescope = true,
       -- Re-enable cloak when a matched buffer leaves the window.
-      cloak_on_leave = false,
+      cloak_on_leave = true,
       patterns = {
         {
           -- Match any file starting with '.env'.
