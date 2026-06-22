@@ -25,6 +25,15 @@
         "region": "eu-west-1",
         "profile": "default"
       }
+    },
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM (proxy)",
+      "options": {
+        "baseURL": "{env:LITELLM_API_URL}",
+        "apiKey": "{env:LITELLM_API_KEY}"
+      }
     }
-  }
+  },
+  "plugin": ["opencode-plugin-litellm@latest"]
 }
