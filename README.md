@@ -101,7 +101,6 @@ source ${HOME}/.zshrc
 | [tools](ansible/roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
 | [dotfiles](ansible/roles/dotfiles/README.md) | Stow dotfiles to home directory |
 | [docker](ansible/roles/docker/README.md) | Docker (Debian) or Podman (RedHat) installation |
-| [common](ansible/roles/common/README.md) | Shared tasks (zshrc sourcing) |
 
 ## Repository Structure
 

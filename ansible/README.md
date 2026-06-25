@@ -29,20 +29,23 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | [tools](roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
 | [dotfiles](roles/dotfiles/README.md) | Stow dotfiles to home directory |
 | [docker](roles/docker/README.md) | Docker (Debian) or Podman (RedHat) installation |
-| [common](roles/common/README.md) | Shared tasks (zshrc sourcing) |
 
-## Quick Start (Ubuntu/Debian)
+## Quick Start
 
-### Install Ansible dependencies
+### Option 1: Using uv (Recommended)
+
+#### Ubuntu/Debian
 
 ```Shell
-sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
+sudo apt-get update && sudo apt-get install -y git
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### Quick Start (Rocky Linux/RHEL/Fedora)
+#### Rocky Linux/RHEL/Fedora
 
 ```Shell
-sudo dnf install -y git python3 python3-pip ansible
+sudo dnf install -y git
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 > [!NOTE]
@@ -54,9 +57,40 @@ sudo dnf install -y git python3 python3-pip ansible
 cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd ${HOME}/dotfiles/ansible/
 ```
 
+### Install Ansible dependencies (Option 1)
+
+```Shell
+uv sync
+```
+
+### Option 2: Using System Ansible
+
+#### Ubuntu/Debian
+
+```Shell
+sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
+```
+
+#### Rocky Linux/RHEL/Fedora
+
+```Shell
+sudo dnf install -y git python3 python3-pip ansible
+```
+
+> [!NOTE]
+> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility. Fedora installs `fastfetch` instead of `neofetch`.
+
+After installing system Ansible, clone the repository using the command above if you have not already.
+
 ### Configure Secrets
 
 Create an encrypted vault file containing your secrets:
+
+```Shell
+cd ${HOME}/dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> uv run ansible-vault create ${HOME}/dotfiles/ansible/secrets.yml
+```
+
+Or, if using system Ansible:
 
 ```Shell
 cd ${HOME}/dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> ansible-vault create ${HOME}/dotfiles/ansible/secrets.yml
@@ -74,6 +108,12 @@ user_passphrase: "passphrase_to_generate_new_gpg_key"
 > You need to remember this **Vault password** for every deployments and future updates.
 
 ### Deploy environment
+
+```Shell
+cd ${HOME}/dotfiles/ansible/ && uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+```
+
+Or, if using system Ansible:
 
 ```Shell
 cd ${HOME}/dotfiles/ansible/ && ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
@@ -166,7 +206,7 @@ wsl --distribution Ubuntu-22.04
 
 ![Ubuntu](./assets/icons/ubuntu.svg)
 
-Now follow the [Quick Start](#quick-start-ubuntu) instructions above.
+Now follow the [Quick Start](#quick-start) instructions above.
 
 ### Close all WSL distributions
 
@@ -236,6 +276,12 @@ ssh ubuntu@192.168.1.100
 Ansible requires Python on the remote host. If Python 3 is not installed, run the bootstrap playbook first:
 
 ```Shell
+uv run ansible-playbook bootstrap.yml -i hosts --ask-become-pass
+```
+
+Or, if using system Ansible:
+
+```Shell
 ansible-playbook bootstrap.yml -i hosts --ask-become-pass
 ```
 
@@ -246,20 +292,22 @@ This uses the `raw` module which doesn't require Python on the remote host. The 
 Run on all hosts:
 
 ```Shell
-ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
 ```
 
 Run on a specific group:
 
 ```Shell
-ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
 ```
 
 Run on a single host:
 
 ```Shell
-ansible-playbook setup.yml -i hosts -l fedora-wsl --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts -l fedora-wsl --ask-become-pass --ask-vault-pass
 ```
+
+Or, if using system Ansible, omit the `uv run` prefix from the commands above.
 
 > [!NOTE]
 > Make sure SSH access is configured before running the playbook.

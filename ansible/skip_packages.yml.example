@@ -40,5 +40,6 @@ skip_packages: []
   # - sops
   # - starship
   # - terraform
+  # - txs
   # - tmux
   # - tmuxifier

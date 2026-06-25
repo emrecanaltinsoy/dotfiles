@@ -241,3 +241,28 @@
       retries: 3
       delay: 5
       until: tmuxifier_result is success
+
+# txs
+- name: txs
+  when: "'txs' not in (skip_packages | default([]))"
+  block:
+    - name: Check if txs is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.local/bin:$PATH"
+        command -v txs
+      args:
+        executable: /bin/bash
+      register: txs_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install txs
+      ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/emrecanaltinsoy/txs/main/install.sh | bash
+      args:
+        executable: /bin/bash
+      when: txs_check.rc != 0
+      changed_when: true
+      register: txs_result
+      retries: 3
+      delay: 5
+      until: txs_result.rc == 0
