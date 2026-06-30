@@ -35,5 +35,5 @@
       }
     }
   },
-  "plugin": ["opencode-plugin-litellm@latest"]
+  "plugin": ["opencode-plugin-litellm@latest", "@dietrichgebert/ponytail"]
 }
