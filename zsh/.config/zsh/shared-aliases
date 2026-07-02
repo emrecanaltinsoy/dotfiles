@@ -125,6 +125,27 @@ tsc() {
 }
 
 ##################################################
+# DOCKER UTILITIES
+##################################################
+docker-fuzzy-rm() {
+  local matches=$(docker ps -a | grep "$1" | awk '{print $1}')
+  if [[ -z "$matches" ]]; then
+    echo "no matching containers found"
+    return 1
+  fi
+  docker rm $matches
+}
+
+docker-fuzzy-rmi() {
+  local matches=$(docker images | grep "$1" | awk '{print $2}')
+  if [[ -z "$matches" ]]; then
+    echo "no matching images found"
+    return 1
+  fi
+  docker rmi $matches
+}
+
+##################################################
 # COMMAND REPLACEMENTS & ENHANCED TOOLS
 ##################################################
 if [ -x "$(command -v exa)" ]; then
