@@ -57,27 +57,32 @@
             msg: "Will be installed: {{ missing_cargo_packages | join(', ') }}"
           when: missing_cargo_packages | length > 0
 
-        - name: Install all missing cargo packages
+        - name: Install cargo packages one by one
           ansible.builtin.shell: |
             source "$HOME/.cargo/env" 2>/dev/null || true
-            cargo install {{ missing_cargo_packages | join(' ') }} --locked
+            cargo install {{ item }} --locked
           args:
             executable: /bin/bash
+          loop: "{{ missing_cargo_packages }}"
+          loop_control:
+            label: "Installing {{ item }}"
           when: missing_cargo_packages | length > 0
           register: cargo_install_result
           ignore_errors: true
+          no_log: true
+
+        - name: Report cargo installation results
+          ansible.builtin.debug:
+            msg: "{{ item.item }}: {{ 'installed' if item.rc == 0 else 'failed' }}"
+          loop: "{{ cargo_install_result.results | default([]) }}"
+          loop_control:
+            label: "{{ item.item }}"
+          when: missing_cargo_packages | length > 0
 
         - name: Set cargo installation failure message
           ansible.builtin.set_fact:
             cargo_install_failed: true
-            cargo_install_error: "{{ cargo_install_result.stderr | default('Unknown error') }}"
+            cargo_install_error: "{{ cargo_install_result.results | selectattr('failed', 'eq', true) | map(attribute='item') | list | join(', ') }}"
           when:
             - missing_cargo_packages | length > 0
-            - cargo_install_result is failed
-
-        - name: Display installation result
-          ansible.builtin.debug:
-            msg: "Successfully installed: {{ missing_cargo_packages | join(', ') }}"
-          when:
-            - missing_cargo_packages | length > 0
-            - cargo_install_result is succeeded
+            - cargo_install_result.results | selectattr('failed', 'eq', true) | list | length > 0

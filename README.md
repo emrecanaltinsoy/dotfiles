@@ -14,7 +14,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, fastfetch/neofetch, Stow |
+| **Other** | OpenCode, fastfetch, Stow |
 
 ## Quick Start
 
@@ -115,7 +115,7 @@ dotfiles/
 ├── bash/               # Bash shell configuration
 ├── git/                # Git configuration
 ├── lazygit/            # Lazygit configuration
-├── neofetch/           # Neofetch config
+├── fastfetch/           # Fastfetch config
 ├── nvim/               # Neovim configuration
 ├── opencode/           # OpenCode configuration
 ├── package-selector/   # Interactive package installer

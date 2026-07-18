@@ -23,7 +23,7 @@ Package Selector provides a grid-based interface to select and install CLI tools
 | Terminal Emulators | `alacritty`, `tmux`, `zellij` |
 | Shell Utilities | `starship`, `fzf`, `zoxide`, `bat`, `exa` |
 | File Management | `xcp`, `rip`, `yazi`, `fd` |
-| System Tools | `neofetch`, `topgrade`, `procs`, `tokei` |
+| System Tools | `fastfetch`, `topgrade`, `procs`, `tokei` |
 | Network | `xh` |
 | Search | `ripgrep` |
 | Node.js | `nvm` |
@@ -96,7 +96,7 @@ scripts/
 ├── install_fd.sh
 ├── install_fzf.sh
 ├── install_lazygit.sh
-├── install_neofetch.sh
+├── install_fastfetch.sh
 ├── install_neovim.sh
 ├── install_nvm.sh
 ├── install_opencode.sh

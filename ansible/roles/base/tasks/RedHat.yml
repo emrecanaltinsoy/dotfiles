@@ -42,7 +42,7 @@
       bat fd-find gawk git git-delta gnupg2 jq keychain fastfetch openssh-clients \
       python3 python3-pip python3-devel ripgrep socat unzip wget zip zsh stow 2>/dev/null || \
     dnf install -y \
-      bat fd-find gawk git git-delta gnupg2 jq keychain neofetch openssh-clients \
+      bat fd-find gawk git git-delta gnupg2 jq keychain fastfetch openssh-clients \
       python3 python3-pip python3-devel ripgrep socat unzip wget zip zsh stow
   args:
     executable: /bin/bash

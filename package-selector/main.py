@@ -19,7 +19,7 @@ PACKAGES = [
     "opencode",
     "alacritty",
     "tmux",
-    "neofetch",
+    "fastfetch",
     "xh",
     "fzf",
     "starship",

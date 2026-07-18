@@ -30,7 +30,7 @@ Symlinks the following dotfile directories to the home directory:
 - bash
 - git
 - lazygit
-- neofetch
+- fastfetch
 - nvim
 - opencode
 - starship

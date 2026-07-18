@@ -48,7 +48,7 @@ Adds the official git-core PPA for the latest Git version.
 - **Security**: gnupg, gpg, gpg-agent, keychain, openssh-client
 - **Shell**: zsh
 - **Python**: python3, python3-pip, python3-venv, python3-wheel, python3-dev
-- **Other**: neofetch, software-properties-common
+- **Other**: fastfetch, software-properties-common
 
 **RedHat/Rocky/Fedora (dnf):**
 
@@ -59,7 +59,7 @@ Adds the official git-core PPA for the latest Git version.
 - **Security**: gnupg2, keychain, openssh-clients
 - **Shell**: zsh
 - **Python**: python3, python3-pip, python3-devel
-- **Other**: fastfetch (Fedora) / neofetch (Rocky/RHEL)
+- **Other**: fastfetch
 
 ### 3. Install fzf
 

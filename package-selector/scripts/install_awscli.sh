@@ -4,7 +4,7 @@ shopt -s expand_aliases
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-# Install neofetch if doesn't exist
+# Install aws-cli if doesn't exist
 if [ ! -x "$(command -v aws)" ]; then
   cd "$HOME" || exit 1
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"

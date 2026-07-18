@@ -14,7 +14,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, fastfetch/neofetch, Stow |
+| **Other** | OpenCode, fastfetch, Stow |
 
 ## Roles
 
@@ -49,7 +49,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 > [!NOTE]
-> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility. Fedora installs `fastfetch` instead of `neofetch`.
+> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility.
 
 ### Clone the repository
 
@@ -78,7 +78,7 @@ sudo dnf install -y git python3 python3-pip ansible
 ```
 
 > [!NOTE]
-> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility. Fedora installs `fastfetch` instead of `neofetch`.
+> **Fedora 43+ (dnf5)**: The playbooks use shell commands instead of the `ansible.builtin.dnf` module due to libdnf5 API incompatibility.
 
 After installing system Ansible, clone the repository using the command above if you have not already.
 
@@ -141,6 +141,33 @@ source ${HOME}/.zshrc
 > ![Github browser authentication](./assets/gh_auth_login_use_web_browser_one-time-code-validation.png)
 >
 > Once you validate the code, your generated ssh key and gpg key will be automatically copied to your Github account.
+
+---
+
+## Troubleshooting
+
+### `sudo: interactive authentication is required` on native Linux
+
+On native Linux systems (non-WSL), sudo may require an interactive TTY for authentication. Ansible cannot satisfy this requirement, causing the playbook to fail with:
+
+```
+fatal: [localhost]: FAILED! => {"msg": "Task failed: Premature end of stream waiting for become success.\n>>> Standard Error\nsudo: interactive authentication is required"}
+```
+
+The fix is to configure passwordless sudo for your user:
+
+```Shell
+echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER && sudo chmod 440 /etc/sudoers.d/$USER
+```
+
+Then run the playbook without `--ask-become-pass`:
+
+```Shell
+uv run ansible-playbook setup.yml -i hosts --ask-vault-pass
+```
+
+> [!NOTE]
+> This is safe for a personal workstation. WSL typically does not have this issue as it configures passwordless sudo by default during distro setup.
 
 ---
 

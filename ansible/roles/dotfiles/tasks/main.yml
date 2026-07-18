@@ -10,7 +10,7 @@
           - bash
           - git
           - lazygit
-          - neofetch
+          - fastfetch
           - nvim
           - opencode
           - starship
