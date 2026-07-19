@@ -20,7 +20,7 @@ Package Selector provides a grid-based interface to select and install CLI tools
 |----------|----------|
 | Cloud & Infrastructure | `awscli`, `terraform`, `sops` |
 | Editors & Development | `neovim`, `lazygit`, `opencode` |
-| Terminal Emulators | `alacritty`, `tmux`, `zellij` |
+| Terminal Emulators | `tmux`, `zellij` |
 | Shell Utilities | `starship`, `fzf`, `zoxide`, `bat`, `exa` |
 | File Management | `xcp`, `rip`, `yazi`, `fd` |
 | System Tools | `fastfetch`, `topgrade`, `procs`, `tokei` |
@@ -89,7 +89,6 @@ Each package has a corresponding Bash installation script in the `scripts/` dire
 
 ```
 scripts/
-├── install_alacritty.sh
 ├── install_awscli.sh
 ├── install_bat.sh
 ├── install_exa.sh

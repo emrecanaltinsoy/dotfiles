@@ -1,15 +1,37 @@
 ---
 # RedHat/Rocky/Fedora specific tools
 
-# Alacritty (skip on WSL)
-- name: Install alacritty
+# wl-clipboard (nvim system clipboard support)
+- name: Install wl-clipboard
   become: true
   ansible.builtin.dnf:
-    name: alacritty
+    name: wl-clipboard
     state: present
+  when: not IS_WSL
+
+# WezTerm (skip on WSL)
+- name: Install wezterm
   when:
     - not IS_WSL
-    - "'alacritty' not in (skip_packages | default([]))"
+    - "'wezterm' not in (skip_packages | default([]))"
+  block:
+    - name: Enable WezTerm Copr repository
+      become: true
+      ansible.builtin.shell: dnf copr enable -y wez/wezterm
+      args:
+        executable: /bin/bash
+      changed_when: true
+
+    - name: Install wezterm
+      become: true
+      ansible.builtin.dnf:
+        name: wezterm
+        state: present
+
+  rescue:
+    - name: Skipping WezTerm installation due to failure
+      ansible.builtin.debug:
+        msg: "WezTerm installation failed, skipping."
 
 # Terraform
 - name: Install Terraform

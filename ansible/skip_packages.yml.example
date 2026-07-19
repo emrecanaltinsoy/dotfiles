@@ -30,7 +30,7 @@ skip_packages: []
   # - zoxide          # RedHat only (installed via apt/pacman on other distros)
 
   # --- tools role ---
-  # - alacritty
+  # - wezterm
   # - aws_cli
   # - lazygit
   # - neovim

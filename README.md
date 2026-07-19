@@ -10,7 +10,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Version Control** | Git (with SSH/GPG signing), GitHub CLI, Lazygit |
 | **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
 | **Editor** | Neovim |
-| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, Alacritty |
+| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm |
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
@@ -111,7 +111,7 @@ dotfiles/
 │   ├── molecule/       # Molecule test configuration
 │   ├── setup.yml       # Main deployment playbook
 │   └── bootstrap.yml   # Bootstrap for remote servers
-├── alacritty/          # Alacritty terminal config
+├── wezterm/            # WezTerm terminal config
 ├── bash/               # Bash shell configuration
 ├── git/                # Git configuration
 ├── lazygit/            # Lazygit configuration

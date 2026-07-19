@@ -26,7 +26,7 @@ Tasks
 
 Symlinks the following dotfile directories to the home directory:
 
-- alacritty
+- wezterm
 - bash
 - git
 - lazygit

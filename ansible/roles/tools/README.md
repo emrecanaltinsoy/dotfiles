@@ -53,6 +53,8 @@ Tasks
 | tmux | Terminal multiplexer | apt (Debian) / dnf (RedHat) |
 | Oh-My-Tmux | Tmux configuration framework | Git clone (all platforms) |
 | tmuxifier | Tmux session manager | Git clone (all platforms) |
+| WezTerm | GPU-accelerated terminal | pacman (Arch) / apt fury repo (Debian) / Copr (RedHat) |
+| wl-clipboard | Wayland clipboard provider for Neovim | pacman (Arch) / apt (Debian) / dnf (RedHat) |
 | yazi | Terminal file manager | AUR (Arch) / cargo (Debian, RedHat) |
 
 ### Platform-Specific Notes
@@ -64,6 +66,17 @@ Tasks
 **tmux:**
 - Debian: Installed via apt
 - RedHat: Installed via dnf
+
+**WezTerm:**
+- Arch: Installed via pacman
+- Debian: Installed from `apt.fury.io/wez` apt repository
+- RedHat: Installed from `wez/wezterm` Copr repository
+- Skipped on WSL
+
+**wl-clipboard:**
+- Installed on all platforms via native package manager
+- Provides Wayland clipboard support for Neovim (`unnamedplus`)
+- Skipped on WSL
 
 **yazi:**
 - Arch: Installed via AUR helper (yay/paru)

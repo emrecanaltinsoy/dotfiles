@@ -21,13 +21,21 @@
     - tmux_check.rc != 0
     - "'tmux' not in (skip_packages | default([]))"
 
+# wl-clipboard (nvim system clipboard support)
+- name: Install wl-clipboard
+  become: true
+  community.general.pacman:
+    name: wl-clipboard
+    state: present
+  when: not IS_WSL
+
 # Packages that would otherwise be installed via cargo
 # These are available in official Arch repositories
 - name: Build filtered list of pacman cargo-alternative packages
   ansible.builtin.set_fact:
     _pacman_cargo_packages: >-
       {{
-        (['alacritty'] if 'alacritty' not in (skip_packages | default([])) else []) +
+        (['wezterm'] if 'wezterm' not in (skip_packages | default([])) else []) +
         (['eza'] if 'exa' not in (skip_packages | default([])) else []) +
         (['git-delta'] if 'git_delta' not in (skip_packages | default([])) else []) +
         (['zoxide'] if 'zoxide' not in (skip_packages | default([])) else []) +

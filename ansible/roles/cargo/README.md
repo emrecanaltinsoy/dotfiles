@@ -61,7 +61,6 @@ The following Rust-based tools are installed via apt/dnf/pacman in other roles, 
 
 | Tool | Role | Installation Method |
 |------|------|---------------------|
-| alacritty | tools | apt/dnf/pacman |
 | bat | base | apt/dnf/pacman |
 | fd-find | base | apt/dnf/pacman |
 | ripgrep | base | apt/dnf/pacman |

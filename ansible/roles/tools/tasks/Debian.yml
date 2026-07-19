@@ -1,15 +1,57 @@
 ---
 # Debian/Ubuntu specific tools
 
-# Alacritty (skip on WSL)
-- name: Install alacritty
+# wl-clipboard (nvim system clipboard support)
+- name: Install wl-clipboard
   become: true
   ansible.builtin.apt:
-    name: alacritty
+    name: wl-clipboard
     state: present
+  when: not IS_WSL
+
+# WezTerm (skip on WSL)
+- name: Install wezterm
   when:
     - not IS_WSL
-    - "'alacritty' not in (skip_packages | default([]))"
+    - "'wezterm' not in (skip_packages | default([]))"
+  block:
+    - name: Check if WezTerm GPG key exists
+      ansible.builtin.stat:
+        path: /usr/share/keyrings/wezterm-fury.gpg
+      register: wezterm_gpg
+
+    - name: Add WezTerm GPG key
+      become: true
+      ansible.builtin.shell: curl -fsSL https://apt.fury.io/wez/gpg.key | gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+      args:
+        executable: /bin/bash
+      when: not wezterm_gpg.stat.exists
+      changed_when: true
+
+    - name: Set correct permissions on WezTerm GPG key
+      become: true
+      ansible.builtin.file:
+        path: /usr/share/keyrings/wezterm-fury.gpg
+        mode: '0644'
+
+    - name: Add WezTerm apt repository
+      become: true
+      ansible.builtin.copy:
+        content: "deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *\n"
+        dest: /etc/apt/sources.list.d/wezterm.list
+        mode: '0644'
+
+    - name: Install wezterm
+      become: true
+      ansible.builtin.apt:
+        name: wezterm
+        state: present
+        update_cache: yes
+
+  rescue:
+    - name: Skipping WezTerm installation due to failure
+      ansible.builtin.debug:
+        msg: "WezTerm installation failed, skipping."
 
 # Terraform
 - name: Install Terraform
