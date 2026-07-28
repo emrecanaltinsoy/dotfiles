@@ -1,0 +1,75 @@
+# herdr configuration
+# https://herdr.dev/docs/configuration/
+
+onboarding = false
+
+[keys]
+# Set prefix to Ctrl+a (like screen)
+prefix = "ctrl+a"
+
+# Basic navigation
+goto = "prefix+g"
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+
+# Pane navigation
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# Splits
+split_horizontal = "prefix+-"
+split_vertical = "prefix+_"
+
+# Navigate mode (no conflicts with workspace navigation)
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+navigate_pane_left = "h"
+navigate_pane_right = "l"
+
+# Indexed jumps
+switch_tab = "prefix+1..9"
+switch_workspace = "prefix+shift+1..9"
+focus_agent = "prefix+alt+1..9"
+
+[terminal]
+# Default shell (uses $SHELL if not set)
+# default_shell = "zsh"
+
+# Shell mode: "auto", "login", or "non_login"
+shell_mode = "auto"
+
+# Working directory for new panes: "follow", "home", "current", or a path
+new_cwd = "follow"
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"
+
+[ui.sidebar.agents]
+row_gap = 0
+rows = [["state_icon", "workspace", "tab"], ["agent"]]
+
+[ui.sidebar.spaces]
+row_gap = 0
+rows = [["state_icon", "workspace"], ["branch", "git_status"]]
+
+[ui.toast]
+delivery = "herdr"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[ui.sound]
+enabled = true
+
+[session]
+resume_agents_on_restore = true
+
+[ui]
+show_agent_labels_on_pane_borders = true
