@@ -32,6 +32,7 @@ skip_packages: []
   # --- tools role ---
   # - wezterm
   # - aws_cli
+  # - herdr
   # - lazygit
   # - neovim
   # - nvm

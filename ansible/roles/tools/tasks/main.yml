@@ -127,6 +127,31 @@
       delay: 5
       until: opencode_result.rc == 0
 
+# Herdr
+- name: Herdr
+  when: "'herdr' not in (skip_packages | default([]))"
+  block:
+    - name: Check if herdr is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.herdr/bin:$PATH"
+        command -v herdr
+      args:
+        executable: /bin/bash
+      register: herdr_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install herdr
+      ansible.builtin.shell: curl -fsSL https://herdr.dev/install.sh | sh
+      args:
+        executable: /bin/bash
+      when: herdr_check.rc != 0
+      changed_when: true
+      register: herdr_result
+      retries: 3
+      delay: 5
+      until: herdr_result.rc == 0
+
 # SOPS
 - name: SOPS
   when: "'sops' not in (skip_packages | default([]))"

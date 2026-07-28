@@ -10,7 +10,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Version Control** | Git (with SSH signing), GitHub CLI, Lazygit |
 | **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
 | **Editor** | Neovim |
-| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm |
+| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm, Herdr |
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
