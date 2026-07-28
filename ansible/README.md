@@ -7,7 +7,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | Category | Tools |
 |----------|-------|
 | **Container** | Docker (Debian) / Podman (RedHat) |
-| **Version Control** | Git (with SSH/GPG signing), GitHub CLI, Lazygit |
+| **Version Control** | Git (with SSH signing), GitHub CLI, Lazygit |
 | **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
 | **Editor** | Neovim |
 | **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm |
@@ -22,7 +22,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 |------|-------------|
 | [discover](roles/discover/README.md) | Environment detection and configuration validation |
 | [base](roles/base/README.md) | System dependencies, Rust, and uv |
-| [git](roles/git/README.md) | Git configuration with GPG signing and SSH |
+| [git](roles/git/README.md) | Git configuration with SSH key management |
 | [shell](roles/shell/README.md) | Zsh with Oh-My-Zsh and plugins |
 | [github](roles/github/README.md) | GitHub CLI installation |
 | [cargo](roles/cargo/README.md) | Rust/Cargo CLI tools |
@@ -82,47 +82,35 @@ sudo dnf install -y git python3 python3-pip ansible
 
 After installing system Ansible, clone the repository using the command above if you have not already.
 
-### Configure Secrets
+### Configure Environment Variables
 
-Create an encrypted vault file containing your secrets:
-
-```Shell
-cd ${HOME}/dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> uv run ansible-vault create ${HOME}/dotfiles/ansible/secrets.yml
-```
-
-Or, if using system Ansible:
+Create your environment configuration file:
 
 ```Shell
-cd ${HOME}/dotfiles/ansible/ && EDITOR=<EDITOR_OF_CHOICE> ansible-vault create ${HOME}/dotfiles/ansible/secrets.yml
+cd ${HOME}/dotfiles/ansible/ && cp env.yml.example env.yml
 ```
 
-Insert and update variables for your secrets.yml file:
+Edit `env.yml` and update with your information:
 
 ```yaml
-user_email: "email"
-user_fullname: "Firstname Lastname"
-user_passphrase: "passphrase_to_generate_new_gpg_key"
+user_email: "your.email@example.com"
+user_fullname: "Your Full Name"
 ```
-
-> [!CAUTION]  
-> You need to remember this **Vault password** for every deployments and future updates.
 
 ### Deploy environment
 
 ```Shell
-cd ${HOME}/dotfiles/ansible/ && uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+cd ${HOME}/dotfiles/ansible/ && uv run ansible-playbook setup.yml -i hosts -l local --ask-become-pass
 ```
 
 Or, if using system Ansible:
 
 ```Shell
-cd ${HOME}/dotfiles/ansible/ && ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+cd ${HOME}/dotfiles/ansible/ && ansible-playbook setup.yml -i hosts -l local --ask-become-pass
 ```
 
 > [!NOTE]  
 > BECOME password: is your sudo password
->
-> Vault password: is your password for your secrets.yml file
 
 ### Post-Install
 
@@ -140,7 +128,7 @@ source ${HOME}/.zshrc
 >
 > ![Github browser authentication](./assets/gh_auth_login_use_web_browser_one-time-code-validation.png)
 >
-> Once you validate the code, your generated ssh key and gpg key will be automatically copied to your Github account.
+> Once you validate the code, your generated SSH key will be automatically copied to your Github account.
 
 ---
 
@@ -163,7 +151,7 @@ echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER && sudo chm
 Then run the playbook without `--ask-become-pass`:
 
 ```Shell
-uv run ansible-playbook setup.yml -i hosts --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts -l local
 ```
 
 > [!NOTE]
@@ -179,13 +167,7 @@ If you're setting up on Windows Subsystem for Linux, follow these additional ste
 
 ### Download and install Windows software
 
-- [GPG](https://www.gnupg.org/download/index.html#binary)
-
-> [!IMPORTANT]  
-> Install 'Simple installer for the current version of GnuPG'
-> ![GPG download](./assets/gpg_download_simple_installer.png)
->
-> Do not install with **elevated rights**: If installer asks you to install with elevated rights, click on "Cancel", it will install with your user rights under your AppData directory.
+- [WezTerm](https://wezfurlong.org/wezterm/installation.html) (Optional terminal emulator)
 
 ### Install WSL
 
@@ -319,19 +301,19 @@ This uses the `raw` module which doesn't require Python on the remote host. The 
 Run on all hosts:
 
 ```Shell
-uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts --ask-become-pass
 ```
 
 Run on a specific group:
 
 ```Shell
-uv run ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass
 ```
 
 Run on a single host:
 
 ```Shell
-uv run ansible-playbook setup.yml -i hosts -l fedora-wsl --ask-become-pass --ask-vault-pass
+uv run ansible-playbook setup.yml -i hosts -l fedora-wsl --ask-become-pass
 ```
 
 Or, if using system Ansible, omit the `uv run` prefix from the commands above.

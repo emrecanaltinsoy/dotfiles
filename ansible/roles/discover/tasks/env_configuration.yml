@@ -1,0 +1,10 @@
+---
+# Check Environment configuration
+- name: Ensure user_email is defined
+  ansible.builtin.assert:
+    that: "user_email is defined"
+    fail_msg: "user_email is not defined. See README.md for env.yml configuration."
+- name: Ensure user_fullname is defined
+  ansible.builtin.assert:
+    that: "user_fullname is defined"
+    fail_msg: "user_fullname is not defined. See README.md for env.yml configuration."

@@ -133,6 +133,11 @@ if [ -x "$(command -v neofetch)" ]; then
   neofetch
 fi
 
+if [ -x "$(command -v fastfetch)" ]; then
+  fastfetch
+fi
+
+
 ############################################################
 # 9. Misc (NVM Hooks)
 ############################################################

@@ -45,7 +45,7 @@ Adds the official git-core PPA for the latest Git version.
 - **CLI tools**: bat, fd-find, ripgrep, zoxide
 - **Utilities**: curl, wget, unzip, zip, jq, socat
 - **Version control**: git, stow
-- **Security**: gnupg, gpg, gpg-agent, keychain, openssh-client
+- **Security**: keychain, openssh-client
 - **Shell**: zsh
 - **Python**: python3, python3-pip, python3-venv, python3-wheel, python3-dev
 - **Other**: fastfetch, software-properties-common

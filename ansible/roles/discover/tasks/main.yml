@@ -15,12 +15,12 @@
     - discover
     - wsl
 
-- name: Discover Vault configuration
+- name: Discover Environment configuration
   ansible.builtin.import_tasks:
-    file: vault_configuration.yml
+    file: env_configuration.yml
   tags:
     - discover
-    - vault
+    - env
 
 - name: Configure bashrc
   ansible.builtin.import_tasks:

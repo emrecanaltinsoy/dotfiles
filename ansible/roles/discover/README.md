@@ -12,13 +12,12 @@ Requirements
 Role Variables
 --------------
 
-This role validates that the following variables are defined (typically in a vault-encrypted `secrets.yml`):
+This role validates that the following variables are defined (typically in `env.yml`):
 
 | Variable | Description |
 |----------|-------------|
 | `user_email` | User's email address (required) |
 | `user_fullname` | User's full name (required) |
-| `user_passphrase` | Passphrase for GPG key (required) |
 
 ### Exported Facts
 
@@ -40,13 +39,12 @@ Tasks
 
 Checks `/proc/version` for Microsoft/WSL indicators and sets the `IS_WSL` fact. This fact is used by other roles to skip or modify behavior for WSL environments.
 
-### 2. Vault Configuration Validation
+### 2. Environment Configuration Validation
 
-Validates that required secrets are defined:
+Validates that required variables are defined:
 
 - `user_email`
 - `user_fullname`
-- `user_passphrase`
 
 Fails with descriptive error messages if any required variable is missing.
 
@@ -60,7 +58,7 @@ Example Playbook
 ```yaml
 - hosts: localhost
   vars_files:
-    - secrets.yml
+    - env.yml
   roles:
     - discover  # Run first to detect environment
     - base
@@ -68,15 +66,12 @@ Example Playbook
     - shell
 ```
 
-Example `secrets.yml`:
+Example `env.yml`:
 
 ```yaml
 user_email: "john.doe@example.com"
 user_fullname: "John Doe"
-user_passphrase: "your-secure-passphrase"
 ```
-
-Encrypt with: `ansible-vault encrypt secrets.yml`
 
 License
 -------

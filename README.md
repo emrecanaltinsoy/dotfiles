@@ -7,7 +7,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | Category | Tools |
 |----------|-------|
 | **Container** | Docker (Debian) / Podman (RedHat) |
-| **Version Control** | Git (with SSH/GPG signing), GitHub CLI, Lazygit |
+| **Version Control** | Git (with SSH signing), GitHub CLI, Lazygit |
 | **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
 | **Editor** | Neovim |
 | **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm |
@@ -33,11 +33,12 @@ cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfil
 # Install dependencies
 uv sync
 
-# Create encrypted secrets file
-EDITOR=nano uv run ansible-vault create secrets.yml
+# Configure environment variables
+cp env.yml.example env.yml
+nano env.yml  # Edit with your email and name
 
-# Run the setup playbook
-uv run ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+# Run the setup playbook (local only)
+uv run ansible-playbook setup.yml -i hosts -l local --ask-become-pass
 ```
 
 ### Option 2: Using System Ansible
@@ -51,11 +52,12 @@ sudo apt-get update && sudo apt-get install -y git python3 python3-pip ansible
 # Clone the repository
 cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfiles/ansible/
 
-# Create encrypted secrets file
-EDITOR=nano ansible-vault create secrets.yml
+# Configure environment variables
+cp env.yml.example env.yml
+nano env.yml  # Edit with your email and name
 
-# Run the setup playbook
-ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+# Run the setup playbook (local only)
+ansible-playbook setup.yml -i hosts -l local --ask-become-pass
 ```
 
 #### Rocky Linux/RHEL/Fedora
@@ -66,18 +68,18 @@ sudo dnf install -y git python3 python3-pip ansible
 
 # Clone and run setup (same as above)
 cd ${HOME} && git clone https://github.com/emrecanaltinsoy/dotfiles && cd dotfiles/ansible/
-EDITOR=nano ansible-vault create secrets.yml
-ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+cp env.yml.example env.yml
+nano env.yml  # Edit with your email and name
+ansible-playbook setup.yml -i hosts --ask-become-pass
 ```
 
-### Secrets Configuration
+### Environment Configuration
 
-The `secrets.yml` file should contain:
+The `env.yml` file should contain:
 
 ```yaml
-user_email: "email"
-user_fullname: "Firstname Lastname"
-user_passphrase: "passphrase_to_generate_new_gpg_key"
+user_email: "your.email@example.com"
+user_fullname: "Your Full Name"
 ```
 
 ### Post-Install
@@ -94,7 +96,7 @@ source ${HOME}/.zshrc
 |------|-------------|
 | [discover](ansible/roles/discover/README.md) | Environment detection and configuration validation |
 | [base](ansible/roles/base/README.md) | System dependencies, Rust, and uv |
-| [git](ansible/roles/git/README.md) | Git configuration with GPG signing and SSH |
+| [git](ansible/roles/git/README.md) | Git configuration with SSH key management |
 | [shell](ansible/roles/shell/README.md) | Zsh with Oh-My-Zsh and plugins |
 | [github](ansible/roles/github/README.md) | GitHub CLI installation |
 | [cargo](ansible/roles/cargo/README.md) | Rust/Cargo CLI tools |
@@ -172,10 +174,10 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub ubuntu@192.168.1.100
 ansible-playbook bootstrap.yml -i hosts --ask-become-pass
 
 # Deploy to all hosts
-ansible-playbook setup.yml -i hosts --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts --ask-become-pass
 
 # Deploy to specific group
-ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass --ask-vault-pass
+ansible-playbook setup.yml -i hosts -l redhat --ask-become-pass
 ```
 
 ## WSL Setup

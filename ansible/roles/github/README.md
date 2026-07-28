@@ -54,7 +54,7 @@ Authentication token export script is templated via setup.yml post_tasks for:
 - `GH_ENTERPRISE_TOKEN`
 - `GALAXY_GIT_TOKEN`
 
-Automatically uploads SSH and GPG keys to GitHub on first authentication.
+Automatically uploads SSH keys to GitHub on first authentication.
 
 Files
 -----

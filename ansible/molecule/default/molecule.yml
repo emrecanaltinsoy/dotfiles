@@ -44,7 +44,6 @@ provisioner:
       all:
         user_email: "test@example.com"
         user_fullname: "Test User"
-        user_passphrase: "test-passphrase"
 
 verifier:
   name: ansible

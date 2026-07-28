@@ -2,7 +2,7 @@
 - name: Configure
   hosts: all
   vars_files:
-    - secrets.yml
+    - env.yml
   pre_tasks:
     - name: Check if skip_packages.yml exists
       ansible.builtin.stat:
@@ -49,3 +49,28 @@
           Error: {{ cargo_install_error }}
           You can retry manually with: cargo install {{ missing_cargo_packages | join(' ') }} --locked
       when: cargo_install_failed | default(false)
+
+    - name: Check GitHub CLI authentication status
+      ansible.builtin.command: gh auth token -h github.com
+      register: gh_auth_check
+      changed_when: false
+      failed_when: false
+
+    - name: Display GitHub CLI setup reminder
+      ansible.builtin.debug:
+        msg: |
+          
+          ╔════════════════════════════════════════════════════════════╗
+          ║              GitHub CLI Authentication Required            ║
+          ╚════════════════════════════════════════════════════════════╝
+          
+          To complete setup, authenticate with GitHub:
+          
+              gh auth login
+          
+          This will:
+            • Upload your SSH key to GitHub
+            • Enable git operations with GitHub
+            • Set up GitHub CLI access
+          
+      when: gh_auth_check.rc != 0
