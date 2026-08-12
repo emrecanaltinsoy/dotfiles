@@ -46,6 +46,7 @@ Tasks
 | lazygit | Terminal UI for git | GitHub release binary (all platforms) |
 | Neovim | Modern vim fork | GitHub release binary (all platforms) |
 | NVM | Node Version Manager | Official install script (all platforms) |
+| Node.js LTS | JavaScript runtime (installed via NVM if no version present) | `nvm install --lts` (all platforms) |
 | OpenCode | AI coding assistant | Official installer (all platforms) |
 | Pi | AI coding agent | Official installer (all platforms) |
 | SOPS | Secrets management | GitHub release binary (all platforms) |

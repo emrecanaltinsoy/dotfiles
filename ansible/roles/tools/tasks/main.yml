@@ -102,6 +102,31 @@
       delay: 5
       until: nvm_result.rc == 0
 
+    - name: Check if any node version is installed
+      ansible.builtin.shell: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+        nvm ls --no-colors 2>/dev/null | grep -v 'N/A' | grep -c 'v[0-9]' || true
+      args:
+        executable: /bin/bash
+      register: node_installed
+      changed_when: false
+
+    - name: Install node LTS
+      ansible.builtin.shell: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+        nvm install --lts
+        nvm alias default 'lts/*'
+      args:
+        executable: /bin/bash
+      when: node_installed.stdout | trim == '0'
+      changed_when: true
+      register: node_lts_result
+      retries: 3
+      delay: 5
+      until: node_lts_result.rc == 0
+
 # OpenCode
 - name: OpenCode
   when: "'opencode' not in (skip_packages | default([]))"
@@ -133,7 +158,8 @@
   block:
     - name: Check if pi is installed
       ansible.builtin.shell: |
-        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
         command -v pi
       args:
         executable: /bin/bash
@@ -154,7 +180,8 @@
 
     - name: Get installed pi extensions
       ansible.builtin.shell: |
-        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
         pi list 2>/dev/null || true
       args:
         executable: /bin/bash
@@ -163,7 +190,8 @@
 
     - name: Install pi extensions
       ansible.builtin.shell: |
-        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
         pi install {{ item }}
       args:
         executable: /bin/bash
