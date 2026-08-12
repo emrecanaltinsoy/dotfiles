@@ -38,6 +38,7 @@ skip_packages: []
   # - nvm
   # - oh_my_tmux
   # - opencode
+  # - pi
   # - sops
   # - starship
   # - terraform

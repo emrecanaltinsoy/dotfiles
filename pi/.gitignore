@@ -1,0 +1,11 @@
+# Never commit credentials or runtime session data
+.pi/agent/auth.json
+.pi/agent/sessions/
+.pi/agent/run-history.jsonl
+.pi/agent/missions/
+.pi/agent/pi-cloakpipe/
+.pi/agent/npm/
+.pi/agent/models-store.json
+.pi/agent/litellm-models-dev.json
+.pi/agent/mcp-onboarding.json
+.pi/agent/pi-atelier.json

@@ -14,7 +14,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
 | **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, fastfetch, Stow |
+| **Other** | OpenCode, Pi, fastfetch, Stow |
 
 ## Roles
 

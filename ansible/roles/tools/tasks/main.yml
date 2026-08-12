@@ -127,6 +127,63 @@
       delay: 5
       until: opencode_result.rc == 0
 
+# Pi
+- name: Pi
+  when: "'pi' not in (skip_packages | default([]))"
+  block:
+    - name: Check if pi is installed
+      ansible.builtin.shell: |
+        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        command -v pi
+      args:
+        executable: /bin/bash
+      register: pi_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install pi
+      ansible.builtin.shell: curl -fsSL https://pi.dev/install.sh | sh
+      args:
+        executable: /bin/bash
+      when: pi_check.rc != 0
+      changed_when: true
+      register: pi_install_result
+      retries: 3
+      delay: 5
+      until: pi_install_result.rc == 0
+
+    - name: Get installed pi extensions
+      ansible.builtin.shell: |
+        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        pi list 2>/dev/null || true
+      args:
+        executable: /bin/bash
+      register: pi_list
+      changed_when: false
+
+    - name: Install pi extensions
+      ansible.builtin.shell: |
+        export PATH="$HOME/.nvm/versions/node/$(ls $HOME/.nvm/versions/node/ 2>/dev/null | sort -V | tail -1)/bin:$HOME/.local/bin:$PATH"
+        pi install {{ item }}
+      args:
+        executable: /bin/bash
+      loop:
+        - npm:pi-provider-litellm
+        - npm:pi-powerline-footer
+        - npm:pi-mcp-adapter
+        - npm:pi-web-access
+        - npm:@juicesharp/rpiv-todo
+        - npm:@juicesharp/rpiv-ask-user-question
+        - npm:@ff-labs/pi-fff
+        - npm:pi-subagents
+        - npm:pi-btw
+      when: item not in pi_list.stdout
+      changed_when: true
+      register: pi_ext_result
+      retries: 3
+      delay: 5
+      until: pi_ext_result.rc == 0
+
 # Herdr
 - name: Herdr
   when: "'herdr' not in (skip_packages | default([]))"

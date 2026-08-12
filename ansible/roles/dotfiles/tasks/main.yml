@@ -13,6 +13,7 @@
           - fastfetch
           - nvim
           - opencode
+          - pi
           - starship
           - tmux
           - topgrade

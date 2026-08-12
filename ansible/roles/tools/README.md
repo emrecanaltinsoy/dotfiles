@@ -47,6 +47,7 @@ Tasks
 | Neovim | Modern vim fork | GitHub release binary (all platforms) |
 | NVM | Node Version Manager | Official install script (all platforms) |
 | OpenCode | AI coding assistant | Official installer (all platforms) |
+| Pi | AI coding agent | Official installer (all platforms) |
 | SOPS | Secrets management | GitHub release binary (all platforms) |
 | Starship | Cross-shell prompt | Official installer (all platforms) |
 | Terraform | Infrastructure as code | apt (Debian) / dnf (RedHat) |

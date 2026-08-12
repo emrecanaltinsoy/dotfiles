@@ -1,3 +1,4 @@
 env.yml
 skip_packages.yml
 *.retry
+.venv/
