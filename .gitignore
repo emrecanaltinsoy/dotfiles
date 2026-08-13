@@ -1,0 +1,10 @@
+graphify-out/**
+# The actual codebase knowledge map
+!graphify-out/graph.json
+# Shareable team visualization mapping
+!graphify-out/graph.html
+# Context report OpenCode reads first
+!graphify-out/GRAPH_REPORT.md
+
+
+.pi

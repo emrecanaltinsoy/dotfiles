@@ -35,5 +35,9 @@
       }
     }
   },
-  "plugin": ["opencode-plugin-litellm@latest", "@dietrichgebert/ponytail"]
+  "plugin": [
+    "opencode-plugin-litellm@latest",
+    "@dietrichgebert/ponytail",
+    "~/.config/opencode/.opencode/plugins/graphify.js"
+  ]
 }
