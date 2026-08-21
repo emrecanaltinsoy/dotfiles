@@ -33,6 +33,7 @@ skip_packages: []
   # - wezterm
   # - aws_cli
   # - herdr
+  # - just
   # - lazygit
   # - neovim
   # - nvm

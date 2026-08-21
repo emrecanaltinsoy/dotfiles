@@ -13,7 +13,7 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 | **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm, Herdr |
 | **Cloud/IaC** | AWS CLI, Terraform, SOPS |
 | **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
-| **CLI Tools** | bat, eza, fd, ripgrep, delta, procs, rip, tokei, topgrade, xcp, xh, zoxide |
+| **CLI Tools** | bat, eza, fd, ripgrep, delta, just, procs, rip, tokei, topgrade, xcp, xh, zoxide |
 | **Other** | OpenCode, fastfetch, Stow |
 
 ## Quick Start

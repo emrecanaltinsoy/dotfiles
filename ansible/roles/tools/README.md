@@ -43,6 +43,7 @@ Tasks
 | Package | Description | Installation Method |
 |---------|-------------|---------------------|
 | AWS CLI | Amazon Web Services CLI | Official installer (all platforms) |
+| just | Command runner | `uv tool install rust-just` (all platforms) |
 | lazygit | Terminal UI for git | GitHub release binary (all platforms) |
 | Neovim | Modern vim fork | GitHub release binary (all platforms) |
 | NVM | Node Version Manager | Official install script (all platforms) |
