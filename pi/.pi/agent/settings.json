@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.85.1",
   "defaultProvider": "github-copilot",
-  "defaultModel": "claude-sonnet-4.6",
+  "defaultModel": "claude-haiku-4.5",
   "defaultThinkingLevel": "medium",
   "showHardwareCursor": false,
   "editorPaddingX": 0,
@@ -17,7 +17,8 @@
     "npm:@ff-labs/pi-fff",
     "npm:pi-subagents",
     "npm:pi-btw",
-    "npm:pi-cursor-sdk"
+    "npm:pi-cursor-sdk",
+    "npm:extract-session-extension"
   ],
   "hideThinkingBlock": false
 }
