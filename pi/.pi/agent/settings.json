@@ -18,7 +18,8 @@
     "npm:pi-subagents",
     "npm:pi-btw",
     "npm:pi-cursor-sdk",
-    "npm:extract-session-extension"
+    "npm:extract-session-extension",
+    "npm:pi-plan"
   ],
   "hideThinkingBlock": false
 }
