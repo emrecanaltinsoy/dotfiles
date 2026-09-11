@@ -6,26 +6,27 @@ vim.keymap.set("t", "jk", "<C-\\><C-N>", { desc = "Terminal Normal Mode" })
 
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-M-s>", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
 
-vim.keymap.set("n", "<leader>tt", function()
-  if vim.env.TMUX then
-    vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs"')
-  end
-end, { desc = "Start txs" })
-
-vim.keymap.set("n", "<leader>tk", function()
-  if vim.env.TMUX then
-    vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs kill"')
-  end
-end, { desc = "Start txs kill" })
-
-vim.keymap.set("n", "<leader>ta", function()
-  if vim.env.TMUX then
-    vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs wt add"')
-  end
-end, { desc = "Add worktree" })
-
-vim.keymap.set("n", "<leader>tr", function()
-  if vim.env.TMUX then
-    vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs wt remove"')
-  end
-end, { desc = "Remove worktree" })
+vim.keymap.set({ "n" }, "<leader>bm", "<cmd>MarkdownPreview<cr>", { desc = "Makrdown Preview" })
+-- vim.keymap.set("n", "<leader>tt", function()
+--   if vim.env.TMUX then
+--     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs"')
+--   end
+-- end, { desc = "Start txs" })
+--
+-- vim.keymap.set("n", "<leader>tk", function()
+--   if vim.env.TMUX then
+--     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs kill"')
+--   end
+-- end, { desc = "Start txs kill" })
+--
+-- vim.keymap.set("n", "<leader>ta", function()
+--   if vim.env.TMUX then
+--     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs wt add"')
+--   end
+-- end, { desc = "Add worktree" })
+--
+-- vim.keymap.set("n", "<leader>tr", function()
+--   if vim.env.TMUX then
+--     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs wt remove"')
+--   end
+-- end, { desc = "Remove worktree" })

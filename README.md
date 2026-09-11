@@ -4,17 +4,17 @@ Automated development environment setup for Linux using Ansible. Supports Debian
 
 ## What Gets Installed
 
-| Category | Tools |
-|----------|-------|
-| **Container** | Docker (Debian) / Podman (RedHat) |
-| **Version Control** | Git (with SSH signing), GitHub CLI, Lazygit |
-| **Shell** | Zsh, Oh-My-Zsh, Starship prompt, fzf |
-| **Editor** | Neovim |
-| **Terminal** | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm, Herdr |
-| **Cloud/IaC** | AWS CLI, Terraform, SOPS |
-| **Languages** | Rust (rustup), Python (uv), Node.js (NVM) |
-| **CLI Tools** | bat, eza, fd, ripgrep, delta, just, procs, rip, tokei, topgrade, xcp, xh, zoxide |
-| **Other** | OpenCode, fastfetch, Stow |
+| Category            | Tools                                                                            |
+| ------------------- | -------------------------------------------------------------------------------- |
+| **Container**       | Docker (Debian) / Podman (RedHat)                                                |
+| **Version Control** | Git (with SSH signing), GitHub CLI, Lazygit                                      |
+| **Shell**           | Zsh, Oh-My-Zsh, Starship prompt, fzf                                             |
+| **Editor**          | Neovim                                                                           |
+| **Terminal**        | Tmux, Oh-My-Tmux, Tmuxifier, WezTerm, Herdr                                      |
+| **Cloud/IaC**       | AWS CLI, Terraform, SOPS                                                         |
+| **Languages**       | Rust (rustup), Python (uv), Node.js (NVM)                                        |
+| **CLI Tools**       | bat, eza, fd, ripgrep, delta, just, procs, rip, tokei, topgrade, xcp, xh, zoxide |
+| **Other**           | OpenCode, fastfetch, Stow                                                        |
 
 ## Quick Start
 
@@ -92,17 +92,17 @@ source ${HOME}/.zshrc
 
 ## Ansible Roles
 
-| Role | Description |
-|------|-------------|
+| Role                                         | Description                                        |
+| -------------------------------------------- | -------------------------------------------------- |
 | [discover](ansible/roles/discover/README.md) | Environment detection and configuration validation |
-| [base](ansible/roles/base/README.md) | System dependencies, Rust, and uv |
-| [git](ansible/roles/git/README.md) | Git configuration with SSH key management |
-| [shell](ansible/roles/shell/README.md) | Zsh with Oh-My-Zsh and plugins |
-| [github](ansible/roles/github/README.md) | GitHub CLI installation |
-| [cargo](ansible/roles/cargo/README.md) | Rust/Cargo CLI tools |
-| [tools](ansible/roles/tools/README.md) | Developer tools (lazygit, neovim, tmux, etc.) |
-| [dotfiles](ansible/roles/dotfiles/README.md) | Stow dotfiles to home directory |
-| [docker](ansible/roles/docker/README.md) | Docker (Debian) or Podman (RedHat) installation |
+| [base](ansible/roles/base/README.md)         | System dependencies, Rust, and uv                  |
+| [git](ansible/roles/git/README.md)           | Git configuration with SSH key management          |
+| [shell](ansible/roles/shell/README.md)       | Zsh with Oh-My-Zsh and plugins                     |
+| [github](ansible/roles/github/README.md)     | GitHub CLI installation                            |
+| [cargo](ansible/roles/cargo/README.md)       | Rust/Cargo CLI tools                               |
+| [tools](ansible/roles/tools/README.md)       | Developer tools (lazygit, neovim, tmux, etc.)      |
+| [dotfiles](ansible/roles/dotfiles/README.md) | Stow dotfiles to home directory                    |
+| [docker](ansible/roles/docker/README.md)     | Docker (Debian) or Podman (RedHat) installation    |
 
 ## Repository Structure
 
