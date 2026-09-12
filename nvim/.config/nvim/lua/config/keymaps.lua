@@ -6,7 +6,6 @@ vim.keymap.set("t", "jk", "<C-\\><C-N>", { desc = "Terminal Normal Mode" })
 
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-M-s>", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
 
-vim.keymap.set({ "n" }, "<leader>bm", "<cmd>MarkdownPreview<cr>", { desc = "Makrdown Preview" })
 -- vim.keymap.set("n", "<leader>tt", function()
 --   if vim.env.TMUX then
 --     vim.fn.system('tmux display-popup -E -w 80% -h 70% "txs"')
