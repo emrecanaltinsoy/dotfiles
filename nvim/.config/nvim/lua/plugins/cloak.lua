@@ -1,15 +1,13 @@
 ---@type LazySpec
 return {
   {
-    "folke/which-key.nvim",
-    opts = {
-      defaults = {
-        ["<leader>h"] = { name = "+CloakOptions", icon = "🧛" },
-      },
-    },
-  },
-  {
     "laytan/cloak.nvim",
+    init = function()
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>h", group = "CloakOptions", icon = "🧛" },
+      })
+    end,
     version = "*", -- use the latest stable version
     event = "VeryLazy",
     keys = {

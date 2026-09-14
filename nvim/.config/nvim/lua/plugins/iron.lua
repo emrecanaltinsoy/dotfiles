@@ -1,15 +1,12 @@
 return {
   {
-    "folke/which-key.nvim",
-    opts = {
-      defaults = {
-        ["<leader>r"] = { name = "+IronOptions", icon = "🐍" },
-      },
-    },
-  },
-
-  {
     "Vigemus/iron.nvim",
+    init = function()
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>r", group = "IronOptions", icon = "🐍" },
+      })
+    end,
     lazy = true,
   },
 }
