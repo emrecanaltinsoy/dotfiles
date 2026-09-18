@@ -300,7 +300,7 @@ else
   for dir in "${STOW_DIRS[@]}"; do
     if [[ -d "$DOTFILES_DIR/$dir" ]]; then
       info "Stowing $dir..."
-      stow --dir="$DOTFILES_DIR" --target="$HOME" --restow "$dir"
+      stow --adopt --dir="$DOTFILES_DIR" --target="$HOME" --restow "$dir"
     else
       warn "dotfiles/$dir not found, skipping"
     fi

@@ -39,6 +39,11 @@ source "$HOME/.cargo/env"
 # # --- Homebrew (optional, left commented as before) ---
 # eval "$([ -x /home/linuxbrew/.linuxbrew/bin/brew ] && /home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# --- Homebrew (macOS Apple Silicon) ---
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 ############################################################
 # 3. Plugins and Oh My Zsh
 ############################################################
