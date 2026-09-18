@@ -30,6 +30,13 @@ elif [[ -f /etc/alpine-release ]]; then
   alias install="sudo apk add"
   alias uninstall="sudo apk del"
   alias autoremove="sudo apk cache clean"
+elif [[ "$(uname -s)" == "Darwin" ]]; then
+  # macOS
+  alias update="brew update"
+  alias upgrade="brew upgrade"
+  alias install="brew install"
+  alias uninstall="brew uninstall"
+  alias autoremove="brew autoremove"
 else
   # Default: apt
   alias update="sudo apt update"
@@ -148,8 +155,10 @@ docker-fuzzy-rmi() {
 ##################################################
 # COMMAND REPLACEMENTS & ENHANCED TOOLS
 ##################################################
-if [ -x "$(command -v exa)" ]; then
-  # alias ls="exa"
+if [ -x "$(command -v eza)" ]; then
+  alias ls='eza --git --icons --color=always --group-directories-first'
+  alias la="eza -al"
+elif [ -x "$(command -v exa)" ]; then
   alias ls='exa --git --icons --color=always --group-directories-first'
   alias la="exa -al"
 fi

@@ -1,16 +1,16 @@
-# Graph Report - dotfiles  (2026-08-13)
+# Graph Report - dotfiles  (2026-09-18)
 
 ## Corpus Check
-- 85 files · ~25,049 words
+- 87 files · ~26,528 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 258 nodes · 217 edges · 73 communities (27 shown, 46 thin omitted)
-- Extraction: 85% EXTRACTED · 15% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.89)
+- 266 nodes · 230 edges · 74 communities (28 shown, 46 thin omitted)
+- Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `152b849d`
+- Built from commit: `599d2aa2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -73,17 +73,18 @@
 - OpenCode README Update Command
 - Ansible Dotfiles Package
 - Package Selector Package
+- setup-macos.sh
 
 ## God Nodes (most connected - your core abstractions)
 1. `PackageSelector` - 17 edges
 2. `Ansible Deployment Documentation` - 9 edges
 3. `Tools Role Main Tasks` - 7 edges
 4. `Base Role - Main Tasks (rustup, uv, fzf)` - 7 edges
-5. `code-reviewer` - 5 edges
-6. `GitHub CLI (gh)` - 5 edges
-7. `Ansible Role` - 5 edges
-8. `context7` - 4 edges
-9. `litellm` - 4 edges
+5. `setup-macos.sh script` - 6 edges
+6. `code-reviewer` - 5 edges
+7. `GitHub CLI (gh)` - 5 edges
+8. `Ansible Role` - 5 edges
+9. `context7` - 4 edges
 10. `plugin` - 4 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -111,7 +112,7 @@
 - **GitHub CLI OS-Specific Installation** — ansible_roles_github_tasks_debian, ansible_roles_github_tasks_redhat, ansible_roles_github_tasks_archlinux [INFERRED 0.85]
 - **OS-Specific Package Installation Pattern** — ansible_roles_docker_tasks_debian, ansible_roles_docker_tasks_redhat, ansible_roles_docker_tasks_archlinux [INFERRED 0.85]
 
-## Communities (73 total, 46 thin omitted)
+## Communities (74 total, 46 thin omitted)
 
 ### Community 0 - "Package Selector UI"
 Cohesion: 0.10
@@ -161,8 +162,12 @@ Nodes (6): Conventional Commits Format, OpenCode Commit Command, caveman-commit 
 Cohesion: 0.50
 Nodes (4): Dotfiles Role Metadata, Dotfiles Role, Dotfiles Stow Tasks, GNU Stow Symlink Manager
 
+### Community 73 - "setup-macos.sh"
+Cohesion: 0.46
+Nodes (7): brew_install(), error(), info(), PATH, setup-macos.sh script, skip(), warn()
+
 ## Knowledge Gaps
-- **119 isolated node(s):** `$schema`, `autoupdate`, `description`, `model`, `prompt` (+114 more)
+- **120 isolated node(s):** `PATH`, `autoupdate`, `description`, `model`, `prompt` (+115 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -170,13 +175,13 @@ Nodes (4): Dotfiles Role Metadata, Dotfiles Role, Dotfiles Stow Tasks, GNU Stow 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `provider` connect `OpenCode LLM Provider Config` to `OpenCode Agent Config`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `Tools Role Main Tasks` (e.g. with `Tools Role (Dev Tools)` and `Package Selector TUI Tool`) actually correct?**
   _`Tools Role Main Tasks` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 3 inferred relationships involving `Base Role - Main Tasks (rustup, uv, fzf)` (e.g. with `Discover Role - Main Tasks` and `OS Family Task Dispatch Pattern`) actually correct?**
   _`Base Role - Main Tasks (rustup, uv, fzf)` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `$schema`, `autoupdate`, `description` to the rest of the system?**
-  _119 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `PATH`, `autoupdate`, `description` to the rest of the system?**
+  _120 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Package Selector UI` be split into smaller, more focused modules?**
   _Cohesion score 0.10227272727272728 - nodes in this community are weakly interconnected._
 - **Should `OpenCode Agent Config` be split into smaller, more focused modules?**

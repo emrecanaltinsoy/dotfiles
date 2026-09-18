@@ -317,10 +317,10 @@
       "source_location": "L12",
       "_callable": true,
       "_origin": "ast",
-      "id": "opencode_config_opencode_plugin_graphify_graphifyplugin",
       "community": 13,
       "community_name": "OpenCode Graphify Plugin",
-      "norm_label": "graphifyplugin()"
+      "norm_label": "graphifyplugin()",
+      "id": "opencode_config_opencode_plugin_graphify_graphifyplugin"
     },
     {
       "label": "App",
@@ -515,10 +515,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "opencode.json"
+      "norm_label": "opencode.json",
+      "id": "opencode_config_opencode_opencode"
     },
     {
       "label": "agent",
@@ -526,10 +526,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_agent",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "agent"
+      "norm_label": "agent",
+      "id": "opencode_config_opencode_opencode_agent"
     },
     {
       "label": "code-reviewer",
@@ -537,10 +537,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_agent_code_reviewer",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "code-reviewer"
+      "norm_label": "code-reviewer",
+      "id": "opencode_config_opencode_opencode_agent_code_reviewer"
     },
     {
       "label": "autoupdate",
@@ -548,10 +548,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_autoupdate",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "autoupdate"
+      "norm_label": "autoupdate",
+      "id": "opencode_config_opencode_opencode_autoupdate"
     },
     {
       "label": "description",
@@ -559,10 +559,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_code_reviewer_description",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "description"
+      "norm_label": "description",
+      "id": "opencode_config_opencode_opencode_code_reviewer_description"
     },
     {
       "label": "model",
@@ -570,10 +570,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_code_reviewer_model",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "model"
+      "norm_label": "model",
+      "id": "opencode_config_opencode_opencode_code_reviewer_model"
     },
     {
       "label": "prompt",
@@ -581,10 +581,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_code_reviewer_prompt",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "prompt"
+      "norm_label": "prompt",
+      "id": "opencode_config_opencode_opencode_code_reviewer_prompt"
     },
     {
       "label": "tools",
@@ -592,10 +592,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_code_reviewer_tools",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "tools"
+      "norm_label": "tools",
+      "id": "opencode_config_opencode_opencode_code_reviewer_tools"
     },
     {
       "label": "enabled",
@@ -603,10 +603,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_context7_enabled",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "enabled"
+      "norm_label": "enabled",
+      "id": "opencode_config_opencode_opencode_context7_enabled"
     },
     {
       "label": "type",
@@ -614,10 +614,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_context7_type",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "opencode_config_opencode_opencode_context7_type"
     },
     {
       "label": "url",
@@ -625,10 +625,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_context7_url",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "url"
+      "norm_label": "url",
+      "id": "opencode_config_opencode_opencode_context7_url"
     },
     {
       "label": "mcp",
@@ -636,10 +636,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_mcp",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "mcp"
+      "norm_label": "mcp",
+      "id": "opencode_config_opencode_opencode_mcp"
     },
     {
       "label": "context7",
@@ -647,10 +647,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_mcp_context7",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "context7"
+      "norm_label": "context7",
+      "id": "opencode_config_opencode_opencode_mcp_context7"
     },
     {
       "label": "plugin",
@@ -658,10 +658,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_plugin",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "plugin"
+      "norm_label": "plugin",
+      "id": "opencode_config_opencode_opencode_plugin"
     },
     {
       "label": "$schema",
@@ -669,10 +669,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_schema",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "$schema"
+      "norm_label": "$schema",
+      "id": "opencode_config_opencode_opencode_schema"
     },
     {
       "label": "edit",
@@ -680,10 +680,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_tools_edit",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "edit"
+      "norm_label": "edit",
+      "id": "opencode_config_opencode_opencode_tools_edit"
     },
     {
       "label": "write",
@@ -691,10 +691,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_tools_write",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "write"
+      "norm_label": "write",
+      "id": "opencode_config_opencode_opencode_tools_write"
     },
     {
       "label": "~/.config/opencode/.opencode/plugins/graphify.js",
@@ -702,10 +702,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "ref_config_opencode_opencode_plugins_graphify_js",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "~/.config/opencode/.opencode/plugins/graphify.js"
+      "norm_label": "~/.config/opencode/.opencode/plugins/graphify.js",
+      "id": "ref_config_opencode_opencode_plugins_graphify_js"
     },
     {
       "label": "@dietrichgebert/ponytail",
@@ -713,10 +713,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "ref_dietrichgebert_ponytail",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "@dietrichgebert/ponytail"
+      "norm_label": "@dietrichgebert/ponytail",
+      "id": "ref_dietrichgebert_ponytail"
     },
     {
       "label": "opencode-plugin-litellm@latest",
@@ -724,10 +724,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "ref_opencode_plugin_litellm_latest",
       "community": 1,
       "community_name": "OpenCode Agent Config",
-      "norm_label": "opencode-plugin-litellm@latest"
+      "norm_label": "opencode-plugin-litellm@latest",
+      "id": "ref_opencode_plugin_litellm_latest"
     },
     {
       "label": "tui.json",
@@ -768,10 +768,10 @@
       "source_file": "opencode/.config/opencode/plugin/graphify.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "opencode_config_opencode_plugin_graphify",
       "community": 13,
       "community_name": "OpenCode Graphify Plugin",
-      "norm_label": "graphify.js"
+      "norm_label": "graphify.js",
+      "id": "opencode_config_opencode_plugin_graphify"
     },
     {
       "label": "IMPORTANT: keep the reminder string free of backticks and $(...) constructs.",
@@ -779,10 +779,10 @@
       "source_file": "opencode/.config/opencode/plugin/graphify.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "opencode_config_opencode_plugin_graphify_rationale_4",
       "community": 13,
       "community_name": "OpenCode Graphify Plugin",
-      "norm_label": "important: keep the reminder string free of backticks and $(...) constructs."
+      "norm_label": "important: keep the reminder string free of backticks and $(...) constructs.",
+      "id": "opencode_config_opencode_plugin_graphify_rationale_4"
     },
     {
       "label": "mcp.json",
@@ -1757,10 +1757,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_amazon_bedrock_options",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "options"
+      "norm_label": "options",
+      "id": "opencode_config_opencode_opencode_amazon_bedrock_options"
     },
     {
       "label": "name",
@@ -1768,10 +1768,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_litellm_name",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "name"
+      "norm_label": "name",
+      "id": "opencode_config_opencode_opencode_litellm_name"
     },
     {
       "label": "npm",
@@ -1779,10 +1779,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_litellm_npm",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "npm"
+      "norm_label": "npm",
+      "id": "opencode_config_opencode_opencode_litellm_npm"
     },
     {
       "label": "options",
@@ -1790,10 +1790,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_litellm_options",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "options"
+      "norm_label": "options",
+      "id": "opencode_config_opencode_opencode_litellm_options"
     },
     {
       "label": "apiKey",
@@ -1801,10 +1801,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_options_apikey",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "apikey"
+      "norm_label": "apikey",
+      "id": "opencode_config_opencode_opencode_options_apikey"
     },
     {
       "label": "baseURL",
@@ -1812,10 +1812,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_options_baseurl",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "baseurl"
+      "norm_label": "baseurl",
+      "id": "opencode_config_opencode_opencode_options_baseurl"
     },
     {
       "label": "profile",
@@ -1823,10 +1823,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_options_profile",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "profile"
+      "norm_label": "profile",
+      "id": "opencode_config_opencode_opencode_options_profile"
     },
     {
       "label": "region",
@@ -1834,10 +1834,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_options_region",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "region"
+      "norm_label": "region",
+      "id": "opencode_config_opencode_opencode_options_region"
     },
     {
       "label": "provider",
@@ -1845,10 +1845,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_provider",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "provider"
+      "norm_label": "provider",
+      "id": "opencode_config_opencode_opencode_provider"
     },
     {
       "label": "amazon-bedrock",
@@ -1856,10 +1856,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_provider_amazon_bedrock",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "amazon-bedrock"
+      "norm_label": "amazon-bedrock",
+      "id": "opencode_config_opencode_opencode_provider_amazon_bedrock"
     },
     {
       "label": "litellm",
@@ -1867,10 +1867,10 @@
       "source_file": "opencode/.config/opencode/opencode.json",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "opencode_config_opencode_opencode_provider_litellm",
       "community": 6,
       "community_name": "OpenCode LLM Provider Config",
-      "norm_label": "litellm"
+      "norm_label": "litellm",
+      "id": "opencode_config_opencode_opencode_provider_litellm"
     },
     {
       "label": "options.lua",
@@ -2009,6 +2009,126 @@
       "community_name": "WezTerm Config",
       "norm_label": "wezterm.lua",
       "id": "wezterm_config_wezterm_wezterm"
+    },
+    {
+      "label": "setup-macos.sh",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "setup-macos.sh"
+    },
+    {
+      "label": "brew_install()",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L69",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_brew_install",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "brew_install()"
+    },
+    {
+      "label": "error()",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L26",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_error",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "error()"
+    },
+    {
+      "label": "info()",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L24",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_info",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "info()"
+    },
+    {
+      "label": "PATH",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L51",
+      "metadata": {
+        "language": "bash",
+        "kind": "code"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_path",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "path"
+    },
+    {
+      "label": "setup-macos.sh script",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_sh__entry",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "setup-macos.sh script"
+    },
+    {
+      "label": "skip()",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L39",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_skip",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "skip()"
+    },
+    {
+      "label": "warn()",
+      "file_type": "code",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L25",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_setup_macos_warn",
+      "community": 73,
+      "community_name": "setup-macos.sh",
+      "norm_label": "warn()"
     },
     {
       "label": "Dotfiles Role Metadata",
@@ -3927,15 +4047,75 @@
       "target": "package_selector_main_packageselector_update_status"
     },
     {
-      "relation": "extends",
+      "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "opencode/.config/opencode/opencode.json",
-      "source_location": "L38",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L72",
       "weight": 1.0,
-      "context": "import",
+      "context": "call",
       "_origin": "ast",
-      "source": "opencode_config_opencode_opencode_plugin",
-      "target": "ref_config_opencode_opencode_plugins_graphify_js",
+      "source": "scripts_setup_macos_brew_install",
+      "target": "scripts_setup_macos_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L35",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "scripts_setup_macos_sh__entry",
+      "target": "scripts_setup_macos_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L54",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "scripts_setup_macos_sh__entry",
+      "target": "scripts_setup_macos_skip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "scripts_setup_macos_sh__entry",
+      "target": "scripts_setup_macos_warn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L58",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "scripts_setup_macos_sh__entry",
+      "target": "scripts_setup_macos_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "scripts_setup_macos_sh__entry",
+      "target": "scripts_setup_macos_brew_install",
       "confidence_score": 1.0
     },
     {
@@ -3946,9 +4126,9 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_plugin",
-      "target": "ref_dietrichgebert_ponytail",
-      "confidence_score": 1.0
+      "target": "ref_config_opencode_opencode_plugins_graphify_js"
     },
     {
       "relation": "extends",
@@ -3958,9 +4138,21 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_plugin",
-      "target": "ref_opencode_plugin_litellm_latest",
-      "confidence_score": 1.0
+      "target": "ref_dietrichgebert_ponytail"
+    },
+    {
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "opencode/.config/opencode/opencode.json",
+      "source_location": "L38",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "opencode_config_opencode_opencode_plugin",
+      "target": "ref_opencode_plugin_litellm_latest"
     },
     {
       "relation": "references",
@@ -3992,9 +4184,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_mcp",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_mcp"
     },
     {
       "relation": "contains",
@@ -4003,9 +4195,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_schema",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_schema"
     },
     {
       "relation": "contains",
@@ -4014,9 +4206,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_provider",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_provider"
     },
     {
       "relation": "contains",
@@ -4025,9 +4217,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_autoupdate",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_autoupdate"
     },
     {
       "relation": "contains",
@@ -4036,9 +4228,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_plugin",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_plugin"
     },
     {
       "relation": "contains",
@@ -4047,9 +4239,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode",
-      "target": "opencode_config_opencode_opencode_agent",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_agent"
     },
     {
       "relation": "contains",
@@ -4058,9 +4250,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_agent",
-      "target": "opencode_config_opencode_opencode_agent_code_reviewer",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_agent_code_reviewer"
     },
     {
       "relation": "contains",
@@ -4069,9 +4261,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_agent_code_reviewer",
-      "target": "opencode_config_opencode_opencode_code_reviewer_description",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_code_reviewer_description"
     },
     {
       "relation": "contains",
@@ -4080,9 +4272,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_agent_code_reviewer",
-      "target": "opencode_config_opencode_opencode_code_reviewer_model",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_code_reviewer_model"
     },
     {
       "relation": "contains",
@@ -4091,9 +4283,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_agent_code_reviewer",
-      "target": "opencode_config_opencode_opencode_code_reviewer_prompt",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_code_reviewer_prompt"
     },
     {
       "relation": "contains",
@@ -4102,9 +4294,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_agent_code_reviewer",
-      "target": "opencode_config_opencode_opencode_code_reviewer_tools",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_code_reviewer_tools"
     },
     {
       "relation": "contains",
@@ -4113,9 +4305,9 @@
       "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_amazon_bedrock_options",
-      "target": "opencode_config_opencode_opencode_options_region",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_options_region"
     },
     {
       "relation": "contains",
@@ -4124,9 +4316,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_amazon_bedrock_options",
-      "target": "opencode_config_opencode_opencode_options_profile",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_options_profile"
     },
     {
       "relation": "contains",
@@ -4135,9 +4327,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_code_reviewer_tools",
-      "target": "opencode_config_opencode_opencode_tools_write",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_tools_write"
     },
     {
       "relation": "contains",
@@ -4146,9 +4338,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_code_reviewer_tools",
-      "target": "opencode_config_opencode_opencode_tools_edit",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_tools_edit"
     },
     {
       "relation": "contains",
@@ -4157,9 +4349,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_litellm_options",
-      "target": "opencode_config_opencode_opencode_options_baseurl",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_options_baseurl"
     },
     {
       "relation": "contains",
@@ -4168,9 +4360,9 @@
       "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_litellm_options",
-      "target": "opencode_config_opencode_opencode_options_apikey",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_options_apikey"
     },
     {
       "relation": "contains",
@@ -4179,9 +4371,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_mcp",
-      "target": "opencode_config_opencode_opencode_mcp_context7",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_mcp_context7"
     },
     {
       "relation": "contains",
@@ -4190,9 +4382,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_mcp_context7",
-      "target": "opencode_config_opencode_opencode_context7_type",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_context7_type"
     },
     {
       "relation": "contains",
@@ -4201,9 +4393,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_mcp_context7",
-      "target": "opencode_config_opencode_opencode_context7_url",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_context7_url"
     },
     {
       "relation": "contains",
@@ -4212,9 +4404,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_mcp_context7",
-      "target": "opencode_config_opencode_opencode_context7_enabled",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_context7_enabled"
     },
     {
       "relation": "contains",
@@ -4223,9 +4415,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider",
-      "target": "opencode_config_opencode_opencode_provider_amazon_bedrock",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_provider_amazon_bedrock"
     },
     {
       "relation": "contains",
@@ -4234,9 +4426,9 @@
       "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider",
-      "target": "opencode_config_opencode_opencode_provider_litellm",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_provider_litellm"
     },
     {
       "relation": "contains",
@@ -4245,9 +4437,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider_amazon_bedrock",
-      "target": "opencode_config_opencode_opencode_amazon_bedrock_options",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_amazon_bedrock_options"
     },
     {
       "relation": "contains",
@@ -4256,9 +4448,9 @@
       "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider_litellm",
-      "target": "opencode_config_opencode_opencode_litellm_npm",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_litellm_npm"
     },
     {
       "relation": "contains",
@@ -4267,9 +4459,9 @@
       "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider_litellm",
-      "target": "opencode_config_opencode_opencode_litellm_name",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_litellm_name"
     },
     {
       "relation": "contains",
@@ -4278,9 +4470,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_opencode_provider_litellm",
-      "target": "opencode_config_opencode_opencode_litellm_options",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_opencode_litellm_options"
     },
     {
       "relation": "contains",
@@ -4289,9 +4481,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_plugin_graphify",
-      "target": "opencode_config_opencode_plugin_graphify_graphifyplugin",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_plugin_graphify_graphifyplugin"
     },
     {
       "relation": "contains",
@@ -4648,6 +4840,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "tmux/.tmux-layouts/dev.session.sh",
       "source_location": "L1",
       "weight": 1.0,
@@ -4666,6 +4869,72 @@
       "confidence_score": 1.0,
       "source": "tmux_tmux_layouts_dev_window",
       "target": "tmux_tmux_layouts_dev_window_sh__entry"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_warn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_skip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/setup-macos.sh",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_setup_macos",
+      "target": "scripts_setup_macos_brew_install",
+      "confidence_score": 1.0
     },
     {
       "relation": "inherits",
@@ -4839,9 +5108,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "opencode_config_opencode_plugin_graphify_rationale_4",
-      "target": "opencode_config_opencode_plugin_graphify",
-      "confidence_score": 1.0
+      "target": "opencode_config_opencode_plugin_graphify"
     },
     {
       "relation": "rationale_for",
@@ -6189,5 +6458,5 @@
       "source_file": "ansible/roles/docker/tasks/main.yml"
     }
   ],
-  "built_at_commit": "152b849da1c7af4339ad7f442a02b9c9f8d4d0ba"
+  "built_at_commit": "599d2aa25c99470f3ecd4c695cf1dc702d5bb7eb"
 }

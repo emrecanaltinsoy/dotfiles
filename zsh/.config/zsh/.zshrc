@@ -97,7 +97,7 @@ if [[ -f $HOME/.config/zsh/starship_comp.zsh ]]; then
 fi
 # --- Terraform Completion ---
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
+complete -o nospace -C "$(command -v terraform 2>/dev/null || true)" terraform 2>/dev/null || true
 # --- txs completion ---
 [[ -f "$HOME/.local/share/txs/completions/txs.zsh" ]] && source "$HOME/.local/share/txs/completions/txs.zsh"
 # --- zsh completion ---
