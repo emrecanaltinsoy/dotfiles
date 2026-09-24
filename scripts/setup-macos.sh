@@ -7,10 +7,10 @@
 #
 # Skip keys:
 #   homebrew, git, rustup, nvm, oh_my_zsh, dotfiles,
-#   aws_cli, lazygit, neovim, opencode, pi, herdr, sops, starship,
+#   aws_cli, lazygit, neovim, pi, herdr, sops, starship,
 #   terraform, tmux, oh_my_tmux, tmuxifier, txs, just,
 #   eza, git_delta, rm_improved, topgrade, xcp, yazi,
-#   procs, tokei, xh, zellij, zoxide, bat, fd, ripgrep
+#   procs, tokei, xh, zoxide, bat, fd, ripgrep
 
 set -euo pipefail
 
@@ -20,19 +20,26 @@ NVM_VERSION="0.40.1"
 SOPS_VERSION="3.9.0"
 
 # ── colour helpers ───────────────────────────────────────────────────────────
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; RESET='\033[0m'
-info()  { echo -e "${GREEN}==>${RESET} $*"; }
-warn()  { echo -e "${YELLOW}SKIP${RESET} $*"; }
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+RESET='\033[0m'
+info() { echo -e "${GREEN}==>${RESET} $*"; }
+warn() { echo -e "${YELLOW}SKIP${RESET} $*"; }
 error() { echo -e "${RED}ERROR${RESET} $*" >&2; }
 
 # ── parse --skip argument ────────────────────────────────────────────────────
 SKIP=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --skip)
-      IFS=',' read -ra SKIP <<< "$2"
-      shift 2 ;;
-    *) error "Unknown argument: $1"; exit 1 ;;
+  --skip)
+    IFS=',' read -ra SKIP <<<"$2"
+    shift 2
+    ;;
+  *)
+    error "Unknown argument: $1"
+    exit 1
+    ;;
   esac
 done
 
@@ -130,8 +137,7 @@ else
     "https://github.com/zsh-users/zsh-syntax-highlighting zsh-syntax-highlighting" \
     "https://github.com/zsh-users/zsh-autosuggestions zsh-autosuggestions" \
     "https://github.com/supercrabtree/k k" \
-    "https://github.com/joshskidmore/zsh-fzf-history-search zsh-fzf-history-search"
-  do
+    "https://github.com/joshskidmore/zsh-fzf-history-search zsh-fzf-history-search"; do
     repo=$(echo "$plugin_repo" | cut -d' ' -f1)
     name=$(echo "$plugin_repo" | cut -d' ' -f2)
     if [[ -d "$ZSH_CUSTOM/plugins/$name" ]]; then
@@ -144,27 +150,35 @@ else
 fi
 
 # ── brew packages ─────────────────────────────────────────────────────────────
-if skip aws_cli;   then warn "aws_cli";   else brew_install awscli aws;         fi
-if skip lazygit;   then warn "lazygit";   else brew_install lazygit;            fi
-if skip neovim;    then warn "neovim";    else brew_install neovim nvim;        fi
-if skip sops;      then warn "sops";      else brew_install sops;               fi
-if skip terraform; then warn "terraform"; else brew_install terraform;          fi
-if skip tmux;      then warn "tmux";      else brew_install tmux;               fi
-if skip eza;       then warn "eza";       else brew_install eza;                fi
-if skip git_delta; then warn "git_delta"; else brew_install git-delta delta;    fi
+if skip aws_cli; then warn "aws_cli"; else brew_install awscli aws; fi
+if skip lazygit; then warn "lazygit"; else brew_install lazygit; fi
+if skip gh; then warn "gh"; else brew_install gh; fi
+if skip neovim; then warn "neovim"; else brew_install neovim nvim; fi
+if skip sops; then warn "sops"; else brew_install sops; fi
+if skip terraform; then warn "terraform"; else
+  if ! command -v terraform &>/dev/null; then
+    info "Installing Terraform..."
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+  else
+    info "Terraform already installed"
+  fi
+fi
+if skip tmux; then warn "tmux"; else brew_install tmux; fi
+if skip eza; then warn "eza"; else brew_install eza; fi
+if skip git_delta; then warn "git_delta"; else brew_install git-delta delta; fi
 if skip rm_improved; then warn "rm_improved"; else brew_install rm-improved rip; fi
-if skip topgrade;  then warn "topgrade";  else brew_install topgrade;           fi
-if skip xcp;       then warn "xcp";       else brew_install xcp;                fi
-if skip yazi;      then warn "yazi";      else brew_install yazi;               fi
-if skip procs;     then warn "procs";     else brew_install procs;              fi
-if skip tokei;     then warn "tokei";     else brew_install tokei;              fi
-if skip xh;        then warn "xh";        else brew_install xh;                 fi
-if skip zellij;    then warn "zellij";    else brew_install zellij;             fi
-if skip zoxide;    then warn "zoxide";    else brew_install zoxide;             fi
-if skip bat;       then warn "bat";       else brew_install bat;                fi
-if skip fd;        then warn "fd";        else brew_install fd;                 fi
-if skip ripgrep;   then warn "ripgrep";   else brew_install ripgrep rg;         fi
-if skip fzf;       then warn "fzf";       else brew_install fzf;                fi
+if skip topgrade; then warn "topgrade"; else brew_install topgrade; fi
+if skip xcp; then warn "xcp"; else brew_install xcp; fi
+if skip yazi; then warn "yazi"; else brew_install yazi; fi
+if skip procs; then warn "procs"; else brew_install procs; fi
+if skip tokei; then warn "tokei"; else brew_install tokei; fi
+if skip xh; then warn "xh"; else brew_install xh; fi
+if skip zoxide; then warn "zoxide"; else brew_install zoxide; fi
+if skip bat; then warn "bat"; else brew_install bat; fi
+if skip fd; then warn "fd"; else brew_install fd; fi
+if skip ripgrep; then warn "ripgrep"; else brew_install ripgrep rg; fi
+if skip fzf; then warn "fzf"; else brew_install fzf; fi
 
 # ── universal installers ─────────────────────────────────────────────────────
 if skip starship; then
@@ -176,17 +190,6 @@ else
     info "Installing starship..."
     mkdir -p "$HOME/.bin"
     curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.bin"
-  fi
-fi
-
-if skip opencode; then
-  warn "opencode"
-else
-  if command -v opencode &>/dev/null; then
-    info "opencode already installed"
-  else
-    info "Installing opencode..."
-    curl -fsSL https://opencode.ai/install | bash
   fi
 fi
 
@@ -292,9 +295,9 @@ else
 
   # fastfetch skipped — config has hardcoded Ubuntu logo
   STOW_DIRS=(
-    bash git lazygit nvim opencode pi
+    bash git lazygit nvim pi
     starship tmux topgrade txs herdr
-    wezterm yazi zellij zsh
+    wezterm yazi zsh
   )
 
   for dir in "${STOW_DIRS[@]}"; do
