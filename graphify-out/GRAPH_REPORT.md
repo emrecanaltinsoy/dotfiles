@@ -1,27 +1,27 @@
-# Graph Report - dotfiles  (2026-09-18)
+# Graph Report - dotfiles  (2026-09-29)
 
 ## Corpus Check
-- 87 files · ~26,528 words
+- 106 files · ~29,264 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 266 nodes · 230 edges · 74 communities (28 shown, 46 thin omitted)
+- 263 nodes · 228 edges · 73 communities (28 shown, 45 thin omitted)
 - Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `599d2aa2`
+- Built from commit: `d3b24274`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Package Selector UI
-- OpenCode Agent Config
+- opencode.json
 - Ansible Role Orchestration
 - Ansible Base Role (Cross-Distro)
 - Project Documentation & Assets
 - Caveman & Ponytail Skills
-- OpenCode LLM Provider Config
+- code-reviewer
 - Git & GitHub Ansible Roles
 - Ansible Role Template
 - Docker Ansible Role
@@ -29,7 +29,6 @@
 - Dotfiles Role (GNU Stow)
 - OpenCode TUI Settings
 - OpenCode Graphify Plugin
-- Pi Agent MCP Servers
 - Ansible Role Metadata (Base/Cargo)
 - Ansible Role Metadata (Git/GitHub)
 - Configure Script
@@ -112,15 +111,15 @@
 - **GitHub CLI OS-Specific Installation** — ansible_roles_github_tasks_debian, ansible_roles_github_tasks_redhat, ansible_roles_github_tasks_archlinux [INFERRED 0.85]
 - **OS-Specific Package Installation Pattern** — ansible_roles_docker_tasks_debian, ansible_roles_docker_tasks_redhat, ansible_roles_docker_tasks_archlinux [INFERRED 0.85]
 
-## Communities (74 total, 46 thin omitted)
+## Communities (73 total, 45 thin omitted)
 
 ### Community 0 - "Package Selector UI"
 Cohesion: 0.10
 Nodes (18): App, ComposeResult, PackageSelector, Convert linear index to (row, col) grid position., Convert (row, col) grid position to linear index., Initialize app when mounted., Update display of all package items., Move cursor up in grid. (+10 more)
 
-### Community 1 - "OpenCode Agent Config"
-Cohesion: 0.10
-Nodes (19): agent, code-reviewer, autoupdate, description, model, prompt, tools, enabled (+11 more)
+### Community 1 - "opencode.json"
+Cohesion: 0.08
+Nodes (23): agent, options, autoupdate, enabled, type, url, name, npm (+15 more)
 
 ### Community 2 - "Ansible Role Orchestration"
 Cohesion: 0.12
@@ -138,9 +137,9 @@ Nodes (15): Graphify Project Instructions, GitHub Auth One-Time Code Screenshot,
 Cohesion: 0.17
 Nodes (15): caveman-review Skill, Auto-Clarity Rule, caveman-review Skill Definition, Terse Code Review Format, ponytail-audit Skill, ponytail: Comment Marker Convention, ponytail-debt Skill, Ponytail Benchmark Scoreboard (+7 more)
 
-### Community 6 - "OpenCode LLM Provider Config"
-Cohesion: 0.18
-Nodes (11): options, name, npm, options, apiKey, baseURL, profile, region (+3 more)
+### Community 6 - "code-reviewer"
+Cohesion: 0.29
+Nodes (7): code-reviewer, description, model, prompt, tools, edit, write
 
 ### Community 7 - "Git & GitHub Ansible Roles"
 Cohesion: 0.22
@@ -167,24 +166,24 @@ Cohesion: 0.46
 Nodes (7): brew_install(), error(), info(), PATH, setup-macos.sh script, skip(), warn()
 
 ## Knowledge Gaps
-- **120 isolated node(s):** `PATH`, `autoupdate`, `description`, `model`, `prompt` (+115 more)
+- **118 isolated node(s):** `autoupdate`, `description`, `model`, `prompt`, `enabled` (+113 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `provider` connect `OpenCode LLM Provider Config` to `OpenCode Agent Config`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `agent` connect `opencode.json` to `code-reviewer`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `Tools Role Main Tasks` (e.g. with `Tools Role (Dev Tools)` and `Package Selector TUI Tool`) actually correct?**
   _`Tools Role Main Tasks` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 3 inferred relationships involving `Base Role - Main Tasks (rustup, uv, fzf)` (e.g. with `Discover Role - Main Tasks` and `OS Family Task Dispatch Pattern`) actually correct?**
   _`Base Role - Main Tasks (rustup, uv, fzf)` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `PATH`, `autoupdate`, `description` to the rest of the system?**
-  _120 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `autoupdate`, `description`, `model` to the rest of the system?**
+  _118 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Package Selector UI` be split into smaller, more focused modules?**
   _Cohesion score 0.10227272727272728 - nodes in this community are weakly interconnected._
-- **Should `OpenCode Agent Config` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+- **Should `opencode.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Ansible Role Orchestration` be split into smaller, more focused modules?**
   _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
