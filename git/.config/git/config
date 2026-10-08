@@ -43,3 +43,5 @@
 	defaultBranch = main
 [alias]
 	upstream = !git push -u origin HEAD
+[url "git@code.siemens-energy.com:"]
+	insteadOf = https://code.siemens-energy.com
