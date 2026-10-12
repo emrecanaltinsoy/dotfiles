@@ -1,4 +1,4 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["."]
 exec = "hidden toggle"
 desc = "Toggle hidden files"
