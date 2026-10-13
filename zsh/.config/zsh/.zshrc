@@ -17,10 +17,16 @@ export LANG=C.UTF-8
 ############################################################
 # 2. Language & Tool Version Managers
 ############################################################
-# --- NVM (Node Version Manager) ---
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion
+_nvm_load() {
+  unset -f nvm node npm npx _nvm_load
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+nvm()  { _nvm_load; nvm  "$@"; }
+node() { _nvm_load; node "$@"; }
+npm()  { _nvm_load; npm  "$@"; }
+npx()  { _nvm_load; npx  "$@"; }
 
 # --- Ruby Gems ---
 export GEM_HOME="$HOME/gems"
@@ -47,8 +53,9 @@ fi
 ############################################################
 # 3. Plugins and Oh My Zsh
 ############################################################
+ZSH_DISABLE_COMPFIX=true
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions k sudo copypath copybuffer dirhistory history docker docker-compose zsh-fzf-history-search)
-source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh  # also calls compinit; don't call it again below
 
 ############################################################
 # 4. Aliases and Custom Loads
@@ -100,9 +107,7 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C "$(command -v terraform 2>/dev/null || true)" terraform 2>/dev/null || true
 # --- txs completion ---
 [[ -f "$HOME/.local/share/txs/completions/txs.zsh" ]] && source "$HOME/.local/share/txs/completions/txs.zsh"
-# --- zsh completion ---
-autoload -U compinit
-compinit
+
 
 ############################################################
 # 7. Secrets, Hooks & User Scripts
@@ -144,8 +149,7 @@ fi
 
 
 ############################################################
-# 9. Misc (NVM Hooks)
+# 9. Misc
 ############################################################
-# place this after nvm initialization!
 autoload -U add-zsh-hook
 

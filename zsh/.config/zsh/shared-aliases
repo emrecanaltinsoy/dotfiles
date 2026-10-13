@@ -189,3 +189,4 @@ fi
 alias watch="watch -n .5"
 alias watch-gpu="watch -n .5 nvidia-smi"
 alias change-terminal="sudo update-alternatives --config x-terminal-emulator"
+alias zsh-profile="zsh -c 'zmodload zsh/zprof; source ~/.config/zsh/.zshrc; zprof'"

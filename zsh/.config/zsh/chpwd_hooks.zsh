@@ -1,6 +1,3 @@
-# --- Function Definitions ---
-
-# Auto activate/deactivate venv on cd
 check_and_activate_venv() {
     if [[ -d ".venv" ]]; then
         if [[ "$VIRTUAL_ENV" != "$PWD/.venv" ]]; then
@@ -13,10 +10,14 @@ check_and_activate_venv() {
     fi
 }
 
-# Auto switch node version using nvm
 load-nvmrc() {
-    if ! command -v nvm >/dev/null 2>&1; then
-        return
+    if ! declare -f nvm_find_nvmrc > /dev/null 2>&1; then
+        local check=$PWD
+        while [[ "$check" != "/" ]]; do
+            [[ -f "$check/.nvmrc" ]] && { _nvm_load; break; }
+            check=${check:h}
+        done
+        declare -f nvm_find_nvmrc > /dev/null 2>&1 || return
     fi
     local nvmrc_path
     nvmrc_path="$(nvm_find_nvmrc)"
@@ -36,17 +37,10 @@ load-nvmrc() {
 }
 
 
-# --- Hook Registration ---
-
 autoload -U add-zsh-hook
 add-zsh-hook chpwd check_and_activate_venv
-autoload -U add-zsh-hook
 add-zsh-hook chpwd load-nvmrc
 
-# --- Run both functions once on shell startup ---
-
 check_and_activate_venv
-if command -v nvm >/dev/null 2>&1; then
-    load-nvmrc
-fi
+load-nvmrc
 
