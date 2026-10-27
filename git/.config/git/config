@@ -1,7 +1,6 @@
 [user]
-	; signingkey = 260365214503B692
 	name = Emrecan Altinsoy
-	email = emrecan.altinsoy@gmail.com
+	email = emrecanaltinsoy@gmail.com
 [core]
   pager = delta
 	editor = nvim
